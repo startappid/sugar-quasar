@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          GoFleet
+          SpaceBear
         </q-toolbar-title>
         <MenuHeaderTopbar/>
       </q-toolbar>
