@@ -27,7 +27,18 @@
       </q-item>
 
     </q-expansion-item>
-
+    <q-expansion-item
+      icon="flag"
+      label="Countries"
+      caption="Countries data"
+      class="q-my-sm"
+    >
+      <q-item clickable v-ripple :inset-level="1" to="/countries">
+        <q-item-section>
+          Countries
+        </q-item-section>
+      </q-item>
+    </q-expansion-item>
     <!-- <q-separator />
     <div class="q-my-md">
       <q-item-label header>Message</q-item-label>

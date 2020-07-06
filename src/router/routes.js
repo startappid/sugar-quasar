@@ -62,6 +62,18 @@ const routes = [
     ]
   },
   {
+    path: '/countries',
+    component: () => import('layouts/AppLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/countries/index.vue') },
+      { path: 'create', component: () => import('pages/countries/create.vue') },
+      { path: 'trash', component: () => import('pages/countries/trash.vue') },
+      { path: ':id', component: () => import('pages/countries/show.vue') },
+      { path: ':id/edit', component: () => import('pages/countries/edit.vue') },
+      { path: ':id/trashed', component: () => import('pages/countries/trashed.vue') }
+    ]
+  },
+  {
     path: '/:collection',
     component: () => import('layouts/AppLayout.vue'),
     children: [
