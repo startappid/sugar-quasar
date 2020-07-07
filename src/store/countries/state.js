@@ -1,7 +1,5 @@
+import state from '../resources/state'
 export const collection = 'countries'
-export const form = {}
-export const validation = {}
-export const data = []
 export const columns = [
   {
     name: 'isocode',
@@ -40,14 +38,9 @@ export const columns = [
 
 export default function () {
   return {
+    ...state(),
     // Collection name
     collection,
-    // Form data input
-    form,
-    // Form validation
-    validation, // for validation use vuelidate
-    // Data fetched from API
-    data,
     // Datatable config
     columns
   }

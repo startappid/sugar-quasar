@@ -4,7 +4,7 @@ export const validation = {}
 export const data = []
 export const columns = []
 
-export default function () {
+export default () => {
   return {
     // Collection name
     collection,

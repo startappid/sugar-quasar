@@ -1,4 +1,1 @@
-/*
-export function someMutation (state) {
-}
-*/
+export * from '../resources/mutations'
