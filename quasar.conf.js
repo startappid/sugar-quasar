@@ -65,6 +65,9 @@ module.exports = function (/* ctx */) {
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
+      env: {
+        BASEURL: 'http://localhost:8000/api/v1'
+      },
 
       // https://quasar.dev/quasar-cli/handling-webpack
       extendWebpack (cfg) {
