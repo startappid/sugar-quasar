@@ -22,7 +22,7 @@ module.exports = function (/* ctx */) {
       'i18n',
       'axios',
       'lodash',
-      'moment',
+      // 'moment',
       'vuelidate'
       // 'auth'
     ],
