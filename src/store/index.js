@@ -34,6 +34,7 @@ export default function (/* { ssrContext } */) {
     },
     // enable strict mode (adds overhead!)
     // for dev mode only
+    // FIXME: Should we lose store strict?
     strict: false,
     plugins: [
       // createPersistedState({
