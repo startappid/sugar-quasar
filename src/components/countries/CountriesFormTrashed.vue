@@ -113,7 +113,7 @@ export default {
   mounted () {
     if (this.stateForm === 'show' || this.stateForm === 'update') {
       this.loading = true
-      this.detail(this.id).then((response) => {
+      this.detail({ id: this.id }).then((response) => {
         const { data } = response
         this.form = {
           name: data.name,

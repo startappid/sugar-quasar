@@ -113,7 +113,7 @@ export default {
   mounted () {
     if (this.stateForm === 'show' || this.stateForm === 'update') {
       this.loading = true
-      this.detail(this.id).then((response) => {
+      this.detail({ id: this.id }).then((response) => {
         const { data } = response
         this.form = {
           name: data.name,
@@ -149,7 +149,7 @@ export default {
       this.$v.$touch()
       if (!this.$v.$error) {
         this.loading = true
-        this.create(this.form).then((response) => {
+        this.create({ data: this.form }).then((response) => {
           const { status, message } = response
           this.$q.dialog({
             title: `${status}`,
