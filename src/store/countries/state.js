@@ -43,6 +43,38 @@ export const form = {
   phonecode: null
 }
 
+export const layout = [
+  [
+    {
+      type: 'QInput',
+      col: 'col-2',
+      name: 'isocode',
+      label: 'ISO Code',
+      props: {
+        maxlength: 2
+      }
+    },
+    {
+      type: 'QInput',
+      col: 'col-6',
+      name: 'name',
+      label: 'Country Name',
+      props: {
+        maxlength: 50
+      }
+    },
+    {
+      type: 'QInput',
+      col: 'col-2',
+      name: 'phonecode',
+      label: 'Phone Code',
+      props: {
+        maxlength: 3
+      }
+    }
+  ]
+]
+
 export const validation = {
   isocode: {
     required
@@ -63,6 +95,7 @@ export default function () {
     // Datatable config
     columns,
     form,
+    layout,
     validation
   }
 }

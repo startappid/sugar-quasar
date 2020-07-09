@@ -1,0 +1,85 @@
+<template>
+<div>
+  <div class="row q-gutter-md q-my-md" v-for="(fields, index) in layout" :key="`row-${index}`">
+    <div :class="field.col"  v-for="field in fields" :key="`form-${field.name}`">
+      <component
+        v-bind:is="field.type"
+        filled
+        v-model="form[field.name]"
+        :readonly="readonly"
+        :label="field.label"
+        stack-label
+        v-bind="field.props"
+        clearable
+      />
+      <!--
+      <q-input
+        filled
+        v-model="form.isocode"
+        :readonly="readonly"
+        label="ISO Code"
+        stack-label
+        maxlength="2"
+        clearable
+        :error="$v.form.isocode.$error"
+      />
+      -->
+    </div>
+  </div>
+</div>
+</template>
+
+<script>
+import {
+  QInput
+} from 'quasar'
+
+export default {
+  name: 'FormFactory',
+  props: {
+    form: {
+      type: Object,
+      default: () => {}
+    },
+    // Layout form generate
+    layout: {
+      type: Array,
+      default: () => []
+    },
+    validation: {
+      type: Object,
+      default: () => {}
+    },
+    readonly: {
+      type: Boolean,
+      default: false
+    }
+  },
+  components: {
+    QInput
+  //   QSelect,
+  //   QFile,
+  //   QField,
+  //   QRadio,
+  //   QCheckbox,
+  //   QToggle,
+  //   QBtnToggle,
+  //   QOptionGroup,
+  //   QSlider,
+  //   QRange,
+  //   QTime,
+  //   QDate
+  },
+  mounted () {
+
+  },
+  data () {
+    return {}
+  },
+  validations () {
+    return {
+      form: this.validation
+    }
+  }
+}
+</script>

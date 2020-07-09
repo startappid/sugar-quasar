@@ -1,44 +1,12 @@
 <template>
   <div class="q-pa-md shadow-1">
     <div class="text-h5">{{titlePage}} {{collectionName}}</div>
-    <div class="row q-gutter-md q-my-md">
-      <div class="col-2">
-        <q-input
-          filled
-          v-model="form.isocode"
-          :readonly="readonly"
-          label="ISO Code"
-          stack-label
-          maxlength="2"
-          clearable
-          :error="this.$v.form.isocode.$error"
-          />
-      </div>
-      <div class="col-6">
-        <q-input
-          filled
-          v-model="form.name"
-          :readonly="readonly"
-          label="Country Name"
-          stack-label
-          maxlength="50"
-          clearable
-          :error="this.$v.form.name.$error"
-          />
-      </div>
-      <div class="col">
-        <q-input
-          filled
-          v-model="form.phonecode"
-          :readonly="readonly"
-          label="Phone Code"
-          stack-label
-          maxlength="3"
-          clearable
-          :error="this.$v.form.phonecode.$error"
-          />
-      </div>
-    </div>
+    <FormFactory
+      :form="form"
+      :layout="layout"
+      :validation="validation"
+      :readonly="readonly"
+    />
 
     <div class="row q-gutter-md q-my-md" v-if="stateForm=='create'">
       <div class="col">
@@ -80,9 +48,13 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 import { mapActions, mapGetters } from 'vuex'
+import FormFactory from 'components/form/FormFactory'
 
 export default {
   name: 'UsersForm',
+  components: {
+    FormFactory
+  },
   props: {
     collection: {
       type: String,
@@ -278,7 +250,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('countries', ['validation', 'form']),
+    ...mapGetters('countries', ['validation', 'form', 'layout']),
     collectionName () {
       const words = this.collection.split('_')
       const titles = []

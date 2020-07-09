@@ -1,5 +1,6 @@
 export const collection = null
 export const form = {}
+export const layout = []
 export const validation = {}
 export const data = []
 export const columns = []
@@ -11,6 +12,8 @@ export default () => {
     collection,
     // Form data input
     form,
+    // Form layout
+    layout,
     // Form validation
     validation, // for validation use vuelidate
     // Data fetched from API

@@ -6,6 +6,10 @@ export function form (state) {
   return state.form
 }
 
+export function layout (state) {
+  return state.layout
+}
+
 export function validation (state) {
   return state.validation
 }
