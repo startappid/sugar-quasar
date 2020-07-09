@@ -5,6 +5,7 @@
     :columns="columns"
     row-key="id"
     :pagination.sync="pagination"
+    :rows-per-page-options="pageOptions"
     :loading="loading"
     :filter="filter"
     @request="onRequest"
@@ -109,6 +110,7 @@ export default {
         rowsPerPage: 25, // limit default set 25
         rowsNumber: 0 // total records
       },
+      pageOptions: [5, 10, 25, 50, 100],
       data: []
     }
   },
