@@ -79,7 +79,7 @@
 </template>
 <script>
 import { required } from 'vuelidate/lib/validators'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'UsersForm',
@@ -99,11 +99,11 @@ export default {
   },
   data () {
     return {
-      form: {
-        isocode: null,
-        name: null,
-        phonecode: null
-      },
+      // form: {
+      //   isocode: null,
+      //   name: null,
+      //   phonecode: null
+      // },
       submitAndCreate: false,
       isPwd: true,
       loading: false,
@@ -278,6 +278,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('countries', ['validation', 'form']),
     collectionName () {
       const words = this.collection.split('_')
       const titles = []
@@ -301,17 +302,7 @@ export default {
   },
   validations () {
     return {
-      form: {
-        isocode: {
-          required
-        },
-        name: {
-          required
-        },
-        phonecode: {
-          required
-        }
-      }
+      form: this.validation
     }
   }
 }

@@ -1,3 +1,4 @@
+import { required } from 'vuelidate/lib/validators'
 import state from '../resources/state'
 export const collection = 'countries'
 export const columns = [
@@ -36,12 +37,32 @@ export const columns = [
   }
 ]
 
+export const form = {
+  isocode: null,
+  name: null,
+  phonecode: null
+}
+
+export const validation = {
+  isocode: {
+    required
+  },
+  name: {
+    required
+  },
+  phonecode: {
+    required
+  }
+}
+
 export default function () {
   return {
     ...state(),
     // Collection name
     collection,
     // Datatable config
-    columns
+    columns,
+    form,
+    validation
   }
 }
