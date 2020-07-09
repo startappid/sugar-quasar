@@ -3,6 +3,7 @@ export const form = {}
 export const validation = {}
 export const data = []
 export const columns = []
+export const baseURL = process.env.BASEURL
 
 export default () => {
   return {
@@ -15,6 +16,10 @@ export default () => {
     // Data fetched from API
     data,
     // Datatable config
-    columns
+    columns,
+    // configuration axios
+    config: {
+      baseURL
+    }
   }
 }

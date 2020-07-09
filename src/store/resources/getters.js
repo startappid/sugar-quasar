@@ -17,3 +17,7 @@ export function data (state) {
 export function columns (state) {
   return state.columns
 }
+
+export function config (state) {
+  return state.config
+}
