@@ -12,18 +12,6 @@
         v-bind="field.props"
         clearable
       />
-      <!--
-      <q-input
-        filled
-        v-model="form.isocode"
-        :readonly="readonly"
-        label="ISO Code"
-        stack-label
-        maxlength="2"
-        clearable
-        :error="$v.form.isocode.$error"
-      />
-      -->
     </div>
   </div>
 </div>
