@@ -10,6 +10,7 @@
         :label="field.label"
         stack-label
         v-bind="field.props"
+        :error="$v.form[field.name].$error"
         clearable
       />
     </div>
@@ -40,7 +41,19 @@ export default {
     },
     readonly: {
       type: Boolean,
-      default: false
+      default: true
+    },
+    collection: {
+      type: String,
+      default: () => ''
+    },
+    stateForm: {
+      type: String,
+      default: () => 'show'
+    },
+    id: {
+      type: String,
+      default: null
     }
   },
   components: {
@@ -62,7 +75,11 @@ export default {
 
   },
   data () {
-    return {}
+    return {
+      submitAndCreate: false,
+      isPwd: true,
+      loading: false
+    }
   },
   validations () {
     return {

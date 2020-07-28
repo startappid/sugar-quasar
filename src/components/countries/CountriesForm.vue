@@ -6,6 +6,7 @@
       :layout="layout"
       :validation="validation"
       :readonly="readonly"
+      :stateForm="stateForm"
     />
 
     <div class="row q-gutter-md q-my-md" v-if="stateForm=='create'">
