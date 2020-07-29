@@ -51,6 +51,16 @@
       <q-btn icon="check" class="q-ml-md bg-primary text-white" color="secondary" label="Update" @click="submitUpdate" />
     </div>
   </div>
+
+  <div class="q-mt-xl q-mb-md row justify-between" v-if="stateForm=='trashed'">
+    <div>
+      <q-btn flat label="Cancel" :to="`/${collection}/trash`" />
+    </div>
+    <div class=" justify-end">
+      <q-btn icon="delete_forever" flat color="negative" label="Delete Forever" @click="confirmDelete(id)" />
+      <q-btn icon="restore_from_trash" class="q-ml-md bg-primary text-white" color="secondary" label="Restore" @click="confirmRestore(id)" />
+    </div>
+  </div>
 </div>
 </template>
 
@@ -101,9 +111,14 @@ export default {
     }
   },
   mounted () {
-    if (this.stateForm === 'show' || this.stateForm === 'update') {
+    if (['show', 'update', 'trashed'].indexOf(this.stateForm) >= 0) {
       this.loading = true
-      this.detail({ id: this.id }).then((response) => {
+      let fetchDetail = this.detail
+      if (this.stateForm === 'trashed') {
+        fetchDetail = this.trashed
+      }
+
+      fetchDetail({ id: this.id }).then((response) => {
         const { data } = response
         const keys = Object.keys(this.form)
         for (const i in keys) {
@@ -152,6 +167,12 @@ export default {
       },
       destroy (dispatch, payload) {
         return dispatch(this.collection + '/destroy', payload)
+      },
+      trashed (dispatch, payload) {
+        return dispatch(this.collection + '/trashed', payload)
+      },
+      restore (dispatch, payload) {
+        return dispatch(this.collection + '/restore', payload)
       }
     }),
     filterFn (val, update, abort) {
@@ -256,6 +277,58 @@ export default {
         persistent: true
       }).onOk(() => {
         this.destroy({
+          type: id,
+          params: {}
+        }).then((response) => {
+          const { status, message } = response
+          this.$q.dialog({
+            title: `${status}`,
+            message: `${message}`,
+            ok: {
+              flat: true
+            },
+            persistent: true
+          }).onOk(() => {
+            this.$router.push(`/${this.collection}`)
+          })
+        }).catch(error => {
+          if (error.response) {
+            const { data } = error.response
+            this.$q.dialog({
+              title: `${data.status}`,
+              message: `${data.message}`,
+              ok: {
+                flat: true
+              },
+              persistent: true
+            })
+          }
+          this.loading = false
+        })
+      }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      }).onDismiss(() => {
+        // console.log('I am triggered on both OK and Cancel')
+      })
+    },
+    confirmRestore (id) {
+      this.$q.dialog({
+        title: 'Restore',
+        message: 'Are you sure to restore?',
+        ok: {
+          label: 'Restore',
+          color: 'secondary',
+          flat: true
+        },
+        cancel: {
+          label: 'Cancel',
+          color: 'white',
+          textColor: 'black',
+          flat: true
+        },
+        persistent: true
+      }).onOk(() => {
+        this.restore({
           type: id,
           params: {}
         }).then((response) => {
