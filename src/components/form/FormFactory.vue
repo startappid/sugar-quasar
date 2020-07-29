@@ -16,20 +16,20 @@
     </div>
   </div>
 
-  <div class="row q-gutter-md q-my-md" v-if="stateForm=='create'">
-    <div class="col">
+  <div class="q-mt-xl q-mb-md row justify-between" v-if="stateForm=='create'">
+    <div>
       <q-toggle v-model="submitAndCreate" label="Submit and create new" />
     </div>
-  </div>
-  <div class="q-mt-xl q-mb-md row justify-end" v-if="stateForm=='create'">
-    <q-btn flat label="Cancel" :to="`/${collection}`" />
-    <q-btn
-      icon="check"
-      class="q-ml-md bg-primary text-white"
-      color="secondary"
-      label="Create"
-      :loading="loading"
-      @click="submit" />
+    <div class=" justify-end">
+      <q-btn flat label="Cancel" :to="`/${collection}`" />
+      <q-btn
+        icon="check"
+        class="q-ml-md bg-primary text-white"
+        color="secondary"
+        label="Create"
+        :loading="loading"
+        @click="submit" />
+    </div>
   </div>
 
   <div class="q-mt-xl q-mb-md row justify-between" v-if="stateForm=='show'">
