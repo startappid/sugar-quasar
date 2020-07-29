@@ -231,13 +231,10 @@ export default {
       this.$router.push(`${this.collection}/${data.id}/edit`)
     },
     deleteSelected () {
-      console.log(this.selected)
       const ids = []
       for (const item of this.selected) {
         ids.push(item.id)
       }
-      console.log(ids)
-
       this.$q.dialog({
         title: 'Delete',
         message: 'Are you sure to delete?',
