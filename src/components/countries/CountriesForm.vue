@@ -4,6 +4,7 @@
     <FormFactory
       :collection="collection"
       :stateForm="stateForm"
+      :id="id"
     />
 
   </div>

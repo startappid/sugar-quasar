@@ -56,7 +56,7 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 import {
   QInput
 } from 'quasar'
@@ -105,10 +105,10 @@ export default {
       this.loading = true
       this.detail({ id: this.id }).then((response) => {
         const { data } = response
-        this.form = {
-          name: data.name,
-          isocode: data.isocode,
-          phonecode: data.phonecode
+        const keys = Object.keys(this.form)
+        for (const i in keys) {
+          const key = keys[i]
+          this.form[key] = data[key]
         }
         this.loading = false
       }).catch(error => {
@@ -129,6 +129,14 @@ export default {
   },
   methods: {
     // ...mapActions(`${this.collection}`, ['create', 'detail', 'update', 'patch', 'destroy']),
+    ...mapMutations({
+      formMutation: () => `${this.collection}/form`,
+      collectionMutation: () => `${this.collection}/collection`,
+      layoutMutation: () => `${this.collection}/layout`,
+      validationMutation: () => `${this.collection}/validation`,
+      dataMutation: () => `${this.collection}/data`,
+      columnsMutation: () => `${this.collection}/columns`
+    }),
     ...mapActions({
       create (dispatch, payload) {
         return dispatch(this.collection + '/create', payload)
