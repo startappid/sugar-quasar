@@ -8,7 +8,7 @@
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
     </q-toolbar>
-    <CountriesForm
+    <FormLayout
       :collection="collection"
       :stateForm="stateForm"
       :id="id"
@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import CountriesForm from 'components/countries/CountriesForm'
+import FormLayout from 'components/form/FormLayout'
 export default {
   components: {
-    CountriesForm
+    FormLayout
   },
   data () {
     return {
