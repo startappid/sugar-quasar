@@ -128,16 +128,13 @@ export default {
         search: filter,
         page: page,
         limit: rowsPerPage,
-        [`sort[${sortBy}]`]: descending ? 'desc' : 'asc'
-        // sort: {
-        //   [sortBy]: descending ? 'desc' : 'asc'
-        // }
+        orderBy: {
+          [sortBy]: descending ? 'desc' : 'asc'
+        }
       }
 
-      console.log(params)
-
       this.loading = true
-      this.fetch(params).then((response) => {
+      this.fetch({ params }).then((response) => {
         const { data, meta } = response
         this.data = data
         this.pagination.rowsNumber = meta.totalRecords
