@@ -197,6 +197,12 @@ export default {
           }).onOk(() => {
             if (!this.submitAndCreate) {
               this.$router.push(`/${this.collection}`)
+            } else {
+              const keys = Object.keys(this.form)
+              for (const i in keys) {
+                const key = keys[i]
+                this.form[key] = null
+              }
             }
           }).finally(() => {
             this.loading = false
