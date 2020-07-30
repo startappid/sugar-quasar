@@ -9,7 +9,7 @@ export const columns = [
     align: 'left',
     field: 'isocode',
     format: (val) => val,
-    sortable: false // FIXME: sortable off for temporary
+    sortable: true
   },
   {
     name: 'name',
@@ -18,7 +18,7 @@ export const columns = [
     align: 'left',
     field: 'name',
     format: (val) => val,
-    sortable: false // FIXME: sortable off for temporary
+    sortable: true
   },
   {
     name: 'phonecode',
@@ -27,7 +27,7 @@ export const columns = [
     align: 'left',
     field: 'phonecode',
     format: (val) => val,
-    sortable: false // FIXME: sortable off for temporary
+    sortable: true
   },
   // Always give this columns as default
   {

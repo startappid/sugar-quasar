@@ -104,8 +104,8 @@ export default {
       filter: '',
       loading: false,
       pagination: {
-        sortBy: 'desc',
-        descending: false,
+        sortBy: 'id',
+        descending: true,
         page: 1,
         rowsPerPage: 25, // limit default set 25
         rowsNumber: 0 // total records
@@ -127,8 +127,14 @@ export default {
         ...this.params,
         search: filter,
         page: page,
-        limit: rowsPerPage
+        limit: rowsPerPage,
+        [`sort[${sortBy}]`]: descending ? 'desc' : 'asc'
+        // sort: {
+        //   [sortBy]: descending ? 'desc' : 'asc'
+        // }
       }
+
+      console.log(params)
 
       this.loading = true
       this.fetch(params).then((response) => {
