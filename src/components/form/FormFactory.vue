@@ -80,7 +80,7 @@ export default {
     },
     stateForm: {
       type: String,
-      default: () => 'show'
+      default: () => 'entries'
     },
     id: {
       type: String,
