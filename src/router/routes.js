@@ -1,3 +1,6 @@
+import Store from '../store'
+const store = Store()
+
 const routes = [
   {
     path: '/',
@@ -61,21 +64,31 @@ const routes = [
       { path: ':id/trashed', component: () => import('pages/roles/trashed.vue') }
     ]
   },
+  // {
+  //   path: '/countries',
+  //   component: () => import('layouts/AppLayout.vue'),
+  //   children: [
+  //     { path: '', component: () => import('pages/countries/index.vue') },
+  //     { path: 'create', component: () => import('pages/countries/create.vue') },
+  //     { path: 'trash', component: () => import('pages/countries/trash.vue') },
+  //     { path: ':id', component: () => import('pages/countries/show.vue') },
+  //     { path: ':id/edit', component: () => import('pages/countries/edit.vue') },
+  //     { path: ':id/trashed', component: () => import('pages/countries/trashed.vue') }
+  //   ]
+  // },
   {
-    path: '/countries',
-    component: () => import('layouts/AppLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/countries/index.vue') },
-      { path: 'create', component: () => import('pages/countries/create.vue') },
-      { path: 'trash', component: () => import('pages/countries/trash.vue') },
-      { path: ':id', component: () => import('pages/countries/show.vue') },
-      { path: ':id/edit', component: () => import('pages/countries/edit.vue') },
-      { path: ':id/trashed', component: () => import('pages/countries/trashed.vue') }
-    ]
+    path: '/404',
+    component: () => import('pages/Error404.vue')
   },
   {
     path: '/:collection',
     component: () => import('layouts/AppLayout.vue'),
+    beforeEnter: (to, from, next) => {
+      const schemes = store.getters['schemes/schemes']
+      const { collection } = to.params
+      if (schemes.indexOf(collection) >= 0) next()
+      else next('/404')
+    },
     children: [
       { path: '', component: () => import('pages/resources/index.vue') },
       { path: 'trash', component: () => import('pages/resources/trash.vue') },

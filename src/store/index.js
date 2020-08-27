@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 // var ls = new SecureLS({ isCompression: false })
 
 import resources from './resources'
+import schemes from './schemes'
 import auth from './auth'
 import users from './users'
 import categories from './categories'
@@ -26,6 +27,7 @@ export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       resources,
+      schemes,
       auth,
       users,
       roles,
