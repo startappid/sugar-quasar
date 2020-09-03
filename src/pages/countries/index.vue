@@ -8,8 +8,7 @@
       <q-toolbar-title></q-toolbar-title>
 
       <q-btn flat rounded icon="add" color="secondary" label="New" :to="`${collection}/create`" />
-      <q-btn flat rounded icon="delete" color="negative" label="Trash" :to="`${collection}/trash`" />
-      <!-- <q-btn flat round dense icon="more_vert">
+      <q-btn flat round dense icon="more_vert">
         <q-menu
           transition-show="jump-down"
           transition-hide="jump-up"
@@ -59,13 +58,14 @@
             </q-item>
           </q-list>
         </q-menu>
-      </q-btn> -->
+      </q-btn>
     </q-toolbar>
     <DataTable
       :columns="columns"
       :fetch="fetch"
       :destroy="destroy"
       :collection="collection"
+      :stateForm="stateForm"
     />
   </q-page>
 </template>
@@ -80,7 +80,8 @@ export default {
   },
   data () {
     return {
-      collection: 'countries'
+      collection: 'countries',
+      stateForm: 'entries' // entries, trash
     }
   },
   methods: {

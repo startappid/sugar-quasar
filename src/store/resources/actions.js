@@ -1,15 +1,16 @@
 import { axiosInstance } from 'boot/axios'
 import { Cookies } from 'quasar'
 
-export async function fetch ({ state, commit, dispatch }, params) {
+export async function fetch ({ state, commit, dispatch, getters }, { params, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
   if (token) {
-    axiosInstance.defaults.headers.common.Authorization = 'Bearer ' + token
+    headers = { Authorization: `Bearer ${token}`, ...headers }
   }
+  config = { ...getters.config, ...config }
   const { collection } = state
   const ROUTE_FETCH = `/${collection}`
-  const promise = new Promise(function (resolve, reject) {
-    return axiosInstance.get(ROUTE_FETCH, { params }).then(response => {
+  const promise = new Promise((resolve, reject) => {
+    return axiosInstance.get(ROUTE_FETCH, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -19,15 +20,16 @@ export async function fetch ({ state, commit, dispatch }, params) {
   return promise
 }
 
-export async function create ({ state, commit, dispatch }, data) {
+export async function create ({ state, commit, dispatch, getters }, { data, params = {}, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
   if (token) {
-    axiosInstance.defaults.headers.common.Authorization = 'Bearer ' + token
+    headers = { Authorization: `Bearer ${token}`, ...headers }
   }
+  config = { ...getters.config, ...config }
   const { collection } = state
   const ROUTE_CREATE = `/${collection}`
-  const promise = new Promise(function (resolve, reject) {
-    return axiosInstance.post(ROUTE_CREATE, data).then(response => {
+  const promise = new Promise((resolve, reject) => {
+    return axiosInstance.post(ROUTE_CREATE, data, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -37,15 +39,16 @@ export async function create ({ state, commit, dispatch }, data) {
   return promise
 }
 
-export async function detail ({ state, commit, dispatch }, id) {
+export async function detail ({ state, commit, dispatch, getters }, { id, params, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
   if (token) {
-    axiosInstance.defaults.headers.common.Authorization = 'Bearer ' + token
+    headers = { Authorization: `Bearer ${token}`, ...headers }
   }
+  config = { ...getters.config, ...config }
   const { collection } = state
   const ROUTE_DETAIL = `/${collection}/:id`
-  const promise = new Promise(function (resolve, reject) {
-    return axiosInstance.get(ROUTE_DETAIL.replace(':id', id)).then(response => {
+  const promise = new Promise((resolve, reject) => {
+    return axiosInstance.get(ROUTE_DETAIL.replace(':id', id), { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -55,16 +58,16 @@ export async function detail ({ state, commit, dispatch }, id) {
   return promise
 }
 
-export async function update ({ state, commit, dispatch }, payload) {
+export async function update ({ state, commit, dispatch, getters }, { id, data, params, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
   if (token) {
-    axiosInstance.defaults.headers.common.Authorization = 'Bearer ' + token
+    headers = { Authorization: `Bearer ${token}`, ...headers }
   }
-  const { id, data } = payload
+  config = { ...getters.config, ...config }
   const { collection } = state
   const ROUTE_UPDATE = `/${collection}/:id`
-  const promise = new Promise(function (resolve, reject) {
-    return axiosInstance.put(ROUTE_UPDATE.replace(':id', id), data).then(response => {
+  const promise = new Promise((resolve, reject) => {
+    return axiosInstance.put(ROUTE_UPDATE.replace(':id', id), data, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -74,16 +77,16 @@ export async function update ({ state, commit, dispatch }, payload) {
   return promise
 }
 
-export async function patch ({ state, commit, dispatch }, payload) {
+export async function patch ({ state, commit, dispatch, getters }, { id, data, params, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
   if (token) {
-    axiosInstance.defaults.headers.common.Authorization = 'Bearer ' + token
+    headers = { Authorization: `Bearer ${token}`, ...headers }
   }
-  const { id, data } = payload
+  config = { ...getters.config, ...config }
   const { collection } = state
   const ROUTE_PATCH = `/${collection}/:id`
-  const promise = new Promise(function (resolve, reject) {
-    return axiosInstance.put(ROUTE_PATCH.replace(':id', id), data).then(response => {
+  const promise = new Promise((resolve, reject) => {
+    return axiosInstance.put(ROUTE_PATCH.replace(':id', id), data, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -96,16 +99,16 @@ export async function patch ({ state, commit, dispatch }, payload) {
 // Destroy Model by ID /collection/{id}
 // Destroy Collection by selected Ids /collection/selected --params selected=[1,2,3]
 // Destroy all Models in Collection /collection/all
-export async function destroy ({ state, commit, dispatch }, payload) {
+export async function destroy ({ state, commit, dispatch, getters }, { type, data, params, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
   if (token) {
-    axiosInstance.defaults.headers.common.Authorization = 'Bearer ' + token
+    headers = { Authorization: `Bearer ${token}`, ...headers }
   }
-  const { type, data } = payload
+  config = { ...getters.config, ...config }
   const { collection } = state
   const ROUTE_DESTROY = `/${collection}/:type` // Softdelete
-  const promise = new Promise(function (resolve, reject) {
-    return axiosInstance.delete(ROUTE_DESTROY.replace(':type', type), { data }).then(response => {
+  const promise = new Promise((resolve, reject) => {
+    return axiosInstance.delete(ROUTE_DESTROY.replace(':type', type), { data, params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -118,16 +121,16 @@ export async function destroy ({ state, commit, dispatch }, payload) {
 // Delete Model by ID /collection/{id}/delete
 // Delete Collection by selected Ids /collection/selected/delete --params ids=[1,2,3]
 // Delete all Models in Collection /collection/all/delete
-export async function hardDelete ({ state, commit, dispatch }, payload) {
+export async function hardDelete ({ state, commit, dispatch, getters }, { type, data, params, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
   if (token) {
-    axiosInstance.defaults.headers.common.Authorization = 'Bearer ' + token
+    headers = { Authorization: `Bearer ${token}`, ...headers }
   }
-  const { type, data } = payload
+  config = { ...getters.config, ...config }
   const { collection } = state
   const ROUTE_DELETE = `/${collection}/:type/delete` // Permanent delete
-  const promise = new Promise(function (resolve, reject) {
-    return axiosInstance.delete(ROUTE_DELETE.replace(':type', type), { data }).then(response => {
+  const promise = new Promise((resolve, reject) => {
+    return axiosInstance.delete(ROUTE_DELETE.replace(':type', type), { data, params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -137,15 +140,16 @@ export async function hardDelete ({ state, commit, dispatch }, payload) {
   return promise
 }
 
-export async function trash ({ state, commit, dispatch }, params) {
+export async function trash ({ state, commit, dispatch, getters }, { params, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
   if (token) {
-    axiosInstance.defaults.headers.common.Authorization = 'Bearer ' + token
+    headers = { Authorization: `Bearer ${token}`, ...headers }
   }
+  config = { ...getters.config, ...config }
   const { collection } = state
   const ROUTE_TRASH = `/${collection}/trash` // Trash of collection
-  const promise = new Promise(function (resolve, reject) {
-    return axiosInstance.get(ROUTE_TRASH, { params }).then(response => {
+  const promise = new Promise((resolve, reject) => {
+    return axiosInstance.get(ROUTE_TRASH, { params, headers }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -155,15 +159,16 @@ export async function trash ({ state, commit, dispatch }, params) {
   return promise
 }
 
-export async function trashed ({ state, commit, dispatch }, id) {
+export async function trashed ({ state, commit, dispatch, getters }, { id, params, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
   if (token) {
-    axiosInstance.defaults.headers.common.Authorization = 'Bearer ' + token
+    headers = { Authorization: `Bearer ${token}`, ...headers }
   }
+  config = { ...getters.config, ...config }
   const { collection } = state
   const ROUTE_TRASHED = `/${collection}/:id/trashed` // Data trashed detail
-  const promise = new Promise(function (resolve, reject) {
-    return axiosInstance.get(ROUTE_TRASHED.replace(':id', id)).then(response => {
+  const promise = new Promise((resolve, reject) => {
+    return axiosInstance.get(ROUTE_TRASHED.replace(':id', id), { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -176,16 +181,16 @@ export async function trashed ({ state, commit, dispatch }, id) {
 // Restore Model by ID /collection/{id}/restore
 // Restore Collection by selected Ids /collection/selected/restore --params selected=[1,2,3]
 // Restore all Models in Collection /collection/all/restore
-export async function restore ({ state, commit, dispatch }, payload) {
+export async function restore ({ state, commit, dispatch, getters }, { type, data, params, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
   if (token) {
-    axiosInstance.defaults.headers.common.Authorization = 'Bearer ' + token
+    headers = { Authorization: `Bearer ${token}`, ...headers }
   }
-  const { type, data } = payload
+  config = { ...getters.config, ...config }
   const { collection } = state
   const ROUTE_RESTORE = `/${collection}/:type/restore` // Restore of collection
-  const promise = new Promise(function (resolve, reject) {
-    return axiosInstance.post(ROUTE_RESTORE.replace(':type', type), data).then(response => {
+  const promise = new Promise((resolve, reject) => {
+    return axiosInstance.post(ROUTE_RESTORE.replace(':type', type), data, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {

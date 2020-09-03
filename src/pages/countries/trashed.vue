@@ -8,7 +8,7 @@
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
     </q-toolbar>
-    <CountriesFormTrashed
+    <FormLayout
       :collection="collection"
       :stateForm="stateForm"
       :id="id"
@@ -17,15 +17,15 @@
 </template>
 
 <script>
-import CountriesFormTrashed from 'components/countries/CountriesFormTrashed'
+import FormLayout from 'components/form/FormLayout'
 export default {
   components: {
-    CountriesFormTrashed
+    FormLayout
   },
   data () {
     return {
       collection: 'countries',
-      stateForm: 'show', // create, update, show
+      stateForm: 'trashed', // create, update, show, trashed
       id: this.$route.params.id
     }
   },

@@ -1,7 +1,6 @@
+import { required } from 'vuelidate/lib/validators'
+import state from '../resources/state'
 export const collection = 'countries'
-export const form = {}
-export const validation = {}
-export const data = []
 export const columns = [
   {
     name: 'isocode',
@@ -10,7 +9,7 @@ export const columns = [
     align: 'left',
     field: 'isocode',
     format: (val) => val,
-    sortable: false // FIXME: sortable off for temporary
+    sortable: true
   },
   {
     name: 'name',
@@ -19,7 +18,7 @@ export const columns = [
     align: 'left',
     field: 'name',
     format: (val) => val,
-    sortable: false // FIXME: sortable off for temporary
+    sortable: true
   },
   {
     name: 'phonecode',
@@ -28,7 +27,7 @@ export const columns = [
     align: 'left',
     field: 'phonecode',
     format: (val) => val,
-    sortable: false // FIXME: sortable off for temporary
+    sortable: true
   },
   // Always give this columns as default
   {
@@ -38,17 +37,65 @@ export const columns = [
   }
 ]
 
+export const form = {
+  isocode: null,
+  name: null,
+  phonecode: null
+}
+
+export const layout = [
+  [
+    {
+      type: 'QInput',
+      col: 'col-2',
+      name: 'isocode',
+      label: 'ISO Code',
+      props: {
+        maxlength: 2
+      }
+    },
+    {
+      type: 'QInput',
+      col: 'col-6',
+      name: 'name',
+      label: 'Country Name',
+      props: {
+        maxlength: 50
+      }
+    },
+    {
+      type: 'QInput',
+      col: 'col-2',
+      name: 'phonecode',
+      label: 'Phone Code',
+      props: {
+        maxlength: 3
+      }
+    }
+  ]
+]
+
+export const validation = {
+  isocode: {
+    required
+  },
+  name: {
+    required
+  },
+  phonecode: {
+    required
+  }
+}
+
 export default function () {
   return {
+    ...state(),
     // Collection name
     collection,
-    // Form data input
-    form,
-    // Form validation
-    validation, // for validation use vuelidate
-    // Data fetched from API
-    data,
     // Datatable config
-    columns
+    columns,
+    form,
+    layout,
+    validation
   }
 }

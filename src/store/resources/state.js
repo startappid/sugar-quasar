@@ -1,20 +1,28 @@
 export const collection = null
 export const form = {}
+export const layout = []
 export const validation = {}
 export const data = []
 export const columns = []
+export const baseURL = process.env.BASEURL
 
-export default function () {
+export default () => {
   return {
     // Collection name
     collection,
     // Form data input
     form,
+    // Form layout
+    layout,
     // Form validation
     validation, // for validation use vuelidate
     // Data fetched from API
     data,
     // Datatable config
-    columns
+    columns,
+    // configuration axios
+    config: {
+      baseURL
+    }
   }
 }

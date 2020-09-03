@@ -13,7 +13,7 @@
 import FormFactory from 'components/form/FormFactory'
 
 export default {
-  name: 'UsersForm',
+  name: 'FormLayout',
   components: {
     FormFactory
   },
@@ -33,15 +33,6 @@ export default {
   },
   data () {
     return {
-      // form: {
-      //   isocode: null,
-      //   name: null,
-      //   phonecode: null
-      // },
-      submitAndCreate: false,
-      isPwd: true,
-      loading: false,
-      readonly: this.stateForm === 'show'
     }
   },
   computed: {

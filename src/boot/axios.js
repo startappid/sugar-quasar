@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
   paramsSerializer: params => {
     return qs.stringify(params, { arrayFormat: 'repeat' })
   },
-  baseURL: 'http://localhost:8000/api/v1',
+  baseURL: process.env.BASEURL,
   timeout: 120 * 1000
 })
 
