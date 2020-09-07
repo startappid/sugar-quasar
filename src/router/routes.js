@@ -97,7 +97,7 @@ const routes = [
       { path: 'import', component: () => import('pages/resources/import.vue') },
       { path: 'export', component: () => import('pages/resources/export.vue') },
       { path: ':id', component: () => import('pages/resources/show.vue') },
-      { path: ':id/trashed', component: () => import('pages/resources/show.vue') },
+      { path: ':id/trashed', component: () => import('pages/resources/trashed.vue') },
       { path: ':id/edit', component: () => import('pages/resources/edit.vue') }
     ]
   }
