@@ -2,83 +2,45 @@
   <q-page class="q-pa-md">
     <q-toolbar class="q-pb-md q-px-none">
       <q-breadcrumbs>
-        <q-breadcrumbs-el label="{$route.params.collection}" icon="home" :to="`/${$route.params.collection}`" />
+        <q-breadcrumbs-el icon="home" :to="`/`" />
+        <q-breadcrumbs-el :label="collectionName" :to="`/${collection}`" />
         <q-breadcrumbs-el label="Detail" />
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
     </q-toolbar>
-
-    <div class="q-pa-md shadow-1">
-      <div class="text-h5">Detail {{$route.params.collection}}</div>
-      <div class="row q-gutter-md q-my-md">
-        <div class="col">
-          <q-input filled bottom-slots label="Name" stack-label maxlength="20" value="Bali" readonly >
-            <template v-slot:hint>
-            Country name
-            </template>
-          </q-input>
-        </div>
-      </div>
-      <div class="row q-gutter-md q-my-md">
-        <div class="col">
-          <q-input filled bottom-slots label="ISO Code" stack-label maxlength="2" value="022 4942 111" readonly >
-            <template v-slot:hint>
-            ex: ID for Indonesia
-            </template>
-          </q-input>
-        </div>
-        <div class="col">
-          <q-input filled bottom-slots label="Phone Code" stack-label maxlength="2" value="087382829830" readonly >
-            <template v-slot:hint>
-            ex: 62 for Indonesia
-            </template>
-          </q-input>
-        </div>
-      </div>
-
-      <div class="q-mt-xl q-mb-md row justify-between">
-        <div>
-          <q-btn flat label="Cancel" :to="`/${$route.params.collection}`" />
-        </div>
-        <div class=" justify-end">
-          <q-btn icon="delete" flat color="negative" label="Delete" @click="confirmDelete($route.params.id)" />
-          <q-btn icon="edit" class="q-ml-md bg-primary text-white" color="secondary" label="Edit" :to="`/${$route.params.collection}/${$route.params.id}/edit`" />
-        </div>
-      </div>
-    </div>
+    <FormLayout
+      :collection="collection"
+      :stateForm="stateForm"
+      :id="id"
+    />
   </q-page>
 </template>
 
 <script>
+import FormLayout from 'components/form/FormLayout'
 export default {
-  // name: 'PageName',
+  components: {
+    FormLayout
+  },
+  data () {
+    const { collection } = this.$route.params
+    return {
+      collection,
+      stateForm: 'show', // create, update, show
+      id: this.$route.params.id
+    }
+  },
   methods: {
-    confirmDelete (id) {
-      this.$q.dialog({
-        title: 'Delete',
-        message: 'Are you sure to delete?',
-        ok: {
-          label: 'Delete',
-          color: 'negative',
-          flat: true
-        },
-        cancel: {
-          label: 'Cancel',
-          color: 'white',
-          textColor: 'black',
-          flat: true
-
-        },
-        persistent: true
-      }).onOk(() => {
-        // console.log('>>>> OK')
-      }).onOk(() => {
-        // console.log('>>>> second OK catcher')
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
-      })
+  },
+  computed: {
+    collectionName () {
+      const words = this.collection.split('_')
+      const titles = []
+      for (const key in words) {
+        const word = words[key]
+        titles.push(word.charAt(0).toUpperCase() + word.slice(1))
+      }
+      return titles.join(' ')
     }
   }
 }
