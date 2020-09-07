@@ -2,20 +2,20 @@
   <q-page class="q-pa-md">
     <q-toolbar class="q-pb-md q-px-none">
       <q-breadcrumbs>
-        <q-breadcrumbs-el :label="$route.params.collection" icon="home" :to="`/${$route.params.collection}`" />
+        <q-breadcrumbs-el icon="home" :to="`/`" />
+        <q-breadcrumbs-el :label="collectionName" :to="`/${collection}`" />
         <q-breadcrumbs-el label="Record" />
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
 
-      <q-btn flat round dense icon="add" class="q-mr-sm" :to="`${$route.params.collection}/create`" />
-      <q-btn flat round dense icon="filter_list" class="q-mr-sm" />
+      <q-btn flat rounded icon="add" color="secondary" label="New" :to="`${collection}/create`" />
       <q-btn flat round dense icon="more_vert">
         <q-menu
           transition-show="jump-down"
           transition-hide="jump-up"
         >
           <q-list>
-            <q-item clickable v-close-popup tabindex="0"  :to="`${$route.params.collection}/report`">
+            <q-item clickable v-close-popup tabindex="0"  :to="`${collection}/report`">
               <q-item-section avatar>
                 <q-avatar icon="bar_chart" color="secondary" text-color="white" />
               </q-item-section>
@@ -29,7 +29,7 @@
             </q-item>
             <q-separator inset spaced />
             <q-item-label header>Import &amp; Export</q-item-label>
-            <q-item clickable v-close-popup :to="`${$route.params.collection}/export`">
+            <q-item clickable v-close-popup :to="`${collection}/export`">
               <q-item-section avatar>
                 <q-avatar icon="cloud_download" color="primary" text-color="white" />
               </q-item-section>
@@ -38,7 +38,7 @@
                 <q-item-label caption>Export Records</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item clickable v-close-popup :to="`${$route.params.collection}/import`">
+            <q-item clickable v-close-popup :to="`${collection}/import`">
               <q-item-section avatar>
                 <q-avatar icon="cloud_upload" color="primary" text-color="white" />
               </q-item-section>
@@ -48,7 +48,7 @@
               </q-item-section>
             </q-item>
             <q-separator inset spaced />
-            <q-item clickable v-close-popup tabindex="0" :to="`${$route.params.collection}/trash`" >
+            <q-item clickable v-close-popup tabindex="0" :to="`${collection}/trash`" >
               <q-item-section avatar>
                 <q-avatar icon="delete" color="negative" text-color="white" />
               </q-item-section>
@@ -62,38 +62,56 @@
       </q-btn>
     </q-toolbar>
     <DataTable
-      v-bind:form="form"
+      :columns="columns"
+      :fetch="fetch"
+      :destroy="destroy"
+      :collection="collection"
+      :stateForm="stateForm"
     />
   </q-page>
 </template>
 
 <script>
 import DataTable from 'components/resources/DataTable'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   components: {
     DataTable
   },
   data () {
-    const collection = this.$route.params.collection
+    const { collection } = this.$route.params
     return {
-      collection
+      collection,
+      stateForm: 'entries' // entries, trash
     }
   },
-  mounted () {
-  },
-  created () {
+  methods: {
+    ...mapActions({
+      fetch (dispatch, payload) {
+        return dispatch(this.collection + '/fetch', payload)
+      },
+      destroy (dispatch, payload) {
+        return dispatch(this.collection + '/destroy', payload)
+      }
+    })
   },
   computed: {
-    // FIXME: Resources module scope
-    ...mapState('resources', {
-      // 'collection',
-      form: state => state.form,
-      validation: state => state.validation,
-      data: state => state.data,
-      table: state => state.table
-    })
+    // ...mapGetters({columns: 'countries/columns'}),
+    ...mapState({
+      columns (state, getters) {
+        return getters[`${this.collection}/columns`]
+      }
+    }),
+    collectionName () {
+      const words = this.collection.split('_')
+      const titles = []
+      for (const key in words) {
+        const word = words[key]
+        titles.push(word.charAt(0).toUpperCase() + word.slice(1))
+      }
+      return titles.join(' ')
+    }
   }
 }
 </script>
