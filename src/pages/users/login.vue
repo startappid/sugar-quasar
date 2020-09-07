@@ -11,7 +11,7 @@
       </q-card-section>
 
       <q-card-section>
-        <q-input
+        <q-input outlined
           id="username"
           v-model.trim="model.username"
           type="text"
@@ -20,6 +20,13 @@
           required
           autofocus
         />
+
+        <q-input color="purple-12" v-model="text" label="Label">
+          <template v-slot:prepend>
+            <q-icon name="user" />
+          </template>
+        </q-input>
+
         <q-input
           id="password"
           v-model="model.password"
@@ -36,8 +43,8 @@
         />
       </q-card-section>
       <q-card-actions>
-        <q-btn
-          color="primary"
+        <q-btn rounded
+          color="secondary"
           class="full-width"
           :loading="loading"
           @click="submit"
