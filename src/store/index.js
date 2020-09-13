@@ -10,7 +10,9 @@ import auth from './auth'
 import users from './users'
 import roles from './roles'
 import permissions from './permissions'
+
 import countries from './countries'
+import provinces from './provinces'
 import person from './person'
 
 Vue.use(Vuex)
@@ -35,6 +37,7 @@ export default function (/* { ssrContext } */) {
       permissions,
 
       countries,
+      provinces,
       person
     },
     // enable strict mode (adds overhead!)

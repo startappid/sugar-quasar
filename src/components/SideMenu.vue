@@ -47,6 +47,16 @@
           Countries
         </q-item-section>
       </q-item>
+      <q-item clickable v-ripple :inset-level="1" to="/provinces">
+        <q-item-section>
+          Provinces
+        </q-item-section>
+      </q-item>
+      <q-item clickable v-ripple :inset-level="1" to="/cities">
+        <q-item-section>
+          Cities
+        </q-item-section>
+      </q-item>
     </q-expansion-item>
     <!-- <q-separator />
     <div class="q-my-md">
