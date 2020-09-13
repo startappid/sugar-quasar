@@ -11,7 +11,7 @@
           transition-hide="jump-up"
         >
           <q-list>
-            <q-item clickable v-close-popup tabindex="0" to="/user/profile">
+            <q-item clickable v-close-popup tabindex="0" to="/profile">
               <q-item-section avatar>
                 <q-avatar icon="face" color="secondary" text-color="grey-11" />
               </q-item-section>
