@@ -102,7 +102,7 @@ export default {
         this.$q.localStorage.clear()
         this.$q.sessionStorage.clear()
         this.$q.cookies.remove('authorization_token')
-        this.$router.push('/user/login')
+        this.$router.push('/login')
         this.$q.notify('You\'re logged out')
       }).onCancel(() => {
         // console.log('>>>> Cancel')

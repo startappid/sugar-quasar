@@ -3,7 +3,7 @@ import { Cookies } from 'quasar'
 
 const REGISTER_ROUTE = '/auth/register'
 const VERIFICATION_ROUTE = '/auth/verify'
-const LOGIN_ROUTE = '/user/login'
+const LOGIN_ROUTE = '/login'
 const CHANGE_PASSWORD = '/user/password'
 const FETCH_USER_ROUTE = '/user/profile'
 const PASSWORD_FORGOT_ROUTE = '/auth/password/forgot'

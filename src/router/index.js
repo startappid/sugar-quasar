@@ -28,8 +28,8 @@ export default function ({ store, ssrContext, router }) {
 
   Router.beforeEach((to, from, next) => {
     const publicRoutes = [
-      '/user/login',
-      '/user/register'
+      '/login',
+      '/register'
     ]
     if (publicRoutes.indexOf(to.path) < 0) {
       const loggedIn = store.getters['auth/loggedIn']
@@ -41,11 +41,11 @@ export default function ({ store, ssrContext, router }) {
           if (loggedIn) {
             next()
           } else {
-            next('/user/login')
+            next('/login')
           }
         }).catch(err => {
           if (err) {
-            next('/user/login')
+            next('/login')
           }
         })
       }

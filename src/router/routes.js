@@ -6,18 +6,42 @@ const routes = [
     path: '/',
     component: () => import('layouts/AppLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') },
-      { path: 'user/profile', component: () => import('pages/users/profile.vue') }
+      { path: '', component: () => import('pages/Index.vue') }
     ]
   },
   {
-    path: '/user',
+    path: '/profile',
+    component: () => import('layouts/AppLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/users/profile.vue') }
+    ]
+  },
+  {
+    path: '/login',
     component: () => import('layouts/AuthLayout.vue'),
     children: [
-      { path: 'login', component: () => import('pages/users/login.vue') },
-      { path: 'register', component: () => import('pages/users/register.vue') },
-      { path: 'forgot', component: () => import('pages/users/forgot.vue') },
-      { path: 'reset', component: () => import('pages/users/resetPassword.vue') }
+      { path: '', component: () => import('pages/users/login.vue') }
+    ]
+  },
+  {
+    path: '/register',
+    component: () => import('layouts/AuthLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/users/register.vue') }
+    ]
+  },
+  {
+    path: '/forgot',
+    component: () => import('layouts/AuthLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/users/forgot.vue') }
+    ]
+  },
+  {
+    path: '/reset-password',
+    component: () => import('layouts/AuthLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/users/resetPassword.vue') }
     ]
   },
   {
@@ -64,18 +88,6 @@ const routes = [
       { path: ':id/trashed', component: () => import('pages/roles/trashed.vue') }
     ]
   },
-  // {
-  //   path: '/countries',
-  //   component: () => import('layouts/AppLayout.vue'),
-  //   children: [
-  //     { path: '', component: () => import('pages/countries/index.vue') },
-  //     { path: 'create', component: () => import('pages/countries/create.vue') },
-  //     { path: 'trash', component: () => import('pages/countries/trash.vue') },
-  //     { path: ':id', component: () => import('pages/countries/show.vue') },
-  //     { path: ':id/edit', component: () => import('pages/countries/edit.vue') },
-  //     { path: ':id/trashed', component: () => import('pages/countries/trashed.vue') }
-  //   ]
-  // },
   {
     path: '/404',
     component: () => import('pages/Error404.vue')
