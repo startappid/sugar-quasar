@@ -4,54 +4,35 @@ export const validation = {}
 export const data = []
 export const columns = [
   {
-    name: 'name',
+    name: 'first_name',
     required: true,
     label: 'Name',
     align: 'left',
     field: 'name',
     format: (val, row) => `${row.first_name} ${row.last_name}`,
-    sortable: false // FIXME: sortable off for temporary
+    sortable: true
   },
   {
     name: 'username',
     align: 'left',
     label: 'Username',
     field: 'username',
-    sortable: false // FIXME: sortable off for temporary
+    sortable: true
   },
   {
     name: 'email',
     align: 'left',
     label: 'Email',
     field: 'email',
-    sortable: false // FIXME: sortable off for temporary
+    sortable: true
   },
   {
     name: 'phone',
     align: 'left',
     label: 'Phone',
     field: 'phone',
-    sortable: false, // FIXME: sortable off for temporary,
+    sortable: true,
     format: (val, row) => val || ' - '
-  },
-  {
-    name: 'is_active',
-    align: 'left',
-    label: 'Status',
-    field: 'is_active',
-    sortable: false, // FIXME: sortable off for temporary,
-    format: (val, row) => parseInt(val) === 1 ? 'Active' : 'Inactive'
-  },
-  {
-    name: 'checkin',
-    align: 'left',
-    label: 'Last Active',
-    field: 'checkin',
-    sortable: false, // FIXME: sortable off for temporary,
-    format: (val, row) => {
-      if (row.checkin == null) return '-'
-      return row.checkin.created_at
-    }
   },
   // Always give this columns as default
   {
