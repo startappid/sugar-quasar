@@ -45,18 +45,6 @@ const routes = [
     ]
   },
   {
-    path: '/roles',
-    component: () => import('layouts/AppLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/roles/index.vue') },
-      { path: 'create', component: () => import('pages/roles/create.vue') },
-      { path: 'trash', component: () => import('pages/roles/trash.vue') },
-      { path: ':id', component: () => import('pages/roles/show.vue') },
-      { path: ':id/edit', component: () => import('pages/roles/edit.vue') },
-      { path: ':id/trashed', component: () => import('pages/roles/trashed.vue') }
-    ]
-  },
-  {
     path: '/404',
     component: () => import('pages/Error404.vue')
   },

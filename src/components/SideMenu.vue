@@ -13,7 +13,7 @@
           <q-icon name="people" />
         </q-item-section>
         <q-item-section>
-          Admins
+          Users
         </q-item-section>
       </q-item>
 
@@ -23,6 +23,15 @@
         </q-item-section>
         <q-item-section>
           Roles
+        </q-item-section>
+      </q-item>
+
+      <q-item clickable v-ripple :inset-level="1" to="/permissions">
+        <q-item-section avatar>
+          <q-icon name="lock" />
+        </q-item-section>
+        <q-item-section>
+          Permissions
         </q-item-section>
       </q-item>
 
