@@ -6,6 +6,7 @@ import Vuex from 'vuex'
 
 import resources from './resources'
 import schemes from './schemes'
+import sysparam from './sysparam'
 import auth from './auth'
 import users from './users'
 import roles from './roles'
@@ -31,6 +32,7 @@ export default function (/* { ssrContext } */) {
     modules: {
       resources,
       schemes,
+      sysparam,
       auth,
       users,
       roles,
