@@ -7,6 +7,7 @@ export const validation = {}
 export const schemes = [
   'users',
   'roles',
+  'permissions',
   'countries',
   'provinces',
   'cities',

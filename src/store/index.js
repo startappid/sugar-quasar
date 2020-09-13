@@ -9,6 +9,7 @@ import schemes from './schemes'
 import auth from './auth'
 import users from './users'
 import roles from './roles'
+import permissions from './permissions'
 import countries from './countries'
 import person from './person'
 
@@ -31,6 +32,8 @@ export default function (/* { ssrContext } */) {
       auth,
       users,
       roles,
+      permissions,
+
       countries,
       person
     },
