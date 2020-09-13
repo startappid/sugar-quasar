@@ -8,9 +8,9 @@ import resources from './resources'
 import schemes from './schemes'
 import auth from './auth'
 import users from './users'
-import categories from './categories'
 import roles from './roles'
 import countries from './countries'
+import person from './person'
 
 Vue.use(Vuex)
 
@@ -31,8 +31,8 @@ export default function (/* { ssrContext } */) {
       auth,
       users,
       roles,
-      categories,
-      countries
+      countries,
+      person
     },
     // enable strict mode (adds overhead!)
     // for dev mode only

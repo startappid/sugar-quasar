@@ -5,6 +5,7 @@ export const form = {}
 export const layout = []
 export const validation = {}
 export const schemes = [
+  'users',
   'countries',
   'provinces',
   'cities',
