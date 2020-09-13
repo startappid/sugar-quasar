@@ -11,7 +11,8 @@
       </q-card-section>
 
       <q-card-section>
-        <q-input outlined
+        <q-input
+          outlined
           id="username"
           v-model.trim="model.username"
           type="text"
@@ -21,13 +22,8 @@
           autofocus
         />
 
-        <q-input color="purple-12" v-model="text" label="Label">
-          <template v-slot:prepend>
-            <q-icon name="user" />
-          </template>
-        </q-input>
-
         <q-input
+          outlined
           id="password"
           v-model="model.password"
           type="password"
