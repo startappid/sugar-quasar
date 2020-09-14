@@ -4,12 +4,13 @@
     <div :class="field.col"  v-for="field in fields" :key="`form-${field.name}`">
       <component
         v-bind:is="field.type"
-        filled
+        outlined
         v-model="form[field.name]"
         :readonly="readonly"
         :label="field.label"
         stack-label
         v-bind="field.props"
+        v-on="field.events"
         :error="$v.form[field.name].$error"
         clearable
       />
@@ -68,7 +69,8 @@
 import { required } from 'vuelidate/lib/validators'
 import { mapActions, mapState, mapMutations } from 'vuex'
 import {
-  QInput
+  QInput,
+  QSelect
 } from 'quasar'
 
 export default {
@@ -88,8 +90,8 @@ export default {
     }
   },
   components: {
-    QInput
-    //   QSelect,
+    QInput,
+    QSelect
     //   QFile,
     //   QField,
     //   QRadio,
@@ -140,6 +142,31 @@ export default {
         }
         this.loading = false
       })
+    }
+
+    for (const fields of this.layout) {
+      for (const field of fields) {
+        const { type, reference } = field
+        if (type === 'QSelect') {
+          this.$store.dispatch(`${reference}/fetch`, {}).then(response => {
+            const { data } = response
+            const { props } = field
+            props.options = data
+          }).catch(error => {
+            if (error.response) {
+              const { data } = error.response
+              this.$q.dialog({
+                title: `${data.status}`,
+                message: `${data.message}`,
+                ok: {
+                  flat: true
+                },
+                persistent: true
+              })
+            }
+          })
+        }
+      }
     }
   },
   methods: {

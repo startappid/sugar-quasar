@@ -46,19 +46,35 @@ export const form = {
 export const layout = [
   [
     {
-      type: 'QInput',
+      type: 'QSelect',
       col: 'col-4',
       name: 'country_id',
       label: 'Country',
       props: {
-        maxlength: 100
+        options: [],
+        'use-input': true,
+        'emit-value': true,
+        'map-options': true,
+        'option-value': 'id',
+        'option-label': 'name',
+        'hide-selected': true,
+        'fill-input': true
+      },
+      reference: 'countries',
+      events: {
+        filter: (val, update, abort) => {
+          update(() => {
+            // const needle = val.toLowerCase()
+            // this.options = stringOptions.filter(v => v.toLowerCase().indexOf(needle) > -1)
+          })
+        }
       }
     },
     {
       type: 'QInput',
       col: 'col-5',
       name: 'name',
-      label: 'Country Name',
+      label: 'Province Name',
       props: {
         maxlength: 50
       }
@@ -69,7 +85,7 @@ export const layout = [
       name: 'isocode',
       label: 'ISO Code',
       props: {
-        maxlength: 2
+        maxlength: 10
       }
     }
   ]

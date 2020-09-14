@@ -48,7 +48,7 @@ const routes = [
     path: '/404',
     component: () => import('pages/Error404.vue')
   },
-  // TODO: find the way simpler way to import vue file dynamically
+  // TODO: find the simpler way to import vue file dynamically
   {
     path: '/:collection',
     component: () => import('layouts/AppLayout.vue'),
