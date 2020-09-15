@@ -61,14 +61,7 @@ export const layout = [
         'fill-input': true
       },
       reference: 'countries',
-      events: {
-        filter: (val, update, abort) => {
-          update(() => {
-            // const needle = val.toLowerCase()
-            // this.options = stringOptions.filter(v => v.toLowerCase().indexOf(needle) > -1)
-          })
-        }
-      }
+      events: {}
     },
     {
       type: 'QInput',

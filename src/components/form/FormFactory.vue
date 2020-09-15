@@ -112,6 +112,39 @@ export default {
       readonly: this.stateForm === 'show'
     }
   },
+  created () {
+    for (const fields of this.layout) {
+      for (const field of fields) {
+        const { type, reference, events } = field
+        if (type === 'QSelect') {
+          events.filter = (search, update, abort) => {
+            const params = {
+              search
+            }
+            this.$store.dispatch(`${reference}/fetch`, { params }).then(response => {
+              const { data } = response
+              const { props } = field
+              update(() => {
+                props.options = data
+              })
+            }).catch(error => {
+              if (error.response) {
+                const { data } = error.response
+                this.$q.dialog({
+                  title: `${data.status}`,
+                  message: `${data.message}`,
+                  ok: {
+                    flat: true
+                  },
+                  persistent: true
+                })
+              }
+            })
+          }
+        }
+      }
+    }
+  },
   mounted () {
     if (['show', 'update', 'trashed'].indexOf(this.stateForm) >= 0) {
       this.loading = true
