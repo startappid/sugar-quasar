@@ -121,11 +121,23 @@ export default {
             const params = {
               search
             }
+
+            if (field.params) {
+              for (const key of field.params) {
+                params[key] = this.form[key]
+              }
+            }
+
             this.$store.dispatch(`${reference}/fetch`, { params }).then(response => {
               const { data } = response
               const { props } = field
               update(() => {
                 props.options = data
+                if (field.updateValues) {
+                  for (const key of field.updateValues) {
+                    this.form[key] = null
+                  }
+                }
               })
             }).catch(error => {
               if (error.response) {
