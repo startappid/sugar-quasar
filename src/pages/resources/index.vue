@@ -66,6 +66,7 @@
       :fetch="fetch"
       :destroy="destroy"
       :collection="collection"
+      :params="params"
       :stateForm="stateForm"
     />
   </q-page>
@@ -101,6 +102,9 @@ export default {
     ...mapState({
       columns (state, getters) {
         return getters[`${this.collection}/columns`]
+      },
+      params (state, getters) {
+        return getters[`${this.collection}/params`]
       }
     }),
     collectionName () {
