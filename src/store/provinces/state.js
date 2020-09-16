@@ -1,6 +1,10 @@
 import { required } from 'vuelidate/lib/validators'
 import state from '../resources/state'
 export const collection = 'provinces'
+export const params = {
+  with: 'country'
+}
+
 export const columns = [
   {
     name: 'country_id',
@@ -8,8 +12,11 @@ export const columns = [
     label: 'Country',
     align: 'left',
     field: 'country_id',
-    format: (val) => val,
-    sortable: true
+    sortable: false,
+    format: (val, row) => {
+      if (!row.country) return '-'
+      return `${row.country.name}`
+    }
   },
   {
     name: 'name',
@@ -101,6 +108,7 @@ export default function () {
     ...state(),
     // Collection name
     collection,
+    params,
     // Datatable config
     columns,
     form,
