@@ -1,5 +1,6 @@
 export const collection = null
 export const form = {}
+export const params = {}
 export const layout = []
 export const validation = {}
 export const data = []
@@ -10,6 +11,8 @@ export default () => {
   return {
     // Collection name
     collection,
+    // Parameters searching
+    params,
     // Form data input
     form,
     // Form layout

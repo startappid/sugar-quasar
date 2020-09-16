@@ -2,6 +2,10 @@ export function collection (state) {
   return state.collection
 }
 
+export function params (state) {
+  return state.params
+}
+
 export function form (state) {
   return state.form
 }
