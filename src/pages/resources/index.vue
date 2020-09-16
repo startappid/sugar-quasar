@@ -87,6 +87,17 @@ export default {
       stateForm: 'entries' // entries, trash
     }
   },
+  mounted () {
+    if (Array.isArray(this.$router.prevRouteStack)) {
+      this.$router.prevRouteStack.splice(0)
+    }
+  },
+  watch: {
+    $route (to, from) {
+      const { collection } = to.params
+      this.collection = collection
+    }
+  },
   methods: {
     ...mapActions({
       fetch (dispatch, payload) {

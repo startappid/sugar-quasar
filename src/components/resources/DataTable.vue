@@ -184,6 +184,13 @@ export default {
       const pagination = this.pagination
       const filter = this.filter
       this.onRequest({ pagination, filter })
+    },
+    collection: function (newVal, oldVal) {
+      this.collection = newVal
+      const pagination = this.pagination
+      const filter = this.filter
+      this.data = []
+      this.onRequest({ pagination, filter })
     }
   },
   methods: {
