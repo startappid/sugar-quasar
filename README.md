@@ -1,6 +1,6 @@
-# Material Lux (materialux)
+# Hi Sugar
 
-Material Lux Components
+Vue (Quasar Framework) Project Skeleton
 
 ## Install the dependencies
 ```bash

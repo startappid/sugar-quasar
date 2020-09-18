@@ -1,8 +1,8 @@
 {
-  "name": "materialux",
+  "name": "sugar",
   "version": "0.0.1",
-  "description": "Material Lux Components",
-  "productName": "Material Lux",
+  "description": "Vue (Quasar Framework) Project Skeleton",
+  "productName": "Sugar",
   "author": "Farid Hidayat <e.faridhidayat@gmail.com>",
   "private": true,
   "scripts": {

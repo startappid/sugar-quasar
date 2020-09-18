@@ -122,9 +122,9 @@ module.exports = function (/* ctx */) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: 'Material Lux',
-        short_name: 'Material Lux',
-        description: 'Material Lux Components',
+        name: 'Sugar',
+        short_name: 'Sugar',
+        description: 'Vue (Quasar Framework) Project Skeleton',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
@@ -189,7 +189,7 @@ module.exports = function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'materialux'
+        appId: 'sugar'
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
