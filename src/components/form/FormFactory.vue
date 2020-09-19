@@ -116,7 +116,7 @@ export default {
     for (const fields of this.layout) {
       for (const field of fields) {
         const { type, reference, events } = field
-        if (type === 'QSelect') {
+        if (type === 'QSelect' && reference) {
           events.filter = (search, update, abort) => {
             const params = {
               search
@@ -192,7 +192,7 @@ export default {
     for (const fields of this.layout) {
       for (const field of fields) {
         const { type, reference } = field
-        if (type === 'QSelect') {
+        if (type === 'QSelect' && reference) {
           this.$store.dispatch(`${reference}/fetch`, {}).then(response => {
             const { data } = response
             const { props } = field
