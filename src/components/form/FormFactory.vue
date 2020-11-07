@@ -1,8 +1,9 @@
 <template>
-<div>
-  <div class="row q-gutter-md q-my-md" v-for="(fields, index) in layout" :key="`row-${index}`">
+<div class="q-mt-md">
+  <div class="row q-gutter-md" v-for="(fields, index) in layout" :key="`row-${index}`">
     <div :class="field.col"  v-for="field in fields" :key="`form-${field.name}`">
       <component
+        v-if="['QInput'].indexOf(field.type) >= 0"
         v-bind:is="field.type"
         outlined
         v-model="form[field.name]"
@@ -14,6 +15,114 @@
         :error="$v.form[field.name].$error"
         clearable
       />
+
+      <component
+        v-if="['QSelect'].indexOf(field.type) >= 0"
+        v-bind:is="field.type"
+        outlined
+        v-model="form[field.name]"
+        :readonly="readonly"
+        :label="field.label"
+        stack-label
+        v-bind="field.props"
+        v-on="field.events"
+        :error="$v.form[field.name].$error"
+        clearable
+      >
+        <template v-slot:no-option>
+          <q-item>
+            <q-item-section class="text-italic text-grey">
+              Data not found
+            </q-item-section>
+          </q-item>
+        </template>
+
+        <template v-slot:after v-if="field.referenceManager">
+          <q-item>
+            <q-item-section>
+              <q-btn
+                style="margin-left: -20px"
+                icon="add"
+                flat
+                round
+                color="secondary"
+                @click="opendialog(field)"
+              >
+                <q-tooltip :delay="1000" anchor="top middle" self="bottom middle" :offset="[10, 10]">Add new data</q-tooltip>
+              </q-btn>
+            </q-item-section>
+          </q-item>
+        </template>
+
+      </component>
+
+      <div v-if="['QRadio'].indexOf(field.type) >= 0">
+        {{field.label}}:
+        <component
+          v-for="option in field.props.options"
+          :key="`form-radio-${option.value}`"
+          v-bind:is="field.type"
+          v-model="form[field.name]"
+          :readonly="readonly"
+          :label="option.label"
+          :val="option.value"
+          stack-label
+          v-bind="field.props"
+          v-on="field.events"
+          :error="$v.form[field.name].$error"
+          clearable
+        />
+      </div>
+
+      <q-img
+        v-if="['QFile'].indexOf(field.type) >= 0 && ['show', 'update', 'trashed'].indexOf(stateForm) >= 0"
+        :src="form[field.imgfield]"
+        spinner-color="white"
+        style="max-width: 600px"
+        class="q-mb-md"
+      />
+
+      <component
+        v-if="['QFile'].indexOf(field.type) >= 0 && !readonly"
+        v-bind:is="field.type"
+        outlined
+        v-model="form[field.name]"
+        :readonly="readonly"
+        :label="field.label"
+        stack-label
+        v-bind="field.props"
+        v-on="field.events"
+        :error="$v.form[field.name].$error"
+        clearable
+      >
+        <template v-slot:file="{ index, file }">
+          <q-chip
+            class="full-width q-my-md"
+            square
+          >
+            <q-avatar>
+              <q-icon :name="field.icon||'insert_drive_file'" />
+            </q-avatar>
+
+            <div class="ellipsis relative-position">
+              {{ file.name }}
+            </div>
+
+            <q-tooltip>
+              {{ file.name }}
+            </q-tooltip>
+          </q-chip>
+          <q-img
+            v-if="file.type.indexOf('image/') === 0"
+            :src="readSrcFile(file)"
+            spinner-color="white"
+            style="height: 200px; max-width: 360px"
+            class="rounded-borders"
+            :ratio="50/10"
+          />
+        </template>
+      </component>
+
     </div>
   </div>
 
@@ -62,15 +171,34 @@
       <q-btn icon="restore_from_trash" class="q-ml-md bg-primary text-white" color="secondary" label="Restore" @click="confirmRestore(id)" />
     </div>
   </div>
+
+  <q-dialog v-model="dialogForms" >
+    <q-card style="width: 700px; max-width: 80vw;">
+      <q-card-section>
+        <div class="text-h6">Create New {{referenceCollectionName}}</div>
+      </q-card-section>
+
+      <q-card-section>
+        <FormFactoryComponent
+          :collection="dialogReference"
+          :stateForm="'create'"
+          :onCreated="dialogFormsonCreated"
+        />
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </div>
 </template>
 
 <script>
 import { required } from 'vuelidate/lib/validators'
 import { mapActions, mapState, mapMutations } from 'vuex'
+import FormFactoryComponent from 'components/form/FormFactoryComponent'
 import {
   QInput,
-  QSelect
+  QSelect,
+  QFile,
+  QRadio
 } from 'quasar'
 
 export default {
@@ -91,10 +219,10 @@ export default {
   },
   components: {
     QInput,
-    QSelect
-    //   QFile,
+    QSelect,
+    QFile,
     //   QField,
-    //   QRadio,
+    QRadio,
     //   QCheckbox,
     //   QToggle,
     //   QBtnToggle,
@@ -102,14 +230,17 @@ export default {
     //   QSlider,
     //   QRange,
     //   QTime,
-    //   QDate
+    //   QDate,
+    FormFactoryComponent
   },
   data () {
     return {
       submitAndCreate: false,
       isPwd: true,
       loading: false,
-      readonly: this.stateForm === 'show'
+      readonly: this.stateForm === 'show',
+      dialogForms: false,
+      dialogReference: ''
     }
   },
   created () {
@@ -495,6 +626,16 @@ export default {
       }).onDismiss(() => {
         // console.log('I am triggered on both OK and Cancel')
       })
+    },
+    readSrcFile (file) {
+      return URL.createObjectURL(file)
+    },
+    opendialog (field) {
+      this.dialogForms = true
+      this.dialogReference = field.reference
+    },
+    dialogFormsonCreated () {
+      this.dialogForms = false
     }
   },
   computed: {
@@ -510,6 +651,15 @@ export default {
         return getters[`${this.collection}/layout`]
       }
     }),
+    referenceCollectionName () {
+      const words = this.dialogReference.split('_')
+      const titles = []
+      for (const key in words) {
+        const word = words[key]
+        titles.push(word.charAt(0).toUpperCase() + word.slice(1))
+      }
+      return titles.join(' ')
+    },
     collectionName () {
       const words = this.collection.split('_')
       const titles = []
