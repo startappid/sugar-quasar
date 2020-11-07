@@ -38,15 +38,6 @@ export const columns = [
     format: (val) => val,
     sortable: true
   },
-  {
-    name: 'postalcode',
-    required: true,
-    label: 'Postal Code',
-    align: 'left',
-    field: 'postalcode',
-    format: (val) => val,
-    sortable: true
-  },
   // Always give this columns as default
   {
     name: 'action',
@@ -58,8 +49,7 @@ export const columns = [
 export const form = {
   country_id: null,
   province_id: null,
-  name: null,
-  postalcode: null
+  name: null
 }
 
 export const layout = [
@@ -112,15 +102,6 @@ export const layout = [
       props: {
         maxlength: 50
       }
-    },
-    {
-      type: 'QInput',
-      col: 'col-2',
-      name: 'postalcode',
-      label: 'Postal Code',
-      props: {
-        maxlength: 5
-      }
     }
   ]
 ]
@@ -133,9 +114,6 @@ export const validation = {
     required
   },
   name: {
-    required
-  },
-  postalcode: {
     required
   }
 }
