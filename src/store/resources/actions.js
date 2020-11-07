@@ -22,9 +22,20 @@ export async function fetch ({ state, commit, dispatch, getters }, { params, hea
 
 export async function create ({ state, commit, dispatch, getters }, { data, params = {}, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
+  const _headers = state.headers
+
   if (token) {
-    headers = { Authorization: `Bearer ${token}`, ...headers }
+    headers = { Authorization: `Bearer ${token}`, ...headers, ..._headers }
   }
+
+  if (headers['Content-Type'] === 'multipart/form-data') {
+    const formData = new FormData()
+    for (const key in data) {
+      if (data[key]) formData.append(key, data[key])
+    }
+    data = formData
+  }
+
   config = { ...getters.config, ...config }
   const { collection } = state
   const ROUTE_CREATE = `/${collection}`
@@ -60,13 +71,26 @@ export async function detail ({ state, commit, dispatch, getters }, { id, params
 
 export async function update ({ state, commit, dispatch, getters }, { id, data, params, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
+  const _headers = state.headers
+  // data._method = 'PUT'
+
   if (token) {
-    headers = { Authorization: `Bearer ${token}`, ...headers }
+    headers = { Authorization: `Bearer ${token}`, ...headers, ..._headers }
   }
+
+  if (headers['Content-Type'] === 'multipart/form-data') {
+    const formData = new FormData()
+    for (const key in data) {
+      if (data[key]) formData.append(key, data[key])
+    }
+    data = formData
+  }
+
   config = { ...getters.config, ...config }
   const { collection } = state
   const ROUTE_UPDATE = `/${collection}/:id`
   const promise = new Promise((resolve, reject) => {
+    // return axiosInstance.post(ROUTE_UPDATE.replace(':id', id), data, { params, headers, ...config }).then(response => {
     return axiosInstance.put(ROUTE_UPDATE.replace(':id', id), data, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
