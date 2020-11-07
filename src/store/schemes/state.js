@@ -11,7 +11,10 @@ export const schemes = [
   'countries',
   'provinces',
   'cities',
-  'person'
+  'addresses',
+  'contacts',
+  'files',
+  'images'
 ]
 
 export default function () {
