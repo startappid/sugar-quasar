@@ -29,3 +29,7 @@ export function columns (state) {
 export function config (state) {
   return state.config
 }
+
+export function headers (state) {
+  return state.headers
+}

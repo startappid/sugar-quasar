@@ -5,6 +5,10 @@ export const layout = []
 export const validation = {}
 export const data = []
 export const columns = []
+export const headers = {
+  'Content-Type': 'application/json'
+}
+
 export const baseURL = process.env.BASEURL
 
 export default () => {
@@ -26,6 +30,7 @@ export default () => {
     // configuration axios
     config: {
       baseURL
-    }
+    },
+    headers
   }
 }
