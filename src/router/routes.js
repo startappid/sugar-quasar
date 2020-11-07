@@ -4,54 +4,54 @@ const store = Store()
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/AppLayout.vue'),
+    component: async () => await import('layouts/AppLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: async () => await import('pages/Index.vue') }
     ]
   },
   {
     path: '/profile',
-    component: () => import('layouts/AppLayout.vue'),
+    component: async () => await import('layouts/AppLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/users/profile.vue') }
+      { path: '', component: async () => await import('pages/users/profile.vue') }
     ]
   },
   {
     path: '/login',
-    component: () => import('layouts/AuthLayout.vue'),
+    component: async () => await import('layouts/AuthLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/users/login.vue') }
+      { path: '', component: async () => await import('pages/users/login.vue') }
     ]
   },
   {
     path: '/register',
-    component: () => import('layouts/AuthLayout.vue'),
+    component: async () => await import('layouts/AuthLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/users/register.vue') }
+      { path: '', component: async () => await import('pages/users/register.vue') }
     ]
   },
   {
     path: '/forgot',
-    component: () => import('layouts/AuthLayout.vue'),
+    component: async () => await import('layouts/AuthLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/users/forgot.vue') }
+      { path: '', component: async () => await import('pages/users/forgot.vue') }
     ]
   },
   {
     path: '/reset-password',
-    component: () => import('layouts/AuthLayout.vue'),
+    component: async () => await import('layouts/AuthLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/users/resetPassword.vue') }
+      { path: '', component: async () => await import('pages/users/resetPassword.vue') }
     ]
   },
   {
     path: '/404',
-    component: () => import('pages/Error404.vue')
+    component: async () => await import('pages/Error404.vue')
   },
   // TODO: find the simpler way to import vue file dynamically
   {
     path: '/:collection',
-    component: () => import('layouts/AppLayout.vue'),
+    component: async () => await import('layouts/AppLayout.vue'),
     beforeEnter: (to, from, next) => {
       const schemes = store.getters['schemes/schemes']
       const { collection } = to.params
@@ -206,7 +206,7 @@ const routes = [
 if (process.env.MODE !== 'ssr') {
   routes.push({
     path: '*',
-    component: () => import('pages/Error404.vue')
+    component: async () => await import('pages/Error404.vue')
   })
 }
 
