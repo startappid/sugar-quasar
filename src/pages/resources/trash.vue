@@ -2,7 +2,6 @@
   <q-page class="q-pa-md">
     <q-toolbar class="q-pb-md q-px-none">
       <q-breadcrumbs>
-        <q-breadcrumbs-el icon="home" :to="`/`" />
         <q-breadcrumbs-el :label="collectionName" :to="`/${collection}`" />
         <q-breadcrumbs-el label="Trash" />
       </q-breadcrumbs>
