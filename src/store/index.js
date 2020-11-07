@@ -16,7 +16,11 @@ import countries from './countries'
 import provinces from './provinces'
 import cities from './cities'
 
-import person from './person'
+import addresses from './addresses'
+import contacts from './contacts'
+import distributions from './distributions'
+import files from './files'
+import images from './images'
 
 Vue.use(Vuex)
 
@@ -44,7 +48,11 @@ export default function (/* { ssrContext } */) {
       provinces,
       cities,
 
-      person
+      addresses,
+      contacts,
+      files,
+      images
+
     },
     // enable strict mode (adds overhead!)
     // for dev mode only
