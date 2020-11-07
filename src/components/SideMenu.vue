@@ -1,5 +1,20 @@
 <template>
   <q-list>
+
+    <q-item clickable v-ripple to="/">
+      <q-item-section avatar>
+        <q-icon name="dashboard" />
+      </q-item-section>
+      <q-item-section>
+        Dashboard
+      </q-item-section>
+    </q-item>
+
+    <q-item-label header>Quasar</q-item-label>
+
+
+    <q-separator inset />
+
     <q-item-label header>Administrator</q-item-label>
 
     <q-expansion-item
@@ -36,6 +51,47 @@
       </q-item>
 
     </q-expansion-item>
+
+    <q-expansion-item
+      icon="storage"
+      label="Data Master"
+      caption="Data Master"
+      class="q-my-sm"
+    >
+      <q-item clickable v-ripple :inset-level="1" to="/contacts">
+        <q-item-section avatar>
+          <q-icon name="contacts" />
+        </q-item-section>
+        <q-item-section>
+          Contacts
+        </q-item-section>
+      </q-item>
+      <q-item clickable v-ripple :inset-level="1" to="/addresses">
+        <q-item-section avatar>
+          <q-icon name="person_pin" />
+        </q-item-section>
+        <q-item-section>
+          Addresses
+        </q-item-section>
+      </q-item>
+      <q-item clickable v-ripple :inset-level="1" to="/images">
+        <q-item-section avatar>
+          <q-icon name="image_search" />
+        </q-item-section>
+        <q-item-section>
+          Image Gallery
+        </q-item-section>
+      </q-item>
+      <q-item clickable v-ripple :inset-level="1" to="/files">
+        <q-item-section avatar>
+          <q-icon name="folder" />
+        </q-item-section>
+        <q-item-section>
+          Files Manager
+        </q-item-section>
+      </q-item>
+    </q-expansion-item>
+
     <q-expansion-item
       icon="flag"
       label="Countries"
@@ -43,16 +99,25 @@
       class="q-my-sm"
     >
       <q-item clickable v-ripple :inset-level="1" to="/countries">
+        <q-item-section avatar>
+          <q-icon name="flag" />
+        </q-item-section>
         <q-item-section>
           Countries
         </q-item-section>
       </q-item>
       <q-item clickable v-ripple :inset-level="1" to="/provinces">
+        <q-item-section avatar>
+          <q-icon name="apartment" />
+        </q-item-section>
         <q-item-section>
           Provinces
         </q-item-section>
       </q-item>
       <q-item clickable v-ripple :inset-level="1" to="/cities">
+        <q-item-section avatar>
+          <q-icon name="location_city" />
+        </q-item-section>
         <q-item-section>
           Cities
         </q-item-section>
