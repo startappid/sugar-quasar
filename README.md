@@ -1,6 +1,6 @@
-# DEN Webapp (den-quasar)
+# Startapp Webapp (sugar-quasar)
 
-DEN backoffice
+Startapp backoffice
 
 ## Install the dependencies
 ```bash

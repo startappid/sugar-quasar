@@ -1,8 +1,8 @@
 {
-  "name": "den-quasar",
+  "name": "sugar-quasar",
   "version": "0.0.1",
-  "description": "DEN backoffice",
-  "productName": "DEN Webapp",
+  "description": "Startapp - Start your business with the App.",
+  "productName": "Startapp",
   "author": "Farid Hidayat <e.faridhidayat@gmail.com>",
   "private": true,
   "scripts": {
