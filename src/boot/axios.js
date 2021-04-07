@@ -1,18 +1,24 @@
-// import Vue from 'vue'
+import { boot } from 'quasar/wrappers'
 import axios from 'axios'
-import qs from 'qs'
-// import { Cookies } from 'quasar'
 
-const axiosInstance = axios.create({
+const api = axios.create({
   paramsSerializer: params => {
     return qs.stringify(params, { arrayFormat: 'repeat' })
   },
-  baseURL: process.env.BASEURL,
+  baseURL: process.env.APIURL,
   timeout: 120 * 1000
 })
 
-export default ({ Vue }) => {
-  Vue.prototype.$axios = axios
-}
+export default boot(({ app }) => {
+  // for use inside Vue files (Options API) through this.$axios and this.$api
 
-export { axiosInstance }
+  app.config.globalProperties.$axios = axios
+  // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
+  //       so you won't necessarily have to import axios in each vue file
+
+  app.config.globalProperties.$api = api
+  // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)
+  //       so you can easily perform requests against your app's API
+})
+
+export { axios, api }

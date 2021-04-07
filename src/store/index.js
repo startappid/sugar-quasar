@@ -1,28 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-// import createPersistedState from 'vuex-persistedstate'
-// import SecureLS from 'secure-ls'
-// var ls = new SecureLS({ isCompression: false })
+import { store } from 'quasar/wrappers'
+import { createStore } from 'vuex'
 
-import resources from './resources'
-import schemes from './schemes'
-import sysparam from './sysparam'
-import auth from './auth'
-import users from './users'
-import roles from './roles'
-import permissions from './permissions'
-
-import countries from './countries'
-import provinces from './provinces'
-import cities from './cities'
-
-import addresses from './addresses'
-import contacts from './contacts'
-import distributions from './distributions'
-import files from './files'
-import images from './images'
-
-Vue.use(Vuex)
+// import example from './module-example'
 
 /*
  * If not building with SSR mode, you can
@@ -33,41 +12,16 @@ Vue.use(Vuex)
  * with the Store instance.
  */
 
-export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
+export default store(function (/* { ssrContext } */) {
+  const Store = createStore({
     modules: {
-      resources,
-      schemes,
-      sysparam,
-      auth,
-      users,
-      roles,
-      permissions,
-
-      countries,
-      provinces,
-      cities,
-
-      addresses,
-      contacts,
-      files,
-      images
-
+      // example
     },
+
     // enable strict mode (adds overhead!)
-    // for dev mode only
-    // FIXME: Should we lose store strict?
-    strict: false,
-    plugins: [
-      // createPersistedState({
-      //   storage: {
-      //     getItem: (key) => ls.get(key),
-      //     setItem: (key, value) => ls.set(key, value),
-      //     removeItem: (key) => ls.remove(key)
-      //   }
-      // })
-    ]
+    // for dev mode and --debug builds only
+    strict: process.env.DEBUGGING
   })
 
   return Store
-}
+})
