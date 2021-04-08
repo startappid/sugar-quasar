@@ -143,19 +143,19 @@
             label="Users Management"
             class="q-my-sm"
           >
-            <q-item clickable v-ripple to="/users">
+            <q-item clickable v-ripple :inset-level="1" to="/users">
               <q-item-section>
                 Users
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple to="/roles">
+            <q-item clickable v-ripple :inset-level="1" to="/roles">
               <q-item-section>
                 Roles
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple to="/permissions">
+            <q-item clickable v-ripple :inset-level="1" to="/permissions">
               <q-item-section>
                 Permissions
               </q-item-section>
@@ -168,17 +168,17 @@
             label="Data Master"
             class="q-my-sm"
           >
-            <q-item clickable v-ripple to="/contacts">
+            <q-item clickable v-ripple :inset-level="1" to="/contacts">
               <q-item-section>
                 Contacts
               </q-item-section>
             </q-item>
-            <q-item clickable v-ripple to="/addresses">
+            <q-item clickable v-ripple :inset-level="1" to="/addresses">
               <q-item-section>
                 Addresses
               </q-item-section>
             </q-item>
-            <q-item clickable v-ripple to="/files">
+            <q-item clickable v-ripple :inset-level="1" to="/files">
               <q-item-section>
                 Files &amp; Media Manager
               </q-item-section>
@@ -190,17 +190,17 @@
             label="Countries"
             class="q-my-sm"
           >
-            <q-item clickable v-ripple to="/countries">
+            <q-item clickable v-ripple :inset-level="1" to="/countries">
               <q-item-section>
                 Countries
               </q-item-section>
             </q-item>
-            <q-item clickable v-ripple to="/provinces">
+            <q-item clickable v-ripple :inset-level="1" to="/provinces">
               <q-item-section>
                 Provinces
               </q-item-section>
             </q-item>
-            <q-item clickable v-ripple to="/cities">
+            <q-item clickable v-ripple :inset-level="1" to="/cities">
               <q-item-section>
                 Cities
               </q-item-section>
