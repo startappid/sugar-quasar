@@ -5,7 +5,7 @@ const REGISTER_ROUTE = '/auth/register'
 const VERIFICATION_ROUTE = '/auth/verify'
 const LOGIN_ROUTE = '/user/login'
 const CHANGE_PASSWORD = '/user/password'
-const FETCH_USER_ROUTE = '/me'
+const FETCH_USER_ROUTE = '/user/profile'
 const PASSWORD_FORGOT_ROUTE = '/auth/password/forgot'
 const PASSWORD_RESET_ROUTE = '/auth/password/reset'
 
@@ -39,14 +39,14 @@ export function login ({ state, commit, dispatch }, data) {
 }
 
 export function setToken (state, data) {
-  api.defaults.headers.common.Authorization = 'Bearer ' + data.token
+  api.defaults.headers.common.Authorization = 'Bearer ' + data.token.access_token
   if (data.rememberMe) {
-    Cookies.set('authorization_token', data.token, {
+    Cookies.set('authorization_token', data.token.access_token, {
       expires: 365,
       path: '/'
     })
   } else {
-    Cookies.set('authorization_token', data.token, {
+    Cookies.set('authorization_token', data.token.access_token, {
       expires: 30,
       path: '/'
     })
@@ -56,8 +56,8 @@ export function setToken (state, data) {
 export async function fetch (state) {
   var token = Cookies.get('authorization_token')
   if (token) {
-    api.defaults.headers.common.Authorization = 'Bearer ' + token
-    return api.get(FETCH_USER_ROUTE).then(response => {
+    const headers = { Authorization: `Bearer ${token}`}
+    return api.get(FETCH_USER_ROUTE, { headers }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       state.commit('setUser', data)
       state.commit('setRoles', [data.role])
