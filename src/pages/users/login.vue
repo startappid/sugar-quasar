@@ -17,7 +17,7 @@
           v-model.trim="model.email"
           type="email"
           :label="$t('auth.login.email')"
-          :error="$v.model.email.$error"
+          :error="v$.model.email.$error"
           required
           autofocus
         />
@@ -28,7 +28,7 @@
           v-model="model.password"
           type="password"
           :label="$t('auth.login.password')"
-          :error="$v.model.password.$error"
+          :error="v$.model.password.$error"
           required
           @keyup.enter="login"
         />
@@ -58,8 +58,7 @@
 </template>
 
 <script>
-// import { required } from 'vuelidate/lib/validators'
-// import { mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
@@ -67,7 +66,7 @@ export default {
   name: 'Login',
   setup () {
     return {
-      $v: useVuelidate()
+      v$: useVuelidate()
     }
   },
   data: () => {
@@ -81,37 +80,41 @@ export default {
     }
   },
   methods: {
-    // ...mapActions('auth', {
-    //   login: 'login',
-    //   remember: 'rememberMe'
-    // }),
-    // submit () {
-    //   this.$v.$touch()
-    //   if (!this.$v.$error) {
-    //     this.loading = true
-    //     if (this.rememberMe) this.remember()
-    //     this.login(this.model).then((response) => {
-    //       this.$router.push('/')
-    //       this.$q.notify('You\'re logged in')
-    //     }).catch((error) => {
-    //       if (error.response) {
-    //         if (error.response.status === 401) {
-    //           this.$q.dialog({
-    //             message: this.$t('auth.login.verification_required')
-    //           })
-    //         } else if (error.response.status === 403) {
-    //           this.$q.dialog({
-    //             message: this.$t('auth.login.invalid_credentials')
-    //           })
-    //         } else {
-    //           console.error(error)
-    //         }
-    //       }
-    //     }).finally(() => {
-    //       this.loading = false
-    //     })
-    //   }
-    // }
+    ...mapActions('auth', {
+      login: 'login',
+      remember: 'rememberMe'
+    }),
+    submit () {
+      this.v$.$touch()
+      if (!this.v$.$error) {
+        this.loading = true
+        if (this.rememberMe) this.remember()
+        this.login(this.model).then((response) => {
+          this.$router.push('/')
+          this.$q.notify('You\'re logged in')
+        }).catch((error) => {
+          if (error.response) {
+            if (error.response.status === 401) {
+              this.$q.dialog({
+                message: this.$t('auth.login.verification_required')
+              })
+            } else if (error.response.status === 403) {
+              this.$q.dialog({
+                message: this.$t('auth.login.invalid_credentials')
+              })
+            } else {
+              const { data }  = error.response
+              this.$q.dialog({
+                title: data.status,
+                message: data.message
+              })
+            }
+          }
+        }).finally(() => {
+          this.loading = false
+        })
+      }
+    }
   },
   validations () {
     return {
