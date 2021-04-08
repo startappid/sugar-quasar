@@ -97,6 +97,79 @@
 
           <q-separator inset class="q-my-sm" />
 
+          <q-item-label header>Administrator</q-item-label>
+
+          <q-expansion-item
+            icon="people"
+            label="Users Management"
+            class="q-my-sm"
+          >
+            <q-item clickable v-ripple to="/users">
+              <q-item-section>
+                Users
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="/roles">
+              <q-item-section>
+                Roles
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple to="/permissions">
+              <q-item-section>
+                Permissions
+              </q-item-section>
+            </q-item>
+
+          </q-expansion-item>
+
+          <q-expansion-item
+            icon="storage"
+            label="Data Master"
+            class="q-my-sm"
+          >
+            <q-item clickable v-ripple to="/contacts">
+              <q-item-section>
+                Contacts
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple to="/addresses">
+              <q-item-section>
+                Addresses
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple to="/files">
+              <q-item-section>
+                Files &amp; Media Manager
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
+
+          <q-expansion-item
+            icon="flag"
+            label="Countries"
+            class="q-my-sm"
+          >
+            <q-item clickable v-ripple to="/countries">
+              <q-item-section>
+                Countries
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple to="/provinces">
+              <q-item-section>
+                Provinces
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple to="/cities">
+              <q-item-section>
+                Cities
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
+
+          <q-separator inset class="q-my-sm" />
+
           <q-item class="GNL__drawer-item" v-ripple v-for="link in links3" :key="link.text" clickable>
             <q-item-section>
               <q-item-label>{{ link.text }} <q-icon v-if="link.icon" :name="link.icon" /></q-item-label>
@@ -124,7 +197,7 @@
 
 <script>
 export default {
-  name: 'GooglePhotosLayout',
+  name: 'MainLayout',
   data () {
     return {
       leftDrawerOpen: true,
