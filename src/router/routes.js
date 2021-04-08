@@ -1,3 +1,4 @@
+import { collection } from './collection'
 
 const routes = [
   {
@@ -15,6 +16,9 @@ const routes = [
       { path: '', component: () => import('pages/users/login.vue') }
     ]
   },
+
+  // Default route
+  { ...collection },
 
   // Always leave this as last one,
   // but you can also remove it
