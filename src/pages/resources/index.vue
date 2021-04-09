@@ -81,22 +81,20 @@ export default {
   components: {
     DataTable
   },
+  props: {
+    collection: {
+      type: String,
+      default: null
+    }
+  },
   data () {
-    const { collection } = this.$route.params
     return {
-      collection,
       stateForm: 'entries' // entries, trash
     }
   },
   mounted () {
     if (Array.isArray(this.$router.prevRouteStack)) {
       this.$router.prevRouteStack.splice(0)
-    }
-  },
-  watch: {
-    $route (to, from) {
-      const { collection } = to.params
-      this.collection = collection
     }
   },
   methods: {
