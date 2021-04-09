@@ -20,10 +20,14 @@ export default {
   components: {
     FormLayout
   },
+  props: {
+    collection: {
+      type: String,
+      default: null
+    }
+  },
   data () {
-    const { collection } = this.$route.params
     return {
-      collection,
       stateForm: 'create' // create, update, show
     }
   },
