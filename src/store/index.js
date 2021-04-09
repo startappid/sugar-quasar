@@ -3,6 +3,7 @@ import { createStore } from 'vuex'
 
 import resources from './resources'
 import auth from './auth'
+import countries from './countries'
 
 /*
  * If not building with SSR mode, you can
@@ -17,7 +18,8 @@ export default store(function (/* { ssrContext } */) {
   const Store = createStore({
     modules: {
       resources,
-      auth
+      auth,
+      countries
     },
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
