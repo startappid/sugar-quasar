@@ -1,5 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
+const qs = require('qs');
 
 const api = axios.create({
   paramsSerializer: params => {
