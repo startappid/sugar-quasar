@@ -7,7 +7,7 @@
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
 
-      <q-btn flat rounded icon="add" color="secondary" label="New" :to="`${collection}/create`" />
+      <q-btn flat rounded icon="add" color="secondary" label="New" :to="`/${collection}/create`" />
       <!--
       <q-btn flat round dense icon="more_vert">
         <q-menu
