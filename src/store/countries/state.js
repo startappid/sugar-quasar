@@ -52,7 +52,8 @@ export const layout = [
       label: 'ISO Code',
       props: {
         maxlength: 2
-      }
+      },
+      events: {}
     },
     {
       type: 'QInput',
@@ -61,7 +62,8 @@ export const layout = [
       label: 'Country Name',
       props: {
         maxlength: 50
-      }
+      },
+      events: {}
     },
     {
       type: 'QInput',
@@ -70,7 +72,8 @@ export const layout = [
       label: 'Phone Code',
       props: {
         maxlength: 3
-      }
+      },
+      events: {}
     }
   ]
 ]
