@@ -1,4 +1,5 @@
 import { collection } from './collection'
+import { countries } from './countries'
 
 const routes = [
   {
@@ -17,6 +18,7 @@ const routes = [
     ]
   },
 
+  { ...countries },
   // Default route
   { ...collection },
 
