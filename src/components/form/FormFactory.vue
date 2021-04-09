@@ -541,8 +541,8 @@ export default {
       })
     },
     submit () {
-      this.$v.$touch()
-      if (!this.$v.$error) {
+      this.v$.$touch()
+      if (!this.v$.$error) {
         this.loading = true
         this.create({ data: this.form }).then((response) => {
           const { status } = response
@@ -584,8 +584,8 @@ export default {
       }
     },
     submitUpdate () {
-      this.$v.$touch()
-      if (!this.$v.$error) {
+      this.v$.$touch()
+      if (!this.v$.$error) {
         this.loading = true
         const payload = {
           id: this.id,
