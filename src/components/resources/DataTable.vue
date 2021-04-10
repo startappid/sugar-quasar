@@ -44,7 +44,7 @@
             transition-hide="jump-up"
           >
             <q-list>
-              <q-item clickable v-close-popup tabindex="0" :to="`${collection}/${props.row.id}`">
+              <q-item clickable v-close-popup tabindex="0" :to="`/${collection}/${props.row.id}`">
                 <q-item-section avatar>
                   <q-avatar icon="remove_red_eye" color="secondary" text-color="white" />
                 </q-item-section>
@@ -53,7 +53,7 @@
                   <q-item-label caption>Detail Record</q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-close-popup tabindex="0" :to="`${collection}/${props.row.id}/edit`">
+              <q-item clickable v-close-popup tabindex="0" :to="`/${collection}/${props.row.id}/edit`">
                 <q-item-section avatar>
                   <q-avatar icon="edit" color="secondary" text-color="white" />
                 </q-item-section>
@@ -559,7 +559,7 @@ export default {
     },
 
     rowClick (evt, row, index) {
-      this.$router.push(`${this.collection}/${row.id}`)
+      this.$router.push(`/${this.collection}/${row.id}`)
     }
   },
   computed: {
