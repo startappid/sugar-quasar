@@ -1,7 +1,8 @@
 <template>
   <q-table
+    ref="tableRef"
     :title="collectionName"
-    :data="data"
+    :rows="data"
     :columns="columns"
     row-key="id"
     :pagination="pagination"
@@ -10,6 +11,10 @@
     :filter="filter"
     @request="onRequest"
     binary-state-sort
+    :selected-rows-label="getSelectedString"
+    selection="multiple"
+    :selected="selected"
+    @selection="onSelection"
   >
     <template v-slot:top-right>
 
@@ -117,6 +122,9 @@
 </template>
 
 <script>
+import { useQuasar } from 'quasar'
+import { ref } from 'vue'
+
 export default {
   name: 'DataTable',
   props: {
@@ -157,10 +165,81 @@ export default {
       default: null
     }
   },
+  setup (props) {
+    const $q = useQuasar()
+
+    const selected = ref([])
+    const rows = ref([])
+    const selectedRow = ref(null)
+    const lastIndex = ref(null)
+    const tableRef = ref(null)
+
+    return {
+      selected,
+      selectedRow,
+      lastIndex,
+      tableRef,
+
+      rows,
+
+      getSelectedString () {
+        return selected.value.length === 0 ? '' : `${selected.value.length} record${selected.value.length > 1 ? 's' : ''} selected of ${rows.value.length}`
+      },
+
+      onSelection ({ rows, added, evt }) {
+        if (rows.length === 0 || tableRef.value === void 0) {
+          return
+        }
+
+        const row = rows[ 0 ]
+        const filteredSortedRows = tableRef.value.filteredSortedRows
+        const rowIndex = filteredSortedRows.indexOf(row)
+        const localLastIndex = lastIndex.value
+
+        lastIndex.value = rowIndex
+        document.getSelection().removeAllRanges()
+
+        if ($q.platform.is.mobile === true) {
+          evt = { ctrlKey: true }
+        }
+        else if (evt !== Object(evt) || (evt.shiftKey !== true && evt.ctrlKey !== true)) {
+          selected.value = added === true ? rows : []
+          return
+        }
+
+        const operateSelection = added === true
+          ? selRow => {
+            const selectedIndex = selected.value.indexOf(selRow)
+            if (selectedIndex === -1) {
+              selected.value = selected.value.concat(selRow)
+            }
+          }
+          : selRow => {
+            const selectedIndex = selected.value.indexOf(selRow)
+            if (selectedIndex > -1) {
+              selected.value = selected.value.slice(0, selectedIndex).concat(selected.value.slice(selectedIndex + 1))
+            }
+          }
+
+        if (localLastIndex === null || evt.shiftKey !== true) {
+          operateSelection(row)
+          return
+        }
+
+        const from = localLastIndex < rowIndex ? localLastIndex : rowIndex
+        const to = localLastIndex < rowIndex ? rowIndex : localLastIndex
+        for (let i = from; i <= to; i += 1) {
+          operateSelection(filteredSortedRows[ i ])
+        }
+      },
+
+      getSelectedRows () {
+        return selected.value.length
+      },
+    }
+  },
   data () {
     return {
-      selected: [],
-      selectedRow: null,
       filter: '',
       loading: false,
       pagination: {
@@ -171,7 +250,6 @@ export default {
         rowsNumber: 0 // total records
       },
       pageOptions: [5, 10, 25, 50, 100],
-      data: []
     }
   },
   mounted () {
@@ -189,7 +267,7 @@ export default {
       // this.collection = newVal
       const pagination = this.pagination
       const filter = this.filter
-      this.data = []
+      this.rows.value = []
       this.onRequest({ pagination, filter })
     }
   },
@@ -210,7 +288,7 @@ export default {
       this.loading = true
       this.fetch({ params }).then((response) => {
         const { data, total } = response
-        this.data = data
+        this.rows.value = data
         this.pagination.rowsNumber = total
 
         this.pagination.page = page
@@ -232,14 +310,6 @@ export default {
         }
         this.loading = false
       })
-    },
-
-    getSelectedString () {
-      return this.selected.length === 0 ? '' : `${this.selected.length} record${this.selected.length > 1 ? 's' : ''} selected of ${this.data.length}`
-    },
-
-    getSelectedRows () {
-      return this.selected.length
     },
 
     confirmDelete (id) {
@@ -488,6 +558,9 @@ export default {
     }
   },
   computed: {
+    data () {
+      return this.rows.value
+    },
     collectionName () {
       const words = this.collection.split('_')
       const titles = []
