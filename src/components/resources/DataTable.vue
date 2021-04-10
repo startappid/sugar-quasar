@@ -15,6 +15,7 @@
     selection="multiple"
     :selected="selected"
     @selection="onSelection"
+    @row-click="rowClick"
   >
     <template v-slot:top-right>
 
@@ -36,7 +37,7 @@
     </template>
 
     <template v-slot:body-cell-action="props">
-      <q-td v-if="isStateFormEntries" :props="props">
+      <q-td v-if="isStateFormEntries" :props="props" @click.stop.prevent>
         <q-btn flat round dense icon="more_vert">
           <q-menu
             transition-show="jump-down"
@@ -75,7 +76,7 @@
           </q-menu>
         </q-btn>
       </q-td>
-      <q-td v-if="isStateFormTrash" :props="props">
+      <q-td v-if="isStateFormTrash" :props="props" @click.stop.prevent>
         <q-btn flat round dense icon="more_vert">
           <q-menu
             transition-show="jump-down"
@@ -555,6 +556,10 @@ export default {
       }).onDismiss(() => {
         // console.log('I am triggered on both OK and Cancel')
       })
+    },
+
+    rowClick (evt, row, index) {
+      this.$router.push(`${this.collection}/${row.id}`)
     }
   },
   computed: {
