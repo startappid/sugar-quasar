@@ -197,16 +197,6 @@
     </div>
   </div>
 
-  <div class="q-mt-xl q-mb-md row justify-between" v-if="stateForm=='update'">
-    <div>
-      <q-btn flat label="Cancel" :to="`/${collection}`" />
-    </div>
-    <div class=" justify-end">
-      <q-btn icon="delete" flat color="negative" label="Delete" @click="confirmDelete(id)" />
-      <q-btn icon="check" class="q-ml-md bg-primary text-white" color="secondary" label="Update" @click="submitUpdate" />
-    </div>
-  </div>
-
   <div class="q-mt-xl q-mb-md row justify-between" v-if="stateForm=='trashed'">
     <div>
       <q-btn flat label="Cancel" :to="`/${collection}/trash`" />
@@ -387,8 +377,6 @@ export default {
         }
         this.loading = false
       })
-    } else {
-      // this.resetValue()
     }
 
     for (const fields of this.layout) {
@@ -496,6 +484,13 @@ export default {
         })
       }
     },
+
+    validateError () {
+      this.v$.$touch()
+      return this.v$.$error
+    },
+
+    // TODO: this will be deleted
     submitUpdate () {
       this.v$.$touch()
       if (!this.v$.$error) {
