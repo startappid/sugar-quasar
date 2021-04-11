@@ -7,8 +7,8 @@
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
 
-      <q-btn icon="delete_forever" class="q-mr-md" label="Empty Trash" flat color="negative" @click="emptyTrash()" />
-      <q-btn icon="restore_from_trash" class="q-mr-md" label="Restore All" color="secondary" @click="restoreAll()"/>
+      <q-btn icon="delete_forever" class="q-mr-md" label="Empty Trash" flat color="negative" @click="emptyTrash" />
+      <q-btn icon="restore_from_trash" class="q-mr-md" label="Restore All" color="secondary" @click="restoreAll"/>
     </q-toolbar>
     <DataTable
       :columns="columns"
@@ -30,16 +30,19 @@ export default {
   components: {
     DataTable
   },
+  props: {
+    collection: {
+      type: String,
+      default: null
+    }
+  },
   data () {
-    const { collection } = this.$route.params
     return {
-      collection,
       stateForm: 'trash', // entries, trash
       stateData: null
     }
   },
   methods: {
-    // ...mapActions('countries', ['trash', 'hardDelete', 'restore']),
     ...mapActions({
       trash (dispatch, payload) {
         return dispatch(this.collection + '/trash', payload)
@@ -157,7 +160,6 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters({ columns: 'countries/columns' }),
     ...mapState({
       columns (state, getters) {
         return getters[`${this.collection}/columns`]

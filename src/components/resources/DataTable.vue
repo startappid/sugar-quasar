@@ -37,7 +37,7 @@
     </template>
 
     <template v-slot:body-cell-action="props">
-      <q-td v-if="isStateFormEntries" :props="props" @click.stop.prevent>
+      <q-td v-show="isStateFormEntries" :props="props" @click.stop.prevent>
         <q-btn flat round dense icon="more_vert">
           <q-menu
             transition-show="jump-down"
@@ -76,7 +76,7 @@
           </q-menu>
         </q-btn>
       </q-td>
-      <q-td v-if="isStateFormTrash" :props="props" @click.stop.prevent>
+      <q-td v-show="isStateFormTrash" :props="props" @click.stop.prevent>
         <q-btn flat round dense icon="more_vert">
           <q-menu
             transition-show="jump-down"
