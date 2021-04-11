@@ -6,7 +6,6 @@
       :stateForm="stateForm"
       :id="id"
     />
-
   </div>
 </template>
 <script>
