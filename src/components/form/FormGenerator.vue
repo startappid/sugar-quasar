@@ -431,97 +431,9 @@ export default {
       this.v$.$reset()
     },
 
-    // TODO: this will be deleted
-    submit () {
-      this.v$.$touch()
-      if (!this.v$.$error) {
-        this.loading = true
-        this.create({ data: this.form }).then((response) => {
-          const { status } = response
-          this.$q.dialog({
-            title: `${status}`,
-            message: 'Data created',
-            ok: {
-              flat: true
-            },
-            persistent: true
-          }).onOk(() => {
-            if (!this.submitAndCreate) {
-              this.$router.push(`/${this.collection}`)
-            } else {
-              const keys = Object.keys(this.form)
-              for (const i in keys) {
-                const key = keys[i]
-                this.form[key] = null
-              }
-            }
-          }).finally(() => {
-            this.loading = false
-          })
-        }).catch((error) => {
-          if (error.response) {
-            const { data } = error.response
-            this.$q.dialog({
-              title: `${data.status}`,
-              message: `${data.message}`,
-              ok: {
-                flat: true
-              },
-              persistent: true
-            })
-          }
-        }).finally(() => {
-          this.loading = false
-        })
-      }
-    },
-
     validateError () {
       this.v$.$touch()
       return this.v$.$error
-    },
-
-    // TODO: this will be deleted
-    submitUpdate () {
-      this.v$.$touch()
-      if (!this.v$.$error) {
-        this.loading = true
-        const payload = {
-          id: this.id,
-          data: this.form
-        }
-        this.update(payload).then((response) => {
-          const { status, message } = response
-          this.$q.dialog({
-            title: `${status}`,
-            message: `${message}`,
-            ok: {
-              flat: true
-            },
-            persistent: true
-          }).onOk(() => {
-            if (!this.submitAndCreate) {
-              this.$router.push(`/${this.collection}`)
-            }
-          }).finally(() => {
-            this.loading = false
-          })
-        }).catch((error) => {
-          if (error.response) {
-            const { data } = error.response
-            this.$q.dialog({
-              title: `${data.status}`,
-              message: `${data.message}`,
-              ok: {
-                flat: true
-              },
-              persistent: true
-            })
-          }
-        }).finally(() => {
-          this.loading = false
-        })
-      }
     },
 
     // TODO: will be deleted
