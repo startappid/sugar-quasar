@@ -7,8 +7,8 @@
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
 
-      <q-btn icon="delete_forever" class="q-mr-md" label="Empty Trash" flat color="negative" @click="emptyTrash" />
-      <q-btn icon="restore_from_trash" class="q-mr-md" label="Restore All" color="secondary" @click="restoreAll"/>
+      <q-btn icon="delete_forever" class="q-mr-md" label="Empty" flat color="negative" @click="emptyTrash" />
+      <q-btn icon="restore_from_trash" class="q-mr-md" label="Restore" color="secondary" @click="restoreAll"/>
     </q-toolbar>
     <DataTable
       :columns="columns"

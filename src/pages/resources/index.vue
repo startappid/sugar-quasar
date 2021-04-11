@@ -7,8 +7,8 @@
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
 
-      <q-btn rounded icon="add" color="secondary" label="New" :to="`/${collection}/create`" />
-      <q-btn flat rounded icon="delete" color="negative" class="q-ml-sm" label="Trash" :to="`/${collection}/trash`" />
+      <q-btn flat rounded icon="delete" color="negative" label="Trash" :to="`/${collection}/trash`" />
+      <q-btn rounded icon="add" color="secondary" class="q-ml-sm" label="New" :to="`/${collection}/create`" />
       <!--
       <q-btn flat round dense icon="more_vert">
         <q-menu
