@@ -2,6 +2,7 @@ import { collection } from './collection'
 
 import { countries } from './countries'
 import { provinces } from './provinces'
+import { cities } from './cities'
 
 const routes = [
   {
@@ -22,6 +23,7 @@ const routes = [
 
   { ...countries },
   { ...provinces },
+  { ...cities },
 
   // Default route
   { ...collection },
