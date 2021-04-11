@@ -1,11 +1,11 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
-const qs = require('qs');
+// const qs = require('qs');
 
 const api = axios.create({
-  paramsSerializer: params => {
-    return qs.stringify(params, { arrayFormat: 'repeat' })
-  },
+  // paramsSerializer: params => {
+  //   return qs.stringify(params, { arrayFormat: 'repeat' })
+  // },
   baseURL: process.env.APIURL,
   timeout: 120 * 1000
 })
