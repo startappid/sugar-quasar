@@ -12,7 +12,7 @@
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
     </q-toolbar>
-    <div class="text-h5">{{titlePage}} {{collectionName}}</div>
+    <div class="text-h5">Detail {{collectionName}}</div>
 
     <FormGenerator
       ref="formGenerator"
