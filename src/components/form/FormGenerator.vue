@@ -280,7 +280,7 @@ export default {
         if (type === 'QSelect' && reference) {
           events.filter = (search, update, abort) => {
             const params = {
-              q: search
+              search
             }
 
             if (field.params) {
