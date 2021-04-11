@@ -98,9 +98,6 @@ export default function () {
     // Datatable config
     columns,
     form,
-    resetValue: {
-      ...form
-    },
     layout,
     validation
   }
