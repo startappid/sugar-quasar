@@ -559,7 +559,8 @@ export default {
     },
 
     rowClick (evt, row, index) {
-      this.$router.push(`/${this.collection}/${row.id}`)
+      const trashed = this.stateForm == 'trash'? '/trashed': ''
+      this.$router.push(`/${this.collection}/${row.id}${trashed}`)
     }
   },
   computed: {
