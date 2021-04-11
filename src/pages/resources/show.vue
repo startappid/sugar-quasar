@@ -116,8 +116,7 @@ export default {
         },
         persistent: true
       }).onOk(() => {
-        const $store = useStore()
-        $store.dispatch(`${this.collection}/destroy`, {
+        this.$store.dispatch(`${this.collection}/destroy`, {
           type: id,
           params: {}
         }).then((response) => {

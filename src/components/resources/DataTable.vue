@@ -278,7 +278,7 @@ export default {
       const filter = props.filter
       const params = {
         ...this.params,
-        q: filter,
+        search: filter,
         page: page,
         limit: rowsPerPage,
         orderBy: {
