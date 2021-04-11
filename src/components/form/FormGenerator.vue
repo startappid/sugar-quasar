@@ -1,5 +1,6 @@
 <template>
 <div class="q-mt-md">
+  <q-form ref="formComponent" @submit.prevent>
   <div class="row q-gutter-md" v-for="(fields, index) in layout" :key="`row-${index}`">
     <div :class="field.col" v-for="field in fields" :key="`form-${field.name}`">
       <div v-if="['QInput'].indexOf(field.type) >= 0">
@@ -180,22 +181,7 @@
 
     </div>
   </div>
-
-  <div class="q-mt-xl q-mb-md row justify-between" v-if="stateForm=='create'">
-    <div>
-      <q-toggle v-model="submitAndCreate" label="Submit and create new" />
-    </div>
-    <div class=" justify-end">
-      <q-btn flat label="Cancel" :to="`/${collection}`" />
-      <q-btn
-        icon="check"
-        class="q-ml-md bg-primary text-white"
-        color="secondary"
-        label="Create"
-        :loading="loading"
-        @click="submit" />
-    </div>
-  </div>
+  </q-form>
 
   <div class="q-mt-xl q-mb-md row justify-between" v-if="stateForm=='trashed'">
     <div>
@@ -440,7 +426,12 @@ export default {
     setFormData(data) {
       this.form = data
     },
+    resetForm() {
+      this.$refs.formComponent.reset()
+      this.v$.$reset()
+    },
 
+    // TODO: this will be deleted
     submit () {
       this.v$.$touch()
       if (!this.v$.$error) {
@@ -586,6 +577,7 @@ export default {
         // console.log('I am triggered on both OK and Cancel')
       })
     },
+
     confirmHardDelete (id) {
       this.$q.dialog({
         title: 'Delete',
