@@ -88,10 +88,10 @@ export async function update ({ state, commit, dispatch, getters }, { id, data, 
 
   config = { ...getters.config, ...config }
   const { collection } = state
-  const ROUTE_UPDATE = `/${collection}/:id`
+  const ROUTE_UPDATE = `/${collection}/${id}`
   const promise = new Promise((resolve, reject) => {
     // return api.post(ROUTE_UPDATE.replace(':id', id), data, { params, headers, ...config }).then(response => {
-    return api.put(ROUTE_UPDATE.replace(':id', id), data, { params, headers, ...config }).then(response => {
+    return api.put(ROUTE_UPDATE, data, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
