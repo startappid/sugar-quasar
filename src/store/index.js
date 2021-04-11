@@ -6,6 +6,7 @@ import auth from './auth'
 
 import countries from './countries'
 import provinces from './provinces'
+import cities from './cities'
 
 /*
  * If not building with SSR mode, you can
@@ -23,7 +24,8 @@ export default store(function (/* { ssrContext } */) {
       auth,
 
       countries,
-      provinces
+      provinces,
+      cities
 
     },
     // enable strict mode (adds overhead!)
