@@ -327,14 +327,15 @@ export default {
           color: 'white',
           textColor: 'black',
           flat: true
-
         },
         persistent: true
-      }).onOk(() => {
+      })
+      .onOk(() => {
         this.destroy({
           type: id,
           params: {}
-        }).then((response) => {
+        })
+        .then((response) => {
           const { status, message } = response
           this.$q.dialog({
             title: `${status}`,
@@ -348,7 +349,8 @@ export default {
             const filter = this.filter
             this.onRequest({ pagination, filter })
           })
-        }).catch(error => {
+        })
+        .catch(error => {
           if (error.response) {
             const { data } = error.response
             this.$q.dialog({
@@ -362,21 +364,16 @@ export default {
           }
           this.loading = false
         })
-      }).onOk(() => {
-        // console.log('>>>> second OK catcher')
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
       })
     },
     showSelected () {
       const data = this.selected[0]
-      this.$router.push(`${this.collection}/${data.id}`)
+      const trashed = this.stateForm == 'trash'? '/trashed': ''
+      this.$router.push(`/${this.collection}/${data.id}${trashed}`)
     },
     editSelected () {
       const data = this.selected[0]
-      this.$router.push(`${this.collection}/${data.id}/edit`)
+      this.$router.push(`/${this.collection}/${data.id}/edit`)
     },
     deleteSelected () {
       const ids = []
@@ -432,12 +429,6 @@ export default {
           }
           this.loading = false
         })
-      }).onOk(() => {
-        // console.log('>>>> second OK catcher')
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
       })
     },
 
@@ -457,11 +448,13 @@ export default {
           flat: true
         },
         persistent: true
-      }).onOk(() => {
+      })
+      .onOk(() => {
         this.restore({
           type: id,
           params: {}
-        }).then((response) => {
+        })
+        .then((response) => {
           const { status, message } = response
           this.$q.dialog({
             title: `${status}`,
@@ -475,7 +468,8 @@ export default {
             const filter = this.filter
             this.onRequest({ pagination, filter })
           })
-        }).catch(error => {
+        })
+        .catch(error => {
           if (error.response) {
             const { data } = error.response
             this.$q.dialog({
@@ -489,10 +483,6 @@ export default {
           }
           this.loading = false
         })
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
       })
     },
 
@@ -517,13 +507,15 @@ export default {
           flat: true
         },
         persistent: true
-      }).onOk(() => {
+      })
+      .onOk(() => {
         this.restore({
           type: 'selected',
           data: {
             selected: ids
           }
-        }).then((response) => {
+        })
+        .then((response) => {
           const { status, message } = response
           this.$q.dialog({
             title: `${status}`,
@@ -537,7 +529,8 @@ export default {
             const filter = this.filter
             this.onRequest({ pagination, filter })
           })
-        }).catch(error => {
+        })
+        .catch(error => {
           if (error.response) {
             const { data } = error.response
             this.$q.dialog({
@@ -551,10 +544,6 @@ export default {
           }
           this.loading = false
         })
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
       })
     },
 
