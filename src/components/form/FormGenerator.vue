@@ -183,16 +183,6 @@
   </div>
   </q-form>
 
-  <div class="q-mt-xl q-mb-md row justify-between" v-if="stateForm=='trashed'">
-    <div>
-      <q-btn flat label="Cancel" :to="`/${collection}/trash`" />
-    </div>
-    <div class=" justify-end">
-      <q-btn icon="delete_forever" flat color="negative" label="Delete Forever" @click="confirmHardDelete(id)" />
-      <q-btn icon="restore_from_trash" class="q-ml-md bg-primary text-white" color="secondary" label="Restore" @click="confirmRestore(id)" />
-    </div>
-  </div>
-
   <q-dialog v-model="dialogForms" >
     <q-card style="width: 700px; max-width: 80vw;">
       <q-card-section>
@@ -332,39 +322,6 @@ export default {
     this.$store.commit(`${this.collection}/reset`)
   },
   mounted () {
-
-    // console.log(this.form)
-    // TODO: it will be deleted
-    if (['show', 'update', 'trashed'].indexOf(this.stateForm) >= 0 && false) {
-      this.loading = true
-      let fetchDetail = this.detail
-      if (this.stateForm === 'trashed') {
-        fetchDetail = this.trashed
-      }
-
-      fetchDetail({ id: this.id }).then((data) => {
-        const keys = Object.keys(this.form)
-        for (const i in keys) {
-          const key = keys[i]
-          this.form[key] = data[key]
-        }
-        this.loading = false
-      }).catch(error => {
-        if (error.response) {
-          const { data } = error.response
-          this.$q.dialog({
-            title: `${data.status}`,
-            message: `${data.message}`,
-            ok: {
-              flat: true
-            },
-            persistent: true
-          })
-        }
-        this.loading = false
-      })
-    }
-
     for (const fields of this.layout) {
       for (const field of fields) {
         const { type, reference } = field
@@ -417,12 +374,7 @@ export default {
         return dispatch(this.collection + '/restore', payload)
       }
     }),
-    filterFn (val, update, abort) {
-      update(() => {
-        // const needle = val.toLowerCase()
-        // this.options = genderOptions.filter(v => v.toLowerCase().indexOf(needle) > -1)
-      })
-    },
+
     setFormData(data) {
       this.form = data
     },
@@ -436,164 +388,6 @@ export default {
       return this.v$.$error
     },
 
-    // TODO: will be deleted
-    confirmDelete (id) {
-      this.$q.dialog({
-        title: 'Delete',
-        message: 'Are you sure to delete?',
-        ok: {
-          label: 'Delete',
-          color: 'negative',
-          flat: true
-        },
-        cancel: {
-          label: 'Cancel',
-          color: 'white',
-          textColor: 'black',
-          flat: true
-        },
-        persistent: true
-      }).onOk(() => {
-        this.destroy({
-          type: id,
-          params: {}
-        }).then((response) => {
-          const { status, message } = response
-          this.$q.dialog({
-            title: `${status}`,
-            message: `${message}`,
-            ok: {
-              flat: true
-            },
-            persistent: true
-          }).onOk(() => {
-            this.$router.push(`/${this.collection}`)
-          })
-        }).catch(error => {
-          if (error.response) {
-            const { data } = error.response
-            this.$q.dialog({
-              title: `${data.status}`,
-              message: `${data.message}`,
-              ok: {
-                flat: true
-              },
-              persistent: true
-            })
-          }
-          this.loading = false
-        })
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
-      })
-    },
-
-    confirmHardDelete (id) {
-      this.$q.dialog({
-        title: 'Delete',
-        message: 'Are you sure to delete?',
-        ok: {
-          label: 'Delete',
-          color: 'negative',
-          flat: true
-        },
-        cancel: {
-          label: 'Cancel',
-          color: 'white',
-          textColor: 'black',
-          flat: true
-        },
-        persistent: true
-      }).onOk(() => {
-        this.hardDelete({
-          type: id,
-          params: {}
-        }).then((response) => {
-          const { status, message } = response
-          this.$q.dialog({
-            title: `${status}`,
-            message: `${message}`,
-            ok: {
-              flat: true
-            },
-            persistent: true
-          }).onOk(() => {
-            this.$router.push(`/${this.collection}`)
-          })
-        }).catch(error => {
-          if (error.response) {
-            const { data } = error.response
-            this.$q.dialog({
-              title: `${data.status}`,
-              message: `${data.message}`,
-              ok: {
-                flat: true
-              },
-              persistent: true
-            })
-          }
-          this.loading = false
-        })
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
-      })
-    },
-    confirmRestore (id) {
-      this.$q.dialog({
-        title: 'Restore',
-        message: 'Are you sure to restore?',
-        ok: {
-          label: 'Restore',
-          color: 'secondary',
-          flat: true
-        },
-        cancel: {
-          label: 'Cancel',
-          color: 'white',
-          textColor: 'black',
-          flat: true
-        },
-        persistent: true
-      }).onOk(() => {
-        this.restore({
-          type: id,
-          params: {}
-        }).then((response) => {
-          const { status, message } = response
-          this.$q.dialog({
-            title: `${status}`,
-            message: `${message}`,
-            ok: {
-              flat: true
-            },
-            persistent: true
-          }).onOk(() => {
-            this.$router.push(`/${this.collection}`)
-          })
-        }).catch(error => {
-          if (error.response) {
-            const { data } = error.response
-            this.$q.dialog({
-              title: `${data.status}`,
-              message: `${data.message}`,
-              ok: {
-                flat: true
-              },
-              persistent: true
-            })
-          }
-          this.loading = false
-        })
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
-      })
-    },
     readSrcFile (file) {
       return URL.createObjectURL(file)
     },
