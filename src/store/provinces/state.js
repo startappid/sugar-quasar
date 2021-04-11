@@ -67,7 +67,8 @@ export const layout = [
       label: 'Province Name',
       props: {
         maxlength: 50
-      }
+      },
+      events: {}
     }
   ]
 ]
