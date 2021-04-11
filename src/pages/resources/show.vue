@@ -35,14 +35,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState /*, mapMutations */ } from 'vuex'
+import { mapState } from 'vuex'
 import { useStore } from 'vuex'
-import { useQuasar } from 'quasar'
-import { ref, reactive } from 'vue'
-
-import { useRoute } from 'vue-router'
-
 import FormGenerator from 'components/form/FormGenerator'
+
 export default {
   components: {
     FormGenerator
