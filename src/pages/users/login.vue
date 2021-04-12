@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 
@@ -79,9 +79,28 @@ export default {
       loading: false
     }
   },
+  mounted() {
+    this.refreshToken()
+    .then((response) => {
+      if(this.loggedIn) {
+        this.$q.notify({
+          spinner: true,
+          message: 'You\'re logged in.\r\nredirecting...',
+          timeout: 3000,
+          onDismiss: () => {
+            this.$router.push('/')
+          }
+        })
+      }
+    })
+  },
+  computed: {
+    ...mapGetters('auth', ['loggedIn'])
+  },
   methods: {
     ...mapActions('auth', {
       login: 'login',
+      refreshToken: 'fetch',
       remember: 'rememberMe'
     }),
     submit () {
