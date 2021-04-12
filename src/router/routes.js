@@ -4,6 +4,8 @@ import { countries } from './countries'
 import { provinces } from './provinces'
 import { cities } from './cities'
 
+import { users } from './users'
+
 const routes = [
   {
     path: '/',
@@ -24,6 +26,8 @@ const routes = [
   { ...countries },
   { ...provinces },
   { ...cities },
+
+  { ...users },
 
   // Default route
   { ...collection },
