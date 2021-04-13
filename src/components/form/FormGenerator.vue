@@ -3,51 +3,6 @@
   <q-form ref="formComponent" @submit.prevent>
   <div class="row q-gutter-md" v-for="(fields, index) in layout" :key="`row-${index}`">
     <div :class="field.col" v-for="field in fields" :key="`form-${field.name}`">
-      <div v-if="['QInput'].indexOf(field.type) >= 0">
-        <component
-          v-bind:is="field.type"
-          outlined
-          v-model="form[field.name]"
-          :readonly="readonly"
-          :label="field.label"
-          stack-label
-          v-bind="field.props"
-          v-on="field.events"
-          :error="v$.form[field.name].$error"
-          clearable
-        />
-      </div>
-
-      <div v-if="['QTextarea'].indexOf(field.type) >= 0">
-        <q-input
-          outlined
-          v-model="form[field.name]"
-          type="textarea"
-          :readonly="readonly"
-          :label="field.label"
-          stack-label
-          v-bind="field.props"
-          v-on="field.events"
-          :error="v$.form[field.name].$error"
-          clearable
-        />
-      </div>
-
-      <div v-if="['QNumber'].indexOf(field.type) >= 0">
-        <component
-          v-bind:is="'QInput'"
-          outlined
-          type="number"
-          v-model="form[field.name]"
-          :readonly="readonly"
-          :label="field.label"
-          stack-label
-          v-bind="field.props"
-          v-on="field.events"
-          :error="v$.form[field.name].$error"
-          clearable
-        />
-      </div>
 
       <div v-if="['QSelect'].indexOf(field.type) >= 0">
         <component
@@ -90,7 +45,7 @@
         </component>
       </div>
 
-      <div v-if="['QRadio'].indexOf(field.type) >= 0">
+      <div v-else-if="['QRadio'].indexOf(field.type) >= 0">
         {{field.label}}:
         <component
           v-for="option in field.props.options"
@@ -108,7 +63,7 @@
         />
       </div>
 
-      <div v-if="['QFile'].indexOf(field.type) >= 0">
+      <div v-else-if="['QFile'].indexOf(field.type) >= 0">
         <q-img
           v-if="['show', 'update', 'trashed'].indexOf(stateForm) >= 0"
           :src="form[field.imgfield]"
@@ -159,7 +114,7 @@
         </component>
       </div>
 
-      <div v-if="['QEditor'].indexOf(field.type) >= 0">
+      <div v-else-if="['QEditor'].indexOf(field.type) >= 0">
         <div class="text-subtitle">{{field.label}}</div>
         <component
           v-bind:is="field.type"
@@ -168,7 +123,7 @@
         />
       </div>
 
-      <div v-if="['QToggle'].indexOf(field.type) >= 0">
+      <div v-else-if="['QToggle'].indexOf(field.type) >= 0">
         <q-toggle
           :label="field.label"
           v-model="form[field.name]"
@@ -178,6 +133,20 @@
           v-on="field.events"
         />
       </div>
+
+      <component
+        v-else
+        v-bind:is="'QInput'"
+        outlined
+        v-model="form[field.name]"
+        :readonly="readonly"
+        :label="field.label"
+        stack-label
+        v-bind="field.props"
+        v-on="field.events"
+        :error="v$.form[field.name].$error"
+        clearable
+      />
 
     </div>
   </div>
