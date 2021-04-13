@@ -1,6 +1,6 @@
 import { required } from '@vuelidate/validators'
 import state from '../resources/state'
-export const collection = 'countries'
+export const collection = 'users'
 export const columns = [
   {
     name: 'name',
@@ -42,28 +42,35 @@ export const columns = [
 ]
 
 export const form = {
-  isocode: null,
-  name: null,
-  phonecode: null
+  email: null,
+  first_name: null,
+  last_name: null,
+  password: null,
+  password_confirmation: null,
+  phone: null,
+  gender: null, // ['male', 'female']
+  dob: null, // Date
+  status: 'inactive', // ['active', 'inactive']
+  membership_status: 0,
+  about: null,
+  visa: null,
+  idcard: null,
+
+  den_id: null,
+  referral_id: null,
+
+  activated_at: null,
+  activation_code: null,
+  referenceable: 0,
 }
 
 export const layout = [
   [
     {
       type: 'QInput',
-      col: 'col-2',
-      name: 'isocode',
-      label: 'ISO Code',
-      props: {
-        maxlength: 2
-      },
-      events: {}
-    },
-    {
-      type: 'QInput',
-      col: 'col-6',
-      name: 'name',
-      label: 'Country Name',
+      col: 'col-4',
+      name: 'first_name',
+      label: 'First Name',
       props: {
         maxlength: 50
       },
@@ -71,27 +78,84 @@ export const layout = [
     },
     {
       type: 'QInput',
-      col: 'col-2',
-      name: 'phonecode',
-      label: 'Phone Code',
+      col: 'col-4',
+      name: 'last_name',
+      label: 'Last Name',
       props: {
-        maxlength: 3
+        maxlength: 50
       },
       events: {}
-    }
+    },
+  ],
+  [
+    {
+      type: 'QInput',
+      col: 'col-6',
+      name: 'email',
+      label: 'Email',
+      props: {
+        type: 'email'
+      },
+      events: {}
+    },
+  ],
+  [
+    {
+      type: 'QSelect',
+      col: 'col-2',
+      name: 'role',
+      label: 'Role',
+      props: {
+        options: [],
+        'use-input': true,
+        'emit-value': true,
+        'map-options': true,
+        'option-value': 'name',
+        'option-label': 'name',
+        'hide-selected': true,
+        'fill-input': true
+      },
+      reference: 'roles',
+      updateValues: [], // update values to be null on value changed
+      events: {}
+    },
+  ],
+  [
+    {
+      type: 'QInput',
+      col: 'col-4',
+      name: 'password',
+      label: 'Password',
+      props: {
+        type: 'password',
+        maxlength: 50
+      },
+      events: {}
+    },
+    {
+      type: 'QInput',
+      col: 'col-4',
+      name: 'password_confirmation',
+      label: 'Retype Password',
+      props: {
+        type: 'password',
+        maxlength: 50
+      },
+      events: {}
+    },
   ]
 ]
 
 export const validation = {
-  isocode: {
-    required
-  },
-  name: {
-    required
-  },
-  phonecode: {
-    required
-  }
+  email: { required },
+  role: { required },
+  first_name: { required },
+  last_name: { required },
+  password: { required },
+  password_confirmation: { required },
+  phone: { },
+  gender: { required },
+  dob: { required },
 }
 
 export default function () {
