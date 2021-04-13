@@ -8,6 +8,14 @@ import countries from './countries'
 import provinces from './provinces'
 import cities from './cities'
 
+import users from './users'
+import addresses from './addresses'
+import contacts from './contacts'
+import files from './files'
+import roles from './roles'
+import permissions from './permissions'
+import sysparam from './sysparam'
+
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -25,7 +33,15 @@ export default store(function (/* { ssrContext } */) {
 
       countries,
       provinces,
-      cities
+      cities,
+
+      users,
+      addresses,
+      contacts,
+      files,
+      roles,
+      permissions,
+      sysparam
 
     },
     // enable strict mode (adds overhead!)
