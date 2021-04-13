@@ -5,7 +5,7 @@
     :rows="data"
     :columns="columns"
     row-key="id"
-    :pagination="pagination"
+    v-model:pagination="pagination"
     :rows-per-page-options="pageOptions"
     :loading="loading"
     :filter="filter"
@@ -288,14 +288,13 @@ export default {
 
       this.loading = true
       this.fetch({ params }).then((response) => {
-        const { data, total } = response
-        this.rows.value = data
-        this.pagination.rowsNumber = total
-
+        const { data, meta } = response
+        this.pagination.rowsNumber = meta.recordsFiltered
         this.pagination.page = page
         this.pagination.rowsPerPage = rowsPerPage
         this.pagination.sortBy = sortBy
         this.pagination.descending = descending
+        this.rows.value = data
         this.loading = false
       }).catch(error => {
         if (error.response) {
