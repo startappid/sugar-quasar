@@ -235,7 +235,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'MainLayout',
   data () {
@@ -282,8 +282,10 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('auth', ['loggedOut']),
     logout () {
-      this.$q.dialog({
+      this.$q
+      .dialog({
         title: 'Logout',
         message: 'Are you sure to logout?',
         ok: {
@@ -298,16 +300,14 @@ export default {
           flat: true
         },
         persistent: true
-      }).onOk(() => {
+      })
+      .onOk(() => {
+        this.loggedOut()
         this.$q.localStorage.clear()
         this.$q.sessionStorage.clear()
         this.$q.cookies.remove('authorization_token')
-        this.$router.push('/login')
         this.$q.notify('You\'re logged out')
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
+        this.$router.push('/login')
       })
     }
   }
