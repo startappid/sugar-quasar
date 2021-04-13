@@ -67,6 +67,7 @@ export async function fetch (state) {
 }
 
 export function logout (state) {
+  state.commit('loggedOut')
   Cookies.remove('authorization_token')
   state.commit('setUser', null)
 }
