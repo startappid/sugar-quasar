@@ -5,6 +5,12 @@ import { provinces } from './provinces'
 import { cities } from './cities'
 
 import { users } from './users'
+import { addresses } from './addresses'
+import { contacts } from './contacts'
+import { files } from './files'
+import { permissions } from './permissions'
+import { roles } from './roles'
+import { sysparam } from './sysparam'
 
 const routes = [
   {
@@ -28,6 +34,12 @@ const routes = [
   { ...cities },
 
   { ...users },
+  { ...addresses },
+  { ...contacts },
+  { ...files },
+  { ...permissions },
+  { ...roles },
+  { ...sysparam },
 
   // Default route
   { ...collection },
