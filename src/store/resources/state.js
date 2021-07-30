@@ -1,6 +1,6 @@
 export const collection = null
-export const resetValue = {}
 export const form = {}
+export const resetValue = {...form}
 export const params = {}
 export const layout = []
 export const validation = {}
