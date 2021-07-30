@@ -74,7 +74,10 @@ export const roles = {
       props: { collection },
       component: () => {
         try {
-          return require('pages/' + collection + '/show.vue')
+          const isExist = require(`pages/${collection}/show.vue`)
+          if (isExist) {
+            return import(`pages/${collection}/show.vue`)
+          }
         } catch (error) {
           return import('pages/resources/show.vue')
         }
@@ -96,7 +99,10 @@ export const roles = {
       props: { collection },
       component: () => {
         try {
-          return require('pages/' + collection + '/edit.vue')
+          const isExist = require(`pages/${collection}/edit.vue`)
+          if (isExist) {
+            return import(`pages/${collection}/edit.vue`)
+          }
         } catch (error) {
           return import('pages/resources/edit.vue')
         }

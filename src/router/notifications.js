@@ -1,5 +1,5 @@
-const collection = 'users'
-export const users = {
+const collection = 'notifications'
+export const notifications = {
   path: `/${collection}`,
   component: async () => await import('layouts/MainLayout.vue'),
   children: [
@@ -8,7 +8,10 @@ export const users = {
       props: { collection },
       component: () => {
         try {
-          return require(`pages/${collection}/index.vue`)
+          const isExist = require(`pages/${collection}/index.vue`)
+          if (isExist) {
+            return import(`pages/${collection}/index.vue`)
+          }
         } catch (error) {
           return import('pages/resources/index.vue')
         }
@@ -19,7 +22,10 @@ export const users = {
       props: { collection },
       component: () => {
         try {
-          return require('pages/' + collection + '/trash.vue')
+          const isExist = require(`pages/${collection}/trash.vue`)
+          if (isExist) {
+            return import(`pages/${collection}/trash.vue`)
+          }
         } catch (error) {
           return import('pages/resources/trash.vue')
         }
@@ -27,7 +33,9 @@ export const users = {
     },
     {
       path: 'create',
-      props: { collection },
+      props: {
+        collection: 'notificationsBroadcast'
+      },
       component: () => {
         try {
           const isExist = require(`pages/${collection}/create.vue`)
@@ -36,39 +44,6 @@ export const users = {
           }
         } catch (error) {
           return import('pages/resources/create.vue')
-        }
-      }
-    },
-    {
-      path: 'report',
-      props: { collection },
-      component: () => {
-        try {
-          return require('pages/' + collection + '/report.vue')
-        } catch (error) {
-          return import('pages/resources/report.vue')
-        }
-      }
-    },
-    {
-      path: 'import',
-      props: { collection },
-      component: () => {
-        try {
-          return require('pages/' + collection + '/import.vue')
-        } catch (error) {
-          return import('pages/resources/import.vue')
-        }
-      }
-    },
-    {
-      path: 'export',
-      props: { collection },
-      component: () => {
-        try {
-          return require('pages/' + collection + '/export.vue')
-        } catch (error) {
-          return import('pages/resources/export.vue')
         }
       }
     },
@@ -91,7 +66,10 @@ export const users = {
       props: { collection },
       component: () => {
         try {
-          return require('pages/' + collection + '/trashed.vue')
+          const isExist = require(`pages/${collection}/trashed.vue`)
+          if (isExist) {
+            return import(`pages/${collection}/trashed.vue`)
+          }
         } catch (error) {
           return import('pages/resources/trashed.vue')
         }
@@ -110,6 +88,6 @@ export const users = {
           return import('pages/resources/edit.vue')
         }
       }
-    }
+    },
   ]
 }

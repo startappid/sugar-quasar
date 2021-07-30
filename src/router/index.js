@@ -30,8 +30,13 @@ export default route(function ({ store, ssrContext }) {
     const publicRoutes = [
       '/login',
       '/register',
-      '/forgot-password'
+      '/forgot-password',
+      '/verify-email'
     ]
+    if(to.path.indexOf('verify-email') >= 0) {
+      next()
+      return
+    }
     if (publicRoutes.indexOf(to.path) < 0) {
       const loggedIn = store.getters['auth/loggedIn']
       if (loggedIn) {
