@@ -4,6 +4,8 @@ import { createStore } from 'vuex'
 import resources from './resources'
 import auth from './auth'
 
+import banners from './banners'
+
 import countries from './countries'
 import provinces from './provinces'
 import cities from './cities'
@@ -30,6 +32,8 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       resources,
       auth,
+
+      banners,
 
       countries,
       provinces,

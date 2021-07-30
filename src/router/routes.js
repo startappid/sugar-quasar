@@ -17,7 +17,7 @@ import { notifications } from './notifications'
 import { notificationTemplates } from './notificationTemplates'
 import { notificationFormats } from './notificationFormats'
 
-const routes = [
+const routes = (store) => [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
@@ -25,7 +25,6 @@ const routes = [
       { path: '', component: () => import('pages/Index.vue') }
     ]
   },
-
   {
     path: '/login',
     component: () => import('layouts/UserLogin.vue'),
@@ -95,7 +94,7 @@ const routes = [
   { ...notificationFormats },
 
   // Default route
-  { ...collection },
+  { ...collection(store) },
 
   // Always leave this as last one,
   // but you can also remove it
