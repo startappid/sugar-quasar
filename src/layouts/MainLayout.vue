@@ -114,10 +114,71 @@
             </q-item-section>
           </q-item>
 
+          <div v-can="'nav.aside.marketing'">
           <q-separator inset class="q-my-sm" />
+          <q-item-label header>Marketing &amp; Contents</q-item-label>
+          <q-item v-ripple v-can="'banners.read.index'"  clickable to="/banners">
+            <q-item-section avatar>
+              <q-icon name="ad_units" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Banners</q-item-label>
+            </q-item-section>
+          </q-item>
 
+          <q-item v-ripple v-can="'contents.read.faq'" clickable to="/faq">
+            <q-item-section avatar>
+              <q-icon name="help_center" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>F.A.Q</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item v-ripple v-can="'contents.read.terms'" clickable to="/terms">
+            <q-item-section avatar>
+              <q-icon name="gavel" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Terms &amp; Condition</q-item-label>
+            </q-item-section>
+          </q-item>
+          </div>
+
+          <div v-can="'nav.aside.notifications'">
+          <q-separator inset class="q-my-sm" />
+          <q-item-label header>Notifications</q-item-label>
+
+          <q-item v-ripple v-can="'notifications.read.index'" clickable to="/notifications">
+            <q-item-section avatar>
+              <q-icon name="notifications" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Notification</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item v-ripple v-can="'notification_templates.read.index'" clickable to="/notificationTemplates">
+            <q-item-section avatar>
+              <q-icon name="feedback" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Notification Template</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item v-ripple v-can="'format_messages.read.index'" clickable to="/notificationFormats">
+            <q-item-section avatar>
+              <q-icon name="warning" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Notification Format</q-item-label>
+            </q-item-section>
+          </q-item>
+          </div>
+
+          <q-separator inset class="q-my-sm" />
           <q-item-label header>Administrator</q-item-label>
-
           <q-expansion-item
             icon="people"
             label="Users Management"
