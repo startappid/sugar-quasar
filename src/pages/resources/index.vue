@@ -77,6 +77,7 @@
 <script>
 import DataTable from 'components/resources/DataTable'
 import { mapState, mapActions } from 'vuex'
+import { useRoute } from 'vue-router'
 
 export default {
   components: {
@@ -85,7 +86,11 @@ export default {
   props: {
     collection: {
       type: String,
-      default: null
+      default: () => {
+        const route = useRoute()
+        const { collection } = route.params
+        return collection
+      }
     }
   },
   data () {
@@ -109,7 +114,6 @@ export default {
     })
   },
   computed: {
-    // ...mapGetters({columns: 'countries/columns'}),
     ...mapState({
       columns (state, getters) {
         return getters[`${this.collection}/columns`]
