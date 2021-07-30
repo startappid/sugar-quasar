@@ -1,6 +1,12 @@
 import { required } from '@vuelidate/validators'
 import state from '../resources/state'
 export const collection = 'users'
+export const params = {
+  // relationship: ['roles.role'],
+  // relationship: ['photo'],
+  'orderby[users.id]': 'desc'
+}
+
 export const columns = [
   {
     name: 'name',
@@ -12,10 +18,10 @@ export const columns = [
     sortable: true
   },
   {
-    name: 'username',
+    name: 'email',
     align: 'left',
-    label: 'Username',
-    field: 'username',
+    label: 'Email',
+    field: 'email',
     sortable: true
   },
   {
@@ -32,6 +38,22 @@ export const columns = [
     field: 'phone',
     sortable: true,
     format: (val, row) => val || ' - '
+  },
+
+  {
+    name: 'role',
+    align: 'left',
+    label: 'Roles',
+    field: 'roles',
+    sortable: true,
+    format: (roles, row) => {
+      if(!roles) return '-'
+      const roleNames = []
+      for (const item of row.roles) {
+        roleNames.push(item.role.name)
+      }
+      return roleNames.join(', ')
+    }
   },
   // Always give this columns as default
   {
@@ -63,6 +85,8 @@ export const form = {
   activation_code: null,
   referenceable: 0,
 }
+
+export const resetValue = {...form}
 
 export const layout = [
   [
@@ -148,7 +172,8 @@ export const layout = [
 
 export const validation = {
   email: { required },
-  role: { required },
+  // role: { required },
+  // role: { },
   first_name: { required },
   last_name: { required },
   password: { required },
@@ -158,6 +183,8 @@ export const validation = {
   dob: { required },
 }
 
+export const permissions = []
+
 export default function () {
   return {
     ...state(),
@@ -166,7 +193,10 @@ export default function () {
     // Datatable config
     columns,
     form,
+    params,
+    resetValue,
     layout,
-    validation
+    validation,
+    permissions
   }
 }
