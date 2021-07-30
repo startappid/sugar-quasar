@@ -2,7 +2,7 @@ import { required } from '@vuelidate/validators'
 import state from '../resources/state'
 export const collection = 'addresses'
 export const params = {
-  with: 'country,province,city'
+  relationship: ['country', 'province', 'city']
 }
 export const columns = [
   {
@@ -59,6 +59,9 @@ export const columns = [
 ]
 
 export const form = {
+  foreign_table: null,
+  foreign_id: null,
+
   country_id: null,
   province_id: null,
   city_id: null,
@@ -66,6 +69,10 @@ export const form = {
   postalcode: null,
   latitude: null,
   longitude: null
+}
+
+export const resetValue = {
+  ...form
 }
 
 export const layout = [
@@ -138,7 +145,8 @@ export const layout = [
       props: {
         maxlength: 1000,
         autogrow: true
-      }
+      },
+      events: {}
     }
   ],
   [
@@ -149,7 +157,8 @@ export const layout = [
       label: 'Postal Code',
       props: {
         maxlength: 5
-      }
+      },
+      events: {}
     },
     {
       type: 'QInput',
@@ -159,7 +168,8 @@ export const layout = [
       props: {
         maxlength: 50,
         hint: '— optional'
-      }
+      },
+      events: {}
     },
     {
       type: 'QInput',
@@ -169,7 +179,8 @@ export const layout = [
       props: {
         maxlength: 50,
         hint: '— optional'
-      }
+      },
+      events: {}
     }
   ]
 ]
@@ -202,6 +213,7 @@ export default function () {
     // Datatable config
     columns,
     form,
+    resetValue,
     layout,
     params,
     validation
