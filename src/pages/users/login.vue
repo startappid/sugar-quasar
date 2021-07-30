@@ -1,15 +1,15 @@
 <template>
   <q-page class="flex flex-center">
     <q-card
-      square
-      style="width: 400px; padding:50px"
+      rounded
+      style="width: 460px; padding:20px"
     >
       <q-card-section>
         <div class="text-h6">
           {{ $t('auth.login.login') }}
         </div>
       </q-card-section>
-
+      <q-separator inset />
       <q-card-section>
         <q-input
           outlined
@@ -32,14 +32,19 @@
           required
           @keyup.enter="login"
         />
+      </q-card-section>
+      <q-card-actions>
         <q-checkbox
           id="rememberMe"
           v-model="rememberMe"
           :label="$t('auth.login.remember_me')"
         />
-      </q-card-section>
-      <q-card-actions>
-        <q-btn rounded
+        <q-space />
+        <router-link to="/forgot-password">
+          <a>{{ $t('auth.login.password_forgot') }}</a>
+        </router-link>
+
+        <q-btn
           color="secondary"
           class="full-width"
           :loading="loading"
@@ -47,11 +52,16 @@
         >
           {{ $t('auth.login.login') }}
         </q-btn>
-      </q-card-actions>
 
-      <router-link to="/forgot-password">
-        <a>{{ $t('auth.login.password_forgot') }}</a>
-      </router-link>
+        <q-btn
+          flat
+          class="full-width q-mt-lg"
+          to="/register"
+        >
+          Register
+        </q-btn>
+
+      </q-card-actions>
 
     </q-card>
   </q-page>
@@ -101,7 +111,8 @@ export default {
     ...mapActions('auth', {
       login: 'login',
       refreshToken: 'fetch',
-      remember: 'rememberMe'
+      remember: 'rememberMe',
+      userPermissions: 'userPermissions'
     }),
     submit () {
       this.v$.$touch()
@@ -109,8 +120,10 @@ export default {
         this.loading = true
         if (this.rememberMe) this.remember()
         this.login(this.model).then((response) => {
-          this.$router.push('/')
-          this.$q.notify('You\'re logged in')
+          this.userPermissions().then((response) => {
+            this.$router.push('/')
+            this.$q.notify('You\'re logged in')
+          })
         }).catch((error) => {
           if (error.response) {
             if (error.response.status === 401) {
