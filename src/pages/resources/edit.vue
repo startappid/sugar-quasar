@@ -7,12 +7,12 @@
     />
     <q-toolbar class="q-pb-md q-px-none">
       <q-breadcrumbs>
-        <q-breadcrumbs-el :label="collectionName" :to="`/${collection}`" />
+        <q-breadcrumbs-el :label="$t(`${collection}.index.title`)" :to="`/${collection}`" />
         <q-breadcrumbs-el label="Detail" />
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
     </q-toolbar>
-    <div class="text-h5">Update {{collectionName}}</div>
+    <div class="text-h5">{{$t(`${collection}.edit.title`)}}</div>
 
     <FormGenerator
       ref="formGenerator"
@@ -38,6 +38,8 @@
 import { mapState } from 'vuex'
 import { useStore } from 'vuex'
 import FormGenerator from 'components/form/FormGenerator'
+import { scroll } from 'quasar'
+const { getScrollTarget, setVerticalScrollPosition } = scroll
 
 export default {
   components: {
@@ -63,8 +65,10 @@ export default {
     loadingbar.start()
     this.loading = true
 
+    const params = this.params
+
     $store
-    .dispatch(`${this.collection}/detail`, { id: this.id })
+    .dispatch(`${this.collection}/detail`, { id: this.id, params })
     .then(response => {
       const { data } = response
       this.loading = false
@@ -150,7 +154,15 @@ export default {
 
     submitUpdate () {
       const { formGenerator } = this.$refs
-      if (formGenerator.validateError()) return
+      if (formGenerator.validateError()) {
+        const $v = formGenerator.getValidation()
+        const el = this.$el.querySelector(`.form-${$v.$errors[0].$property}`)
+        const target = getScrollTarget(el)
+        const offset = el.offsetTop
+        const duration = 500
+        setVerticalScrollPosition(target, offset, duration)
+        return
+      }
 
       const { loadingbar } = this.$refs
       loadingbar.start()
@@ -209,6 +221,9 @@ export default {
       },
       layout (state, getters) {
         return getters[`${this.collection}/layout`]
+      },
+      params (state, getters) {
+        return getters[`${this.collection}/params`]
       }
     }),
     readonly () {

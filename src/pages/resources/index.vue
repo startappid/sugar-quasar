@@ -2,7 +2,7 @@
   <q-page class="q-pa-md">
     <q-toolbar class="q-pb-md q-px-none">
       <q-breadcrumbs>
-        <q-breadcrumbs-el :label="collectionName" :to="`/${collection}`" />
+        <q-breadcrumbs-el :label="$t(`${collection}.index.title`)" :to="`/${collection}`" />
         <q-breadcrumbs-el label="Record" />
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>

@@ -7,12 +7,12 @@
     />
     <q-toolbar class="q-pb-md q-px-none">
       <q-breadcrumbs>
-        <q-breadcrumbs-el :label="collectionName" :to="`/${collection}`" />
+        <q-breadcrumbs-el :label="$t(`${collection}.index.title`)" :to="`/${collection}`" />
         <q-breadcrumbs-el label="Detail" />
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
     </q-toolbar>
-    <div class="text-h5">Trashed {{collectionName}}</div>
+    <div class="text-h5">{{$t(`${collection}.trashed.title`)}}</div>
 
     <FormGenerator
       ref="formGenerator"
@@ -130,7 +130,7 @@ export default {
             },
             persistent: true
           }).onOk(() => {
-            this.$router.push(`/${this.collection}`)
+            this.$router.push(`/${this.collection}/trash`)
           })
         }).catch(error => {
           if (error.response) {
@@ -178,7 +178,7 @@ export default {
             },
             persistent: true
           }).onOk(() => {
-            this.$router.push(`/${this.collection}`)
+            this.$router.push(`/${this.collection}/trash`)
           })
         }).catch(error => {
           if (error.response) {

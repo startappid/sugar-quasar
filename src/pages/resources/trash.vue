@@ -2,7 +2,7 @@
   <q-page class="q-pa-md">
     <q-toolbar class="q-pb-md q-px-none">
       <q-breadcrumbs>
-        <q-breadcrumbs-el :label="collectionName" :to="`/${collection}`" />
+        <q-breadcrumbs-el :label="$t(`${collection}.index.title`)" :to="`/${collection}`" />
         <q-breadcrumbs-el label="Trash" />
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
@@ -16,6 +16,7 @@
       :destroy="destroy"
       :restore="restore"
       :collection="collection"
+      :params="params"
       :stateForm="stateForm"
       :stateData="stateData"
     />
@@ -100,10 +101,6 @@ export default {
           }
           this.loading = false
         })
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
       })
     },
 
@@ -152,10 +149,6 @@ export default {
           }
           this.loading = false
         })
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
       })
     }
   },
@@ -163,7 +156,10 @@ export default {
     ...mapState({
       columns (state, getters) {
         return getters[`${this.collection}/columns`]
-      }
+      },
+      params (state, getters) {
+        return getters[`${this.collection}/params`]
+      },
     }),
     collectionName () {
       const words = this.collection.split('_')

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md">
+  <q-page class="q-pa-md scrolltop">
     <q-ajax-bar
       ref="loadingbar"
       position="top"
@@ -7,12 +7,12 @@
     />
     <q-toolbar class="q-pb-md q-px-none">
       <q-breadcrumbs>
-        <q-breadcrumbs-el :label="collectionName" :to="`/${collection}`" />
-        <q-breadcrumbs-el label="Detail" />
+        <q-breadcrumbs-el :label="$t(`${collection}.index.title`)" :to="`/${collection}`" />
+        <q-breadcrumbs-el label="Create" />
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
     </q-toolbar>
-    <div class="text-h5">Create {{collectionName}}</div>
+    <div class="text-h5">{{$t(`${collection}.create.title`)}}</div>
 
     <FormGenerator
       ref="formGenerator"
@@ -43,6 +43,8 @@
 <script>
 import { mapState } from 'vuex'
 import FormGenerator from 'components/form/FormGenerator'
+import { scroll } from 'quasar'
+const { getScrollTarget, setVerticalScrollPosition } = scroll
 
 export default {
   components: {
@@ -76,7 +78,15 @@ export default {
   methods: {
     submit () {
       const { formGenerator } = this.$refs
-      if (formGenerator.validateError()) return
+      if (formGenerator.validateError()) {
+        const $v = formGenerator.getValidation()
+        const el = this.$el.querySelector(`.form-${$v.$errors[0].$property}`)
+        const target = getScrollTarget(el)
+        const offset = el.offsetTop
+        const duration = 500
+        setVerticalScrollPosition(target, offset, duration)
+        return
+      }
 
       const { loadingbar } = this.$refs
       loadingbar.start()
@@ -90,6 +100,17 @@ export default {
       .dispatch(`${this.collection}/create`, payload)
       .then((response) => {
         const { status } = response
+        if (this.submitAndCreate) {
+          this.$q.notify('Data created')
+          const keys = Object.keys(this.form)
+          for (const i in keys) {
+            const key = keys[i]
+            this.form[key] = null
+          }
+          this.$refs.formGenerator.resetForm()
+          return
+        }
+
         this.$q.dialog({
           title: `${status}`,
           message: 'Data created',
@@ -98,16 +119,7 @@ export default {
           },
           persistent: true
         }).onOk(() => {
-          if (!this.submitAndCreate) {
-            this.$router.push(`/${this.collection}`)
-          } else {
-            const keys = Object.keys(this.form)
-            for (const i in keys) {
-              const key = keys[i]
-              this.form[key] = null
-            }
-            this.$refs.formGenerator.resetForm()
-          }
+          this.$router.push(`/${this.collection}`)
         }).finally(() => {
           this.loading = false
         })
