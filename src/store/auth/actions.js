@@ -1,16 +1,27 @@
 import { api } from 'boot/axios'
 import { Cookies } from 'quasar'
 
-const REGISTER_ROUTE = '/auth/register'
+const REGISTER_ROUTE = '/user/register'
 const VERIFICATION_ROUTE = '/auth/verify'
 const LOGIN_ROUTE = '/user/login'
 const CHANGE_PASSWORD = '/user/password'
 const FETCH_USER_ROUTE = '/user/profile'
-const PASSWORD_FORGOT_ROUTE = '/auth/password/forgot'
+const PASSWORD_FORGOT_ROUTE = '/user/forgot'
 const PASSWORD_RESET_ROUTE = '/auth/password/reset'
 
-export function register (state, data) {
-  return api.post(REGISTER_ROUTE, data)
+export function register ({ state, commit, dispatch }, data) {
+  const p = new Promise(function (resolve, reject) {
+    return api
+      .post(REGISTER_ROUTE, data)
+      .then(response => {
+        const { data /** , status, statusText, headers, config **/ } = response
+        resolve(data)
+      })
+      .catch(error => {
+        reject(error)
+      })
+  })
+  return p
 }
 
 export function login ({ state, commit, dispatch }, data) {
@@ -20,7 +31,7 @@ export function login ({ state, commit, dispatch }, data) {
       .then(response => {
         const { data /** , status, statusText, headers, config **/ } = response
         const user = data.data
-        commit('setUser', user)
+        commit('setUser', user.user)
         commit('setRoles', [user.role])
         commit('loggedIn')
         const token = user.token
@@ -30,6 +41,36 @@ export function login ({ state, commit, dispatch }, data) {
           rememberMe: state.rememberMe
         })
         resolve()
+      })
+      .catch(error => {
+        reject(error)
+      })
+  })
+  return p
+}
+
+export function forgotPassword ({ state, commit, dispatch }, data) {
+  const p = new Promise(function (resolve, reject) {
+    return api
+      .post(PASSWORD_FORGOT_ROUTE, data)
+      .then(response => {
+        const { data /** , status, statusText, headers, config **/ } = response
+        resolve(data)
+      })
+      .catch(error => {
+        reject(error)
+      })
+  })
+  return p
+}
+
+export function verifyEmail ({ state, commit, dispatch }, {id, params}) {
+  const p = new Promise(function (resolve, reject) {
+    return api
+      .get(`/user/verify-email/${id}`, { params })
+      .then(response => {
+        const { data /** , status, statusText, headers, config **/ } = response
+        resolve(data)
       })
       .catch(error => {
         reject(error)
@@ -53,15 +94,28 @@ export function setToken (state, data) {
   }
 }
 
-export async function fetch (state) {
+export async function fetch ({commit}) {
   var token = Cookies.get('authorization_token')
   if (token) {
     const headers = { Authorization: `Bearer ${token}`}
     return api.get(FETCH_USER_ROUTE, { headers }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
-      state.commit('setUser', data)
-      state.commit('setRoles', [data.role])
-      state.commit('loggedIn')
+      commit('setUser', data.data)
+      commit('setPermissions', data.permissions)
+      commit('setRoles', [data.role])
+      commit('loggedIn')
+    })
+  }
+}
+
+export async function userPermissions ({commit}) {
+  var token = Cookies.get('authorization_token')
+  if (token) {
+    const headers = { Authorization: `Bearer ${token}`}
+    const FETCH_USER_ROUTE = '/user/permissions'
+    return api.get(FETCH_USER_ROUTE, { headers }).then(response => {
+      const { data /** , status, statusText, headers, config **/ } = response
+      commit('setPermissions', data.data)
     })
   }
 }

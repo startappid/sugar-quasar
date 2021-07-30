@@ -1,5 +1,11 @@
+// import {AES, enc}from 'vue-cryptojs';
+import { Cookies } from 'quasar'
+
 export function setUser (state, data) {
   state.user = data
+  // const envrypted = AES.encrypt(JSON.stringify(data), process.env.KEYENC).toString();
+  // Cookies.set('user', envrypted)
+  Cookies.set('user', data)
 }
 
 export function clearUser (state) {
@@ -16,6 +22,7 @@ export function clearRoles (state) {
 
 export function setPermissions (state, data) {
   state.permissions = data
+  Cookies.set('permissions', data)
 }
 
 export function clearPermissions (state) {
