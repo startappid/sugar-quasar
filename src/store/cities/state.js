@@ -1,8 +1,11 @@
 import { required } from '@vuelidate/validators'
 import state from '../resources/state'
 export const collection = 'cities'
+export const headers = {
+  'Content-Type': 'multipart/form-data'
+}
 export const params = {
-  relationship: ['country', 'province']
+  relationship: ['country', 'province', 'thumbnail']
 }
 
 export const columns = [
@@ -50,8 +53,11 @@ export const columns = [
 export const form = {
   country_id: null,
   province_id: null,
-  name: null
+  name: null,
+  thumbnail: null
 }
+
+export const resetValue = {...form}
 
 export const layout = [
   [
@@ -105,6 +111,19 @@ export const layout = [
       },
       events: {}
     }
+  ],
+  [
+    {
+      type: 'QFile',
+      col: 'col-4',
+      name: 'thumbnail',
+      label: 'Choose file thumbnail',
+      props: {
+        maxlength: 50,
+        hint: '— optional'
+      },
+      events: {}
+    },
   ]
 ]
 
@@ -117,18 +136,21 @@ export const validation = {
   },
   name: {
     required
-  }
+  },
+  thumbnail: {}
 }
 
 export default function () {
   return {
     ...state(),
+    headers,
     // Collection name
     collection,
     // Datatable config
     columns,
     params,
     form,
+    resetValue,
     layout,
     validation
   }
