@@ -7,16 +7,16 @@
     />
     <q-toolbar class="q-pb-md q-px-none">
       <q-breadcrumbs>
-        <q-breadcrumbs-el :label="$t(`${collection}.index.title`)" :to="`/${collection}`" />
+        <q-breadcrumbs-el :label="$t(`${storeCollection}.index.title`)" :to="`/${storeCollection}`" />
         <q-breadcrumbs-el label="Detail" />
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
     </q-toolbar>
-    <div class="text-h5">{{$t(`${collection}.edit.title`)}}</div>
+    <div class="text-h5">{{$t(`${storeCollection}.edit.title`)}}</div>
 
     <FormGenerator
       ref="formGenerator"
-      :collection="collection"
+      :collection="storeCollection"
       :stateForm="stateForm"
       :layout="layout"
       :validation="validation"
@@ -25,7 +25,7 @@
 
     <q-footer reveal elevated class="bg-white text-black">
       <q-toolbar style="height: 64px">
-        <q-btn flat label="Cancel" :to="`/${collection}`" />
+        <q-btn flat label="Cancel" :to="`/${storeCollection}`" />
         <q-space />
         <q-btn icon="delete" flat color="negative" label="Delete" @click="confirmDelete(id)" />
         <q-btn icon="check" class="q-ml-md bg-primary text-white" :loading="loading" color="secondary" label="Update" @click="submitUpdate" />
@@ -39,6 +39,7 @@ import { mapState } from 'vuex'
 import { useStore } from 'vuex'
 import FormGenerator from 'components/form/FormGenerator'
 import { scroll } from 'quasar'
+import { useRoute } from 'vue-router'
 const { getScrollTarget, setVerticalScrollPosition } = scroll
 
 export default {
@@ -68,7 +69,7 @@ export default {
     const params = this.params
 
     $store
-    .dispatch(`${this.collection}/detail`, { id: this.id, params })
+    .dispatch(`${this.storeCollection}/detail`, { id: this.id, params })
     .then(response => {
       const { data } = response
       this.loading = false
@@ -120,7 +121,7 @@ export default {
         },
         persistent: true
       }).onOk(() => {
-        this.$store.dispatch(`${this.collection}/destroy`, {
+        this.$store.dispatch(`${this.storeCollection}/destroy`, {
           type: id,
           params: {}
         }).then((response) => {
@@ -133,7 +134,7 @@ export default {
             },
             persistent: true
           }).onOk(() => {
-            this.$router.push(`/${this.collection}`)
+            this.$router.push(`/${this.storeCollection}`)
           })
         }).catch(error => {
           if (error.response) {
@@ -174,7 +175,7 @@ export default {
       }
 
       this.$store
-      .dispatch(`${this.collection}/update`, payload)
+      .dispatch(`${this.storeCollection}/update`, payload)
       .then((response) => {
         const { status, message } = response
         this.$q.dialog({
@@ -186,7 +187,7 @@ export default {
           persistent: true
         }).onOk(() => {
           if (!this.submitAndCreate) {
-            this.$router.push(`/${this.collection}`)
+            this.$router.push(`/${this.storeCollection}`)
           }
         }).finally(() => {
           this.loading = false
@@ -214,37 +215,27 @@ export default {
   computed: {
     ...mapState({
       validation (state, getters) {
-        return getters[`${this.collection}/validation`]
+        return getters[`${this.storeCollection}/validation`]
       },
       form (state, getters) {
-        return getters[`${this.collection}/form`]
+        return getters[`${this.storeCollection}/form`]
       },
       layout (state, getters) {
-        return getters[`${this.collection}/layout`]
+        return getters[`${this.storeCollection}/layout`]
       },
       params (state, getters) {
-        return getters[`${this.collection}/params`]
+        return getters[`${this.storeCollection}/params`]
       }
     }),
     readonly () {
       return this.stateForm === 'show'
     },
-    collectionName () {
-      const words = this.collection.split('_')
-      const titles = []
-      for (const key in words) {
-        const word = words[key]
-        titles.push(word.charAt(0).toUpperCase() + word.slice(1))
-      }
-      return titles.join(' ')
-    },
-    titlePage () {
-      let title = ''
-      if (this.stateForm === 'create') title = 'Create New'
-      if (this.stateForm === 'show') title = 'Detail'
-      if (this.stateForm === 'update') title = 'Update'
-      return title
-    },
+    storeCollection() {
+      const route = useRoute()
+      const { collection } = route.params
+      const storeCollection = this.storeCollection || collection
+      return storeCollection
+    }
   }
 }
 </script>
