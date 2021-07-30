@@ -32,6 +32,7 @@ export const form = {
   type: null,
   contact: null
 }
+export const resetValue = {...form}
 
 export const layout = [
   [
@@ -102,6 +103,7 @@ export default function () {
     // Datatable config
     columns,
     form,
+    resetValue,
     layout,
     validation
   }
