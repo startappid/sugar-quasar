@@ -58,6 +58,7 @@ export const columns = [
 
 export const form = {
   email: null,
+  username: null,
   first_name: null,
   last_name: null,
   password: null,
@@ -79,6 +80,16 @@ export const layout = [
       label: 'Email',
       props: {
         type: 'email'
+      },
+      events: {}
+    },
+    {
+      type: 'QInput',
+      col: 'col-6',
+      name: 'username',
+      label: 'Username',
+      props: {
+        type: 'text'
       },
       events: {}
     }
@@ -195,12 +206,13 @@ export const layout = [
 
 export const validation = {
   email: { required },
+  username: { required },
   // role: { required },
   // role: { },
   first_name: { required },
   last_name: { required },
-  password: { required },
-  password_confirmation: { required },
+  password: { },
+  password_confirmation: { },
   phone: { },
   gender: { required },
   dob: { required },
