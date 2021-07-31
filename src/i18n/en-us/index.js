@@ -120,7 +120,7 @@ export default {
       title: 'Trash of Countries'
     },
     trashed: {
-      title: null
+      title: 'Deleted Country'
     },
   },
   provinces: {
@@ -140,7 +140,7 @@ export default {
       title: 'Trash of Provinces'
     },
     trashed: {
-      title: null
+      title: 'Deleted Province'
     },
   },
   cities: {
@@ -158,246 +158,6 @@ export default {
     },
     trash: {
       title: 'Trash of Cities'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  institutions: {
-    index: {
-      title: 'Institutions'
-    },
-    create: {
-      title: 'Create new Institution'
-    },
-    show: {
-      title: 'Detail Institution'
-    },
-    edit: {
-      title: 'Update Institution'
-    },
-    trash: {
-      title: 'Trash of Institutions'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  institutionMajors: {
-    index: {
-      title: 'Majors'
-    },
-    create: {
-      title: 'Create new Major'
-    },
-    show: {
-      title: 'Detail Major'
-    },
-    edit: {
-      title: 'Update Major'
-    },
-    trash: {
-      title: 'Trash of Majors'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  institutionDegrees: {
-    index: {
-      title: 'Degrees'
-    },
-    create: {
-      title: 'Create new Degree'
-    },
-    show: {
-      title: 'Detail Degree'
-    },
-    edit: {
-      title: 'Update Degree'
-    },
-    trash: {
-      title: 'Trash of Degrees'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  institutionGalleries: {
-    index: {
-      title: 'Galleries'
-    },
-    create: {
-      title: 'Upload new Media'
-    },
-    show: {
-      title: 'Detail Media'
-    },
-    edit: {
-      title: 'Update Media'
-    },
-    trash: {
-      title: 'Trash of Galleries'
-    },
-    trashed: {
-      title: 'Trashed Media'
-    },
-  },
-  courseGalleries: {
-    index: {
-      title: 'Galleries'
-    },
-    create: {
-      title: 'Upload new Media'
-    },
-    show: {
-      title: 'Detail Media'
-    },
-    edit: {
-      title: 'Update Media'
-    },
-    trash: {
-      title: 'Trash of Galleries'
-    },
-    trashed: {
-      title: 'Trashed Media'
-    },
-  },
-  institutionCalendars: {
-    index: {
-      title: 'Calendars'
-    },
-    create: {
-      title: 'Create new Calendar'
-    },
-    show: {
-      title: 'Detail Calendar'
-    },
-    edit: {
-      title: 'Update Calendar'
-    },
-    trash: {
-      title: 'Trash of Calendars'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  majors: {
-    index: {
-      title: 'Majors'
-    },
-    create: {
-      title: 'Create new Major'
-    },
-    show: {
-      title: 'Detail Major'
-    },
-    edit: {
-      title: 'Update Major'
-    },
-    trash: {
-      title: 'Trash of Majors'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  educationalLevels: {
-    index: {
-      title: 'Educational Levels'
-    },
-    create: {
-      title: 'Create new Educational Level'
-    },
-    show: {
-      title: 'Detail Educational Level'
-    },
-    edit: {
-      title: 'Update Educational Level'
-    },
-    trash: {
-      title: 'Trash of Educational Levels'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  courses: {
-    index: {
-      title: 'Short Courses'
-    },
-    create: {
-      title: 'Create new Short Course'
-    },
-    show: {
-      title: 'Detail Short Course'
-    },
-    edit: {
-      title: 'Update Short Course'
-    },
-    trash: {
-      title: 'Trash of Short Courses'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  courseCategories: {
-    index: {
-      title: 'Categories of Course'
-    },
-    create: {
-      title: 'Create new Category'
-    },
-    show: {
-      title: 'Detail Category'
-    },
-    edit: {
-      title: 'Update Category'
-    },
-    trash: {
-      title: 'Trash of Categories of Course'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  enrollments: {
-    index: {
-      title: 'Enrollments'
-    },
-    create: {
-      title: 'Create new Enrollment'
-    },
-    show: {
-      title: 'Detail Enrollment'
-    },
-    edit: {
-      title: 'Update Enrollment'
-    },
-    trash: {
-      title: 'Trash of Enrollments'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  commissions: {
-    index: {
-      title: 'Commissions'
-    },
-    create: {
-      title: 'Create new Commission'
-    },
-    show: {
-      title: 'Detail Commission'
-    },
-    edit: {
-      title: 'Update Commission'
-    },
-    trash: {
-      title: 'Trash of Commissions'
     },
     trashed: {
       title: null
@@ -423,26 +183,6 @@ export default {
       title: null
     },
   },
-  applies: {
-    index: {
-      title: 'How to Apply'
-    },
-    create: {
-      title: 'Create new How to Apply'
-    },
-    show: {
-      title: 'Detail How to Apply'
-    },
-    edit: {
-      title: 'Update How to Apply'
-    },
-    trash: {
-      title: 'Trash of How to Apply'
-    },
-    trashed: {
-      title: null
-    },
-  },
   faq: {
     index: {
       title: 'F.A.Q'
@@ -458,46 +198,6 @@ export default {
     },
     trash: {
       title: 'Trash of F.A.Q'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  works: {
-    index: {
-      title: 'How Does it Works'
-    },
-    create: {
-      title: 'Create new How Does it Works'
-    },
-    show: {
-      title: 'Detail How Does it Works'
-    },
-    edit: {
-      title: 'Update How Does it Works'
-    },
-    trash: {
-      title: 'Trash of How Does it Works'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  partnerships: {
-    index: {
-      title: 'Partnerships'
-    },
-    create: {
-      title: 'Create new Partnerships'
-    },
-    show: {
-      title: 'Detail Partnerships'
-    },
-    edit: {
-      title: 'Update Partnerships'
-    },
-    trash: {
-      title: 'Trash of Partnerships'
     },
     trashed: {
       title: null
@@ -523,66 +223,6 @@ export default {
       title: null
     },
   },
-  memberships: {
-    index: {
-      title: 'Memberships'
-    },
-    create: {
-      title: 'Create new Memberships'
-    },
-    show: {
-      title: 'Detail Memberships'
-    },
-    edit: {
-      title: 'Update Memberships'
-    },
-    trash: {
-      title: 'Trash of Memberships'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  documents: {
-    index: {
-      title: 'Documents'
-    },
-    create: {
-      title: 'Upload Document'
-    },
-    show: {
-      title: 'Detail Document'
-    },
-    edit: {
-      title: 'Update Document'
-    },
-    trash: {
-      title: 'Trash of Documents'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  resumes: {
-    index: {
-      title: 'Digital Resumes'
-    },
-    create: {
-      title: 'Create new Digital Resumes'
-    },
-    show: {
-      title: 'Detail Digital Resumes'
-    },
-    edit: {
-      title: 'Update Digital Resumes'
-    },
-    trash: {
-      title: 'Trash of Digital Resumes'
-    },
-    trashed: {
-      title: null
-    },
-  },
   users: {
     index: {
       title: 'Users'
@@ -603,7 +243,7 @@ export default {
       title: null
     },
   },
-  agents: {
+  teachers: {
     index: {
       title: 'Digital Partners'
     },
@@ -621,46 +261,6 @@ export default {
     },
     trashed: {
       title: null
-    },
-  },
-  reportAgents: {
-    index: {
-      title: 'Report Digital Partners'
-    },
-    create: {
-      title: 'Report Digital Partners'
-    },
-    show: {
-      title: 'Report Digital Partners'
-    },
-    edit: {
-      title: 'Report Digital Partners'
-    },
-    trash: {
-      title: 'Report Digital Partners'
-    },
-    trashed: {
-      title: 'Report Digital Partners'
-    },
-  },
-  reportCommissions: {
-    index: {
-      title: 'Report Commissions'
-    },
-    create: {
-      title: 'Report Commissions'
-    },
-    show: {
-      title: 'Report Commissions'
-    },
-    edit: {
-      title: 'Report Commissions'
-    },
-    trash: {
-      title: 'Report Commissions'
-    },
-    trashed: {
-      title: 'Report Commissions'
     },
   },
   students: {
@@ -681,26 +281,6 @@ export default {
     },
     trashed: {
       title: null
-    },
-  },
-  reportStudents: {
-    index: {
-      title: 'Report Students'
-    },
-    create: {
-      title: 'Report Students'
-    },
-    show: {
-      title: 'Report Students'
-    },
-    edit: {
-      title: 'Report Students'
-    },
-    trash: {
-      title: 'Report Students'
-    },
-    trashed: {
-      title: 'Report Students'
     },
   },
   addresses: {
@@ -898,46 +478,6 @@ export default {
     },
     trash: {
       title: 'Trash of Notification Formats'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  bankAccounts: {
-    index: {
-      title: 'Bank Accounts'
-    },
-    create: {
-      title: 'Bank Account'
-    },
-    show: {
-      title: 'Bank Account'
-    },
-    edit: {
-      title: 'Update Bank Account'
-    },
-    trash: {
-      title: 'Trash of Bank Accounts'
-    },
-    trashed: {
-      title: null
-    },
-  },
-  tuitions: {
-    index: {
-      title: 'Tuitions'
-    },
-    create: {
-      title: 'Tuition'
-    },
-    show: {
-      title: 'Tuition'
-    },
-    edit: {
-      title: 'Update Tuition'
-    },
-    trash: {
-      title: 'Trash of Tuitions'
     },
     trashed: {
       title: null
