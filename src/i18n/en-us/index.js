@@ -380,7 +380,7 @@ export default {
       title: 'Trash of Roles'
     },
     trashed: {
-      title: null
+      title: 'Deleted Role'
     },
   },
   sysparam: {
