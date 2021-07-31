@@ -5,8 +5,6 @@ import { profile } from './profile'
 import { addresses } from './addresses'
 import { contacts } from './contacts'
 import { files } from './files'
-import { permissions } from './permissions'
-import { roles } from './roles'
 import { sysparam } from './sysparam'
 
 import { notifications } from './notifications'
@@ -77,8 +75,6 @@ const routes = (store) => [
   { ...addresses },
   { ...contacts },
   { ...files },
-  { ...permissions },
-  { ...roles },
   { ...sysparam },
 
   { ...notifications },
