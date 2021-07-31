@@ -1,7 +1,16 @@
 import { required } from '@vuelidate/validators'
 import state from '../resources/state'
 export const collection = 'banners'
+export const params = {
+  relationship: ['banner', 'video'],
+  'orderby[order]': 'asc'
+}
 export const columns = [
+  {
+    name: 'display',
+    label: null,
+    field: null
+  },
   {
     name: 'title',
     required: true,
@@ -54,7 +63,7 @@ export const form = {
   videourl: null,
   link: null,
   order: 1,
-  image: null,
+  banner: null,
   video: null
 }
 
@@ -111,7 +120,7 @@ export const layout = [
     {
       type: 'QFile',
       col: 'col-4',
-      name: 'image',
+      name: 'banner',
       label: 'Image',
       props: {
         maxlength: 1024
@@ -200,8 +209,12 @@ export const validation = {
   order: {
     required
   },
-  image: {},
+  banner: {},
   video: {},
+}
+
+export const headers = {
+  'Content-Type': 'multipart/form-data'
 }
 
 export default function () {
@@ -209,9 +222,11 @@ export default function () {
     ...state(),
     // Collection name
     collection,
+    params,
     // Datatable config
     columns,
     form,
+    headers,
     resetValue,
     layout,
     validation
