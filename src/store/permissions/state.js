@@ -42,7 +42,8 @@ export const layout = [
       label: 'Permission',
       props: {
         maxlength: 100
-      }
+      },
+      events: {}
     },
     {
       type: 'QInput',
@@ -51,7 +52,8 @@ export const layout = [
       label: 'Guard',
       props: {
         maxlength: 25
-      }
+      },
+      events: {}
     }
   ]
 ]
