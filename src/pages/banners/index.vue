@@ -19,16 +19,27 @@
       :stateForm="stateForm"
     >
       <template v-slot:body-cell-title="props">
-        <q-td :props="props" auto-width @click.stop.prevent class="q-mx-none q-px-none">
+        <q-td :props="props" auto-width class="vertical-top">
           <q-avatar rounded class="q-mx-none q-px-none">
             <!-- <img :src="props.row.thumbnail.fullpath" /> -->
             <q-icon name="videocam" v-if="props.row.type=='video'" />
             <q-icon name="image" v-else />
           </q-avatar>
           {{props.row.title}}
+          <br/>
+          <q-img
+            @click.stop.prevent
+            @click="displayImage(props.row.banner.fullpath)"
+            v-if="props.row.banner"
+            :src="props.row.banner.fullpath"
+            mode="cover"
+          />
         </q-td>
       </template>
     </DataTable>
+    <q-dialog v-model="popupimage">
+      <q-img :src="selectedImg" />
+    </q-dialog>
   </q-page>
 </template>
 
@@ -49,6 +60,8 @@ export default {
   },
   data () {
     return {
+      popupimage: false,
+      selectedImg: null,
       stateForm: 'entries' // entries, trash
     }
   },
@@ -60,7 +73,11 @@ export default {
       destroy (dispatch, payload) {
         return dispatch(this.storeCollection + '/destroy', payload)
       }
-    })
+    }),
+    displayImage(img) {
+      this.selectedImg = img
+      this.popupimage = true
+    }
   },
   computed: {
     ...mapState({

@@ -7,11 +7,6 @@ export const params = {
 }
 export const columns = [
   {
-    name: 'display',
-    label: null,
-    field: null
-  },
-  {
     name: 'title',
     required: true,
     label: 'Title',
