@@ -30,9 +30,13 @@
           <q-img
             @click.stop.prevent
             @click="displayImage(props.row.banner.fullpath)"
-            v-if="props.row.banner"
+            v-if="props.row.banner&&props.row.type=='banner'"
             :src="props.row.banner.fullpath"
             mode="cover"
+          />
+          <q-video
+            v-if="videoSource(props.row)&&props.row.type=='video'"
+            :src="videoSource(props.row)"
           />
         </q-td>
       </template>
@@ -77,7 +81,12 @@ export default {
     displayImage(img) {
       this.selectedImg = img
       this.popupimage = true
-    }
+    },
+    videoSource (data) {
+      let src = null
+      if(data.video) src = data.video.fullpath
+      return data.videourl || src
+    },
   },
   computed: {
     ...mapState({
