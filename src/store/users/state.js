@@ -66,22 +66,42 @@ export const form = {
   gender: null, // ['male', 'female']
   dob: null, // Date
   status: 'inactive', // ['active', 'inactive']
-  membership_status: 0,
-  about: null,
-  visa: null,
-  idcard: null,
-
-  den_id: null,
-  referral_id: null,
-
-  activated_at: null,
-  activation_code: null,
-  referenceable: 0,
 }
 
 export const resetValue = {...form}
 
 export const layout = [
+  [
+    {
+      type: 'QInput',
+      col: 'col-6',
+      name: 'email',
+      label: 'Email',
+      props: {
+        type: 'email'
+      },
+      events: {}
+    }
+    // {
+    //   type: 'QSelect',
+    //   col: 'col-2',
+    //   name: 'role',
+    //   label: 'Role',
+    //   props: {
+    //     options: [],
+    //     'use-input': true,
+    //     'emit-value': true,
+    //     'map-options': true,
+    //     'option-value': 'name',
+    //     'option-label': 'name',
+    //     'hide-selected': true,
+    //     'fill-input': true
+    //   },
+    //   reference: 'roles',
+    //   updateValues: [], // update values to be null on value changed
+    //   events: {}
+    // },
+  ],
   [
     {
       type: 'QInput',
@@ -104,63 +124,73 @@ export const layout = [
       events: {}
     },
   ],
+  // [
+  //   {
+  //     type: 'QInput',
+  //     col: 'col-4',
+  //     name: 'password',
+  //     label: 'Password',
+  //     props: {
+  //       type: 'password',
+  //       maxlength: 50
+  //     },
+  //     events: {}
+  //   },
+  //   {
+  //     type: 'QInput',
+  //     col: 'col-4',
+  //     name: 'password_confirmation',
+  //     label: 'Retype Password',
+  //     props: {
+  //       type: 'password',
+  //       maxlength: 50
+  //     },
+  //     events: {}
+  //   },
+  // ],
   [
     {
       type: 'QInput',
-      col: 'col-6',
-      name: 'email',
-      label: 'Email',
+      col: 'col-3',
+      name: 'dob',
+      label: 'Date of Birth',
       props: {
-        type: 'email'
+        type: 'date',
+      },
+      events: {}
+    },
+    {
+      type: 'QRadio',
+      col: 'col-5',
+      name: 'gender',
+      label: 'Gender',
+      props: {
+        options: [
+          {
+            value: 'female',
+            label: 'Female'
+          },
+          {
+            value: 'male',
+            label: 'Male'
+          }
+        ]
       },
       events: {}
     },
   ],
   [
     {
-      type: 'QSelect',
-      col: 'col-2',
-      name: 'role',
-      label: 'Role',
+      type: 'QInput',
+      col: 'col-3',
+      name: 'phone',
+      label: 'Phone',
       props: {
-        options: [],
-        'use-input': true,
-        'emit-value': true,
-        'map-options': true,
-        'option-value': 'name',
-        'option-label': 'name',
-        'hide-selected': true,
-        'fill-input': true
+        type: 'tel',
       },
-      reference: 'roles',
-      updateValues: [], // update values to be null on value changed
       events: {}
     },
   ],
-  [
-    {
-      type: 'QInput',
-      col: 'col-4',
-      name: 'password',
-      label: 'Password',
-      props: {
-        type: 'password',
-        maxlength: 50
-      },
-      events: {}
-    },
-    {
-      type: 'QInput',
-      col: 'col-4',
-      name: 'password_confirmation',
-      label: 'Retype Password',
-      props: {
-        type: 'password',
-        maxlength: 50
-      },
-      events: {}
-    },
-  ]
 ]
 
 export const validation = {
@@ -174,6 +204,7 @@ export const validation = {
   phone: { },
   gender: { required },
   dob: { required },
+  status: { required },
 }
 
 export const permissions = []
