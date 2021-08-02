@@ -1,5 +1,16 @@
+// import {AES, enc}from 'crypto-js';
+import { Cookies } from 'quasar'
+
 export function user (state) {
-  return state.user
+  if(state.user) {
+    return state.user
+  }
+  return Cookies.get('user')
+  // const envrypted = Cookies.get('user')
+  // if(!envrypted) return null
+  // const decrypted = AES.decrypt(envrypted, process.env.KEYENC);
+  // const user = decrypted.toString(enc.Utf8);
+  // return user
 }
 
 export function loggedIn (state) {
@@ -11,7 +22,10 @@ export function roles (state) {
 }
 
 export function permissions (state) {
-  return state.permissions
+  if(state.permissions) {
+    return state.permissions
+  }
+  return Cookies.get('permissions')
 }
 
 export function token (state) {

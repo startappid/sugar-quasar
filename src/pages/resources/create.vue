@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md">
+  <q-page class="q-pa-md scrolltop">
     <q-ajax-bar
       ref="loadingbar"
       position="top"
@@ -7,16 +7,16 @@
     />
     <q-toolbar class="q-pb-md q-px-none">
       <q-breadcrumbs>
-        <q-breadcrumbs-el :label="collectionName" :to="`/${collection}`" />
-        <q-breadcrumbs-el label="Detail" />
+        <q-breadcrumbs-el :label="$t(`${storeCollection}.index.title`)" :to="`/${storeCollection}`" />
+        <q-breadcrumbs-el label="Create" />
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
     </q-toolbar>
-    <div class="text-h5">Create {{collectionName}}</div>
+    <div class="text-h5">{{$t(`${storeCollection}.create.title`)}}</div>
 
     <FormGenerator
       ref="formGenerator"
-      :collection="collection"
+      :collection="storeCollection"
       :stateForm="stateForm"
       :layout="layout"
       :validation="validation"
@@ -26,7 +26,7 @@
       <q-toolbar style="height: 64px">
         <q-toggle v-model="submitAndCreate" label="Submit and create new" />
         <q-space />
-        <q-btn flat label="Cancel" :to="`/${collection}`" />
+        <q-btn flat label="Cancel" :to="`/${storeCollection}`" />
         <q-btn
           icon="check"
           class="q-ml-md bg-primary text-white"
@@ -43,6 +43,9 @@
 <script>
 import { mapState } from 'vuex'
 import FormGenerator from 'components/form/FormGenerator'
+import { scroll } from 'quasar'
+import { useRoute } from 'vue-router'
+const { getScrollTarget, setVerticalScrollPosition } = scroll
 
 export default {
   components: {
@@ -76,7 +79,15 @@ export default {
   methods: {
     submit () {
       const { formGenerator } = this.$refs
-      if (formGenerator.validateError()) return
+      if (formGenerator.validateError()) {
+        const $v = formGenerator.getValidation()
+        const el = this.$el.querySelector(`.form-${$v.$errors[0].$property}`)
+        const target = getScrollTarget(el)
+        const offset = el.offsetTop
+        const duration = 500
+        setVerticalScrollPosition(target, offset, duration)
+        return
+      }
 
       const { loadingbar } = this.$refs
       loadingbar.start()
@@ -87,9 +98,20 @@ export default {
       }
 
       this.$store
-      .dispatch(`${this.collection}/create`, payload)
+      .dispatch(`${this.storeCollection}/create`, payload)
       .then((response) => {
         const { status } = response
+        if (this.submitAndCreate) {
+          this.$q.notify('Data created')
+          const keys = Object.keys(this.form)
+          for (const i in keys) {
+            const key = keys[i]
+            this.form[key] = null
+          }
+          this.$refs.formGenerator.resetForm()
+          return
+        }
+
         this.$q.dialog({
           title: `${status}`,
           message: 'Data created',
@@ -98,16 +120,7 @@ export default {
           },
           persistent: true
         }).onOk(() => {
-          if (!this.submitAndCreate) {
-            this.$router.push(`/${this.collection}`)
-          } else {
-            const keys = Object.keys(this.form)
-            for (const i in keys) {
-              const key = keys[i]
-              this.form[key] = null
-            }
-            this.$refs.formGenerator.resetForm()
-          }
+          this.$router.push(`/${this.storeCollection}`)
         }).finally(() => {
           this.loading = false
         })
@@ -132,32 +145,23 @@ export default {
   computed: {
     ...mapState({
       validation (state, getters) {
-        return getters[`${this.collection}/validation`]
+        return getters[`${this.storeCollection}/validation`]
       },
       form (state, getters) {
-        return getters[`${this.collection}/form`]
+        return getters[`${this.storeCollection}/form`]
       },
       layout (state, getters) {
-        return getters[`${this.collection}/layout`]
+        return getters[`${this.storeCollection}/layout`]
       }
     }),
     readonly () {
       return this.stateForm === 'show'
     },
-    collectionName () {
-      const words = this.collection.split('_')
-      const titles = []
-      for (const key in words) {
-        const word = words[key]
-        titles.push(word.charAt(0).toUpperCase() + word.slice(1))
-      }
-      return titles.join(' ')
-    },
-    titlePage () {
-      let title = ''
-      if (this.stateForm === 'create') title = 'Create New'
-      if (this.stateForm === 'show') title = 'Detail'
-      return title
+    storeCollection() {
+      const route = useRoute()
+      const { collection } = route.params
+      const storeCollection = this.storeCollection || collection
+      return storeCollection
     },
   }
 }

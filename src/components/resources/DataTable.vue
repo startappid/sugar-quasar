@@ -1,7 +1,7 @@
 <template>
   <q-table
     ref="tableRef"
-    :title="collectionName"
+    :title="pageTitle"
     :rows="data"
     :columns="columns"
     row-key="id"
@@ -12,10 +12,11 @@
     @request="onRequest"
     binary-state-sort
     :selected-rows-label="getSelectedString"
-    selection="multiple"
-    :selected="selected"
+    :selection="selection"
+    v-model:selected="selected"
     @selection="onSelection"
-    @row-click="rowClick"
+    v-on="events"
+    class="sticky-column"
   >
     <template v-slot:top-right>
 
@@ -29,6 +30,7 @@
       <q-btn flat rounded dense icon="restore_from_trash" class="q-mr-sm q-ml-sm" v-if="selected.length>=1&&isStateFormTrash" @click="restoreSelected()"/>
       <q-btn flat rounded dense icon="delete_forever" class="q-mr-sm" color="negative"  v-if="selected.length>=1&&isStateFormTrash" @click="deleteSelected()" />
 
+      <slot name="filterbox"></slot>
       <q-input filled dense debounce="300" v-model="filter" placeholder="Search">
         <template v-slot:append>
           <q-icon name="search" />
@@ -44,7 +46,7 @@
             transition-hide="jump-up"
           >
             <q-list>
-              <q-item clickable v-close-popup tabindex="0" :to="`/${collection}/${props.row.id}`">
+              <q-item clickable v-close-popup tabindex="0" :to="`/${path}/${props.row.id}`">
                 <q-item-section avatar>
                   <q-avatar icon="remove_red_eye" color="secondary" text-color="white" />
                 </q-item-section>
@@ -53,7 +55,7 @@
                   <q-item-label caption>Detail Record</q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item clickable v-close-popup tabindex="0" :to="`/${collection}/${props.row.id}/edit`">
+              <q-item clickable v-close-popup tabindex="0" :to="`/${path}/${props.row.id}/edit`">
                 <q-item-section avatar>
                   <q-avatar icon="edit" color="secondary" text-color="white" />
                 </q-item-section>
@@ -83,7 +85,7 @@
             transition-hide="jump-up"
           >
             <q-list>
-              <q-item clickable v-close-popup tabindex="0" :to="`/${collection}/${props.row.id}/trashed`">
+              <q-item clickable v-close-popup tabindex="0" :to="`/${path}/${props.row.id}/trashed`">
                 <q-item-section avatar>
                   <q-avatar icon="remove_red_eye" color="secondary" text-color="white" />
                 </q-item-section>
@@ -122,6 +124,15 @@
   </q-table>
 </template>
 
+<style>
+.sticky-column th:nth-last-child(2),
+.sticky-column td:nth-last-child(2) {
+  position: sticky;
+  right: 0;
+  z-index: 1;
+}
+</style>
+
 <script>
 import { useQuasar } from 'quasar'
 import { ref } from 'vue'
@@ -129,6 +140,18 @@ import { ref } from 'vue'
 export default {
   name: 'DataTable',
   props: {
+    basePath: {
+      type: String,
+      default: () => ''
+    },
+    selection: {
+      type: String,
+      default: () => 'multiple'
+    },
+    rowclickable: {
+      type: Boolean,
+      default: () => true
+    },
     collection: {
       type: String,
       default: () => ''
@@ -240,6 +263,11 @@ export default {
     }
   },
   data () {
+    const events = {}
+    if(this.rowclickable) {
+      events['rowClick'] = this.rowClick
+    }
+
     return {
       filter: '',
       loading: false,
@@ -251,6 +279,7 @@ export default {
         rowsNumber: 0 // total records
       },
       pageOptions: [5, 10, 25, 50, 100],
+      events
     }
   },
   mounted () {
@@ -274,16 +303,25 @@ export default {
   },
   methods: {
     onRequest (props) {
+      const { filters } = props
       const { page, rowsPerPage, sortBy, descending } = props.pagination
-      const filter = props.filter
+      let filter = {}
+      if(filters) {
+        filter = { ...filters }
+      }
+      const search = props.filter
       const params = {
         ...this.params,
-        search: filter,
+        ...filter,
+        search,
         page: page,
         limit: rowsPerPage,
-        orderBy: {
-          [sortBy]: descending ? 'desc' : 'asc'
-        }
+        // [`orderby[${sortBy}]`]: descending ? 'desc' : 'asc'
+      }
+
+      const orderby = Object.keys(this.params).find((index, item) => index.startsWith("orderby"))
+      if(!orderby) {
+        params[[`orderby[${sortBy}]`]] = descending ? 'desc' : 'asc'
       }
 
       this.loading = true
@@ -311,7 +349,11 @@ export default {
         this.loading = false
       })
     },
-
+    emitFilter(filters) {
+      const pagination = this.pagination
+      const filter = this.filter
+      this.onRequest({ pagination, filter, filters })
+    },
     confirmDelete (id) {
       this.$q.dialog({
         title: 'Delete',
@@ -368,11 +410,11 @@ export default {
     showSelected () {
       const data = this.selected[0]
       const trashed = this.stateForm == 'trash'? '/trashed': ''
-      this.$router.push(`/${this.collection}/${data.id}${trashed}`)
+      this.$router.push(`/${this.path}/${data.id}${trashed}`)
     },
     editSelected () {
       const data = this.selected[0]
-      this.$router.push(`/${this.collection}/${data.id}/edit`)
+      this.$router.push(`/${this.path}/${data.id}/edit`)
     },
     deleteSelected () {
       const ids = []
@@ -547,8 +589,9 @@ export default {
     },
 
     rowClick (evt, row, index) {
+      if(!this.rowclickable) return
       const trashed = this.stateForm == 'trash'? '/trashed': ''
-      this.$router.push(`/${this.collection}/${row.id}${trashed}`)
+      this.$router.push(`/${this.path}/${row.id}${trashed}`)
     }
   },
   computed: {
@@ -564,11 +607,21 @@ export default {
       }
       return titles.join(' ')
     },
+    pageTitle () {
+      if (this.stateForm == 'trash') {
+        return this.$t(`${this.collection}.trash.title`)
+      }
+      return this.$t(`${this.collection}.index.title`)
+    },
     isStateFormEntries () {
       return this.stateForm === 'entries'
     },
     isStateFormTrash () {
       return this.stateForm === 'trash'
+    },
+    path () {
+      if (this.basePath != '') return this.basePath
+      return this.collection
     }
   }
 }

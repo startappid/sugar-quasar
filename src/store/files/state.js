@@ -4,11 +4,11 @@ export const collection = 'files'
 
 export const columns = [
   {
-    name: 'file',
+    name: 'display',
     required: true,
     label: 'File',
     align: 'left',
-    field: 'filename',
+    field: 'full_path',
     format: (val, row) => val,
     sortable: false,
     style: 'width: 120px'
@@ -23,11 +23,11 @@ export const columns = [
     sortable: true
   },
   {
-    name: 'information',
+    name: 'directory',
     required: true,
-    label: 'Information',
+    label: 'Directory',
     align: 'left',
-    field: 'size',
+    field: 'directory',
     format: (val) => val,
     sortable: true
   },
@@ -46,26 +46,106 @@ export const columns = [
   }
 ]
 
+export const directories = [
+  {
+    value: 'banners/image',
+    label: 'Banners Image'
+  },
+  {
+    value: 'banners/video',
+    label: 'Banners Video'
+  },
+  {
+    value: 'cities/thumbnail',
+    label: 'Cities Thumbnail'
+  },
+  {
+    value: 'countries/flag',
+    label: 'Countries Flag'
+  },
+  {
+    value: 'institutions/gallery',
+    label: 'Institutions Gallery'
+  },
+  {
+    value: 'institutions/logo',
+    label: 'Institutions Logo'
+  },
+  {
+    value: 'partnerships/image',
+    label: 'Partnerships Image'
+  },
+  {
+    value: 'users',
+    label: 'Users'
+  },
+  {
+    value: 'users/docs',
+    label: 'Users Docs'
+  },
+  {
+    value: 'users/id',
+    label: 'Users ID'
+  },
+  {
+    value: 'users/resume',
+    label: 'Digital Resume'
+  },
+  {
+    value: 'users/membership',
+    label: 'Membership'
+  },
+  {
+    value: 'users/receipt',
+    label: 'Receipt'
+  },
+  {
+    value: 'user_accounts/card',
+    label: 'Accounts Card'
+  },
+  {
+    value: 'courses/categories/thumbnail',
+    label: 'Courses Categories Thumbnail'
+  },
+  {
+    value: 'courses/thumbnail',
+    label: 'Courses Thumbnail'
+  },
+  {
+    value: 'courses/gallery',
+    label: 'Courses Gallery'
+  },
+  {
+    value: 'files',
+    label: 'Files'
+  },
+]
+
 export const form = {
   file: null,
   title: null,
-  description: null,
-  type: 'other',
+  description: '',
+  directory: null,
+  foreign_table: null,
+  foreign_id: null,
+  type: 'image',
   fullpath: null // NOTE: fullpath will not be submited
 }
 
+export const resetValue = {...form}
 export const layout = [
   [
     {
       type: 'QFile',
-      col: 'col',
+      col: 'col-4',
       name: 'file',
-      label: 'FIle',
-      icon: 'insert_drive_file', // movie, photo, audiotrack, insert_drive_file
+      label: 'File',
       imgfield: 'fullpath', // NOTE: field wil be shown
       props: {
-        maxlength: 1024
-      }
+        maxlength: 1024,
+        accept: 'application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*'
+      },
+      events: {}
     }
   ],
   [
@@ -76,20 +156,24 @@ export const layout = [
       label: 'Title',
       props: {
         maxlength: 1024,
-        autogrow: true
-      }
+        autogrow: true,
+        hint: '-- optional'
+      },
+      events: {}
     }
   ],
   [
     {
-      type: 'QInput',
+      type: 'QEditor',
       col: 'col',
       name: 'description',
       label: 'Description',
       props: {
         maxlength: 1024,
-        autogrow: true
-      }
+        autogrow: true,
+        hint: '-- optional'
+      },
+      events: {}
     }
   ],
   [
@@ -120,13 +204,60 @@ export const layout = [
       },
       events: {}
     }
-  ]
+  ],
+  [
+    {
+      type: 'QInput',
+      col: 'col-2',
+      name: 'foreign_table',
+      label: 'Foreign Table',
+      props: {
+        maxlength: 1024,
+        autogrow: true,
+        hint: '-- optional'
+      },
+      events: {}
+    },
+    {
+      type: 'QInput',
+      col: 'col-2',
+      name: 'foreign_id',
+      label: 'Foreign ID',
+      props: {
+        maxlength: 1024,
+        autogrow: true,
+        hint: '-- optional'
+      },
+      events: {}
+    },
+    {
+      type: 'QSelect',
+      col: 'col-3',
+      name: 'directory',
+      label: 'Directory',
+      props: {
+        options: directories,
+        'use-input': true,
+        'emit-value': true,
+        'map-options': true,
+        'option-value': 'value',
+        'option-label': 'label',
+        'hide-selected': true,
+        'fill-input': true,
+        hint: '-- optional'
+      },
+      events: {}
+    },
+  ],
 ]
 
 export const validation = {
   file: {},
   title: {},
   description: {},
+  directory: {},
+  foreign_table: {},
+  foreign_id: {},
   type: {
     required
   }
@@ -144,6 +275,8 @@ export default function () {
     // Datatable config
     columns,
     form,
+    resetValue,
+    directories,
     layout,
     validation,
     headers

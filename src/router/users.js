@@ -30,7 +30,10 @@ export const users = {
       props: { collection },
       component: () => {
         try {
-          return require('pages/' + collection + '/create.vue')
+          const isExist = require(`pages/${collection}/create.vue`)
+          if (isExist) {
+            return import('pages/' + collection + '/create.vue')
+          }
         } catch (error) {
           return import('pages/resources/create.vue')
         }
@@ -74,7 +77,10 @@ export const users = {
       props: { collection },
       component: () => {
         try {
-          return require('pages/' + collection + '/show.vue')
+          const isExist = require(`pages/${collection}/show.vue`)
+          if (isExist) {
+            return import('pages/' + collection + '/show.vue')
+          }
         } catch (error) {
           return import('pages/resources/show.vue')
         }
@@ -96,7 +102,10 @@ export const users = {
       props: { collection },
       component: () => {
         try {
-          return require('pages/' + collection + '/edit.vue')
+          const isExist = require(`pages/${collection}/edit.vue`)
+          if (isExist) {
+            return import(`pages/${collection}/edit.vue`)
+          }
         } catch (error) {
           return import('pages/resources/edit.vue')
         }

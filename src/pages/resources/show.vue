@@ -7,16 +7,16 @@
     />
     <q-toolbar class="q-pb-md q-px-none">
       <q-breadcrumbs>
-        <q-breadcrumbs-el :label="collectionName" :to="`/${collection}`" />
+        <q-breadcrumbs-el :label="$t(`${storeCollection}.index.title`)" :to="`/${storeCollection}`" />
         <q-breadcrumbs-el label="Detail" />
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
     </q-toolbar>
-    <div class="text-h5">Detail {{collectionName}}</div>
+    <div class="text-h5">{{$t(`${storeCollection}.show.title`)}}</div>
 
     <FormGenerator
       ref="formGenerator"
-      :collection="collection"
+      :collection="storeCollection"
       :stateForm="stateForm"
       :layout="layout"
       :validation="validation"
@@ -25,10 +25,10 @@
 
     <q-footer reveal elevated class="bg-white text-black">
       <q-toolbar style="height: 64px">
-        <q-btn flat label="Cancel" :to="`/${collection}`" />
+        <q-btn flat label="Cancel" :to="`/${storeCollection}`" />
         <q-space />
         <q-btn icon="delete" flat color="negative" label="Delete" @click="confirmDelete(id)" />
-        <q-btn icon="edit" :loading="loading" class="q-ml-md bg-primary text-white" color="secondary" label="Edit" :to="`/${collection}/${$route.params.id}/edit`" />
+        <q-btn icon="edit" :loading="loading" class="q-ml-md bg-primary text-white" color="secondary" label="Edit" :to="`/${storeCollection}/${$route.params.id}/edit`" />
       </q-toolbar>
     </q-footer>
   </q-page>
@@ -38,6 +38,7 @@
 import { mapState } from 'vuex'
 import { useStore } from 'vuex'
 import FormGenerator from 'components/form/FormGenerator'
+import { useRoute } from 'vue-router'
 
 export default {
   components: {
@@ -63,8 +64,10 @@ export default {
     loadingbar.start()
     this.loading = true
 
+    const params = this.params
+
     $store
-    .dispatch(`${this.collection}/detail`, { id: this.id })
+    .dispatch(`${this.storeCollection}/detail`, { id: this.id, params })
     .then(response => {
       const { data } = response
       this.loading = false
@@ -91,9 +94,11 @@ export default {
     })
   },
   data () {
+    const route = useRoute()
+    const { id } = route.params
     return {
       stateForm: 'show', // create, update, show
-      id: this.$route.params.id,
+      id,
       isPwd: true,
       loading: false
     }
@@ -116,7 +121,7 @@ export default {
         },
         persistent: true
       }).onOk(() => {
-        this.$store.dispatch(`${this.collection}/destroy`, {
+        this.$store.dispatch(`${this.storeCollection}/destroy`, {
           type: id,
           params: {}
         }).then((response) => {
@@ -129,7 +134,7 @@ export default {
             },
             persistent: true
           }).onOk(() => {
-            this.$router.push(`/${this.collection}`)
+            this.$router.push(`/${this.storeCollection}`)
           })
         }).catch(error => {
           if (error.response) {
@@ -151,33 +156,27 @@ export default {
   computed: {
     ...mapState({
       validation (state, getters) {
-        return getters[`${this.collection}/validation`]
+        return getters[`${this.storeCollection}/validation`]
       },
       form (state, getters) {
-        return getters[`${this.collection}/form`]
+        return getters[`${this.storeCollection}/form`]
       },
       layout (state, getters) {
-        return getters[`${this.collection}/layout`]
+        return getters[`${this.storeCollection}/layout`]
+      },
+      params (state, getters) {
+        return getters[`${this.storeCollection}/params`]
       }
     }),
     readonly () {
       return this.stateForm === 'show'
     },
-    collectionName () {
-      const words = this.collection.split('_')
-      const titles = []
-      for (const key in words) {
-        const word = words[key]
-        titles.push(word.charAt(0).toUpperCase() + word.slice(1))
-      }
-      return titles.join(' ')
-    },
-    titlePage () {
-      let title = ''
-      if (this.stateForm === 'create') title = 'Create New'
-      if (this.stateForm === 'show') title = 'Detail'
-      return title
-    },
+    storeCollection() {
+      const route = useRoute()
+      const { collection } = route.params
+      const storeCollection = this.collection || collection
+      return storeCollection
+    }
   }
 }
 </script>

@@ -57,9 +57,9 @@ export async function detail ({ state, commit, dispatch, getters }, { id, params
   }
   config = { ...getters.config, ...config }
   const { collection } = state
-  const ROUTE_DETAIL = `/${collection}/:id`
+  const ROUTE_DETAIL = `/${collection}/${id}`
   const promise = new Promise((resolve, reject) => {
-    return api.get(ROUTE_DETAIL.replace(':id', id), { params, headers, ...config }).then(response => {
+    return api.get(ROUTE_DETAIL, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -72,7 +72,7 @@ export async function detail ({ state, commit, dispatch, getters }, { id, params
 export async function update ({ state, commit, dispatch, getters }, { id, data, params, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
   const _headers = state.headers
-  // data._method = 'PUT'
+  data._method = 'PUT'
 
   if (token) {
     headers = { Authorization: `Bearer ${token}`, ...headers, ..._headers }
@@ -90,8 +90,8 @@ export async function update ({ state, commit, dispatch, getters }, { id, data, 
   const { collection } = state
   const ROUTE_UPDATE = `/${collection}/${id}`
   const promise = new Promise((resolve, reject) => {
-    // return api.post(ROUTE_UPDATE.replace(':id', id), data, { params, headers, ...config }).then(response => {
-    return api.put(ROUTE_UPDATE, data, { params, headers, ...config }).then(response => {
+    return api.post(ROUTE_UPDATE, data, { params, headers, ...config }).then(response => {
+    // return api.put(ROUTE_UPDATE, data, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -108,9 +108,9 @@ export async function patch ({ state, commit, dispatch, getters }, { id, data, p
   }
   config = { ...getters.config, ...config }
   const { collection } = state
-  const ROUTE_PATCH = `/${collection}/:id`
+  const ROUTE_PATCH = `/${collection}/${id}`
   const promise = new Promise((resolve, reject) => {
-    return api.put(ROUTE_PATCH.replace(':id', id), data, { params, headers, ...config }).then(response => {
+    return api.put(ROUTE_PATCH, data, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -130,9 +130,9 @@ export async function destroy ({ state, commit, dispatch, getters }, { type, dat
   }
   config = { ...getters.config, ...config }
   const { collection } = state
-  const ROUTE_DESTROY = `/${collection}/:type` // Softdelete
+  const ROUTE_DESTROY = `/${collection}/${type}` // Softdelete
   const promise = new Promise((resolve, reject) => {
-    return api.delete(ROUTE_DESTROY.replace(':type', type), { data, params, headers, ...config }).then(response => {
+    return api.delete(ROUTE_DESTROY, { data, params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -152,9 +152,9 @@ export async function hardDelete ({ state, commit, dispatch, getters }, { type, 
   }
   config = { ...getters.config, ...config }
   const { collection } = state
-  const ROUTE_DELETE = `/${collection}/:type/delete` // Permanent delete
+  const ROUTE_DELETE = `/${collection}/${type}/delete` // Permanent delete
   const promise = new Promise((resolve, reject) => {
-    return api.delete(ROUTE_DELETE.replace(':type', type), { data, params, headers, ...config }).then(response => {
+    return api.delete(ROUTE_DELETE, { data, params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -190,9 +190,9 @@ export async function trashed ({ state, commit, dispatch, getters }, { id, param
   }
   config = { ...getters.config, ...config }
   const { collection } = state
-  const ROUTE_TRASHED = `/${collection}/:id/trashed` // Data trashed detail
+  const ROUTE_TRASHED = `/${collection}/${id}/trashed` // Data trashed detail
   const promise = new Promise((resolve, reject) => {
-    return api.get(ROUTE_TRASHED.replace(':id', id), { params, headers, ...config }).then(response => {
+    return api.get(ROUTE_TRASHED, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {
@@ -212,9 +212,9 @@ export async function restore ({ state, commit, dispatch, getters }, { type, dat
   }
   config = { ...getters.config, ...config }
   const { collection } = state
-  const ROUTE_RESTORE = `/${collection}/:type/restore` // Restore of collection
+  const ROUTE_RESTORE = `/${collection}/${type}/restore` // Restore of collection
   const promise = new Promise((resolve, reject) => {
-    return api.post(ROUTE_RESTORE.replace(':type', type), data, { params, headers, ...config }).then(response => {
+    return api.post(ROUTE_RESTORE, data, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {

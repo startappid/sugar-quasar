@@ -1,18 +1,18 @@
 import { collection } from './collection'
 
-import { countries } from './countries'
-import { provinces } from './provinces'
-import { cities } from './cities'
-
 import { users } from './users'
+import { roles } from './roles'
+import { profile } from './profile'
 import { addresses } from './addresses'
 import { contacts } from './contacts'
 import { files } from './files'
-import { permissions } from './permissions'
-import { roles } from './roles'
 import { sysparam } from './sysparam'
 
-const routes = [
+import { notifications } from './notifications'
+import { notificationTemplates } from './notificationTemplates'
+import { notificationFormats } from './notificationFormats'
+
+const routes = (store) => [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
@@ -20,7 +20,6 @@ const routes = [
       { path: '', component: () => import('pages/Index.vue') }
     ]
   },
-
   {
     path: '/login',
     component: () => import('layouts/UserLogin.vue'),
@@ -28,21 +27,64 @@ const routes = [
       { path: '', component: () => import('pages/users/login.vue') }
     ]
   },
+  {
+    path: '/register',
+    component: () => import('layouts/UserLogin.vue'),
+    children: [
+      { path: '', component: () => import('pages/users/register.vue') }
+    ]
+  },
+  {
+    path: '/forgot-password',
+    component: () => import('layouts/UserLogin.vue'),
+    children: [
+      { path: '', component: () => import('pages/users/forgot.vue') }
+    ]
+  },
+  {
+    path: '/verify-email/:id/:hash',
+    component: () => import('layouts/UserLogin.vue'),
+    children: [
+      { path: '', component: () => import('pages/users/verify-email.vue') }
+    ]
+  },
 
-  { ...countries },
-  { ...provinces },
-  { ...cities },
+  // {
+  //   path: '/profile',
+  //   component: async () => await import('layouts/MainLayout.vue'),
+  //   children: [
+  //     {
+  //       path: '',
+  //       props: {
+  //         collection: 'users'
+  //       },
+  //       component: () => {
+  //         try {
+  //           return import('pages/profile/show.vue')
+  //         } catch (error) {
+  //           return import('pages/resources/show.vue')
+  //         }
+  //       }
+  //     },
+  //   ]
+  // },
+
+
+  { ...profile },
 
   { ...users },
+  { ...roles },
   { ...addresses },
   { ...contacts },
   { ...files },
-  { ...permissions },
-  { ...roles },
   { ...sysparam },
 
+  { ...notifications },
+  { ...notificationTemplates },
+  { ...notificationFormats },
+
   // Default route
-  { ...collection },
+  { ...collection(store) },
 
   // Always leave this as last one,
   // but you can also remove it

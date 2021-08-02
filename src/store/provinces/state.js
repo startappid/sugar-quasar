@@ -39,7 +39,7 @@ export const form = {
   name: null,
   country_id: null
 }
-
+export const resetValue = {...form}
 export const layout = [
   [
     {
@@ -91,6 +91,7 @@ export default function () {
     columns,
     params,
     form,
+    resetValue,
     layout,
     validation
   }

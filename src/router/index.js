@@ -16,9 +16,10 @@ export default route(function ({ store, ssrContext }) {
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory
 
+  const routesGenerate = routes(store)
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
-    routes,
+    routes: routesGenerate,
 
     // Leave this as is and make changes in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
@@ -30,8 +31,13 @@ export default route(function ({ store, ssrContext }) {
     const publicRoutes = [
       '/login',
       '/register',
-      '/forgot-password'
+      '/forgot-password',
+      '/verify-email'
     ]
+    if(to.path.indexOf('verify-email') >= 0) {
+      next()
+      return
+    }
     if (publicRoutes.indexOf(to.path) < 0) {
       const loggedIn = store.getters['auth/loggedIn']
       if (loggedIn) {

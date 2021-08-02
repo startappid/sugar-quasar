@@ -2,7 +2,7 @@
   <q-page class="q-pa-md">
     <q-toolbar class="q-pb-md q-px-none">
       <q-breadcrumbs>
-        <q-breadcrumbs-el :label="collectionName" :to="`/${collection}`" />
+        <q-breadcrumbs-el :label="$t(`${storeCollection}.index.title`)" :to="`/${storeCollection}`" />
         <q-breadcrumbs-el label="Trash" />
       </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
@@ -15,7 +15,8 @@
       :fetch="trash"
       :destroy="destroy"
       :restore="restore"
-      :collection="collection"
+      :collection="storeCollection"
+      :params="params"
       :stateForm="stateForm"
       :stateData="stateData"
     />
@@ -25,6 +26,7 @@
 <script>
 import DataTable from 'components/resources/DataTable'
 import { mapState, mapActions } from 'vuex'
+import { useRoute } from 'vue-router'
 
 export default {
   components: {
@@ -45,13 +47,13 @@ export default {
   methods: {
     ...mapActions({
       trash (dispatch, payload) {
-        return dispatch(this.collection + '/trash', payload)
+        return dispatch(this.storeCollection + '/trash', payload)
       },
       destroy (dispatch, payload) {
-        return dispatch(this.collection + '/hardDelete', payload)
+        return dispatch(this.storeCollection + '/hardDelete', payload)
       },
       restore (dispatch, payload) {
-        return dispatch(this.collection + '/restore', payload)
+        return dispatch(this.storeCollection + '/restore', payload)
       }
     }),
 
@@ -100,10 +102,6 @@ export default {
           }
           this.loading = false
         })
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
       })
     },
 
@@ -152,28 +150,24 @@ export default {
           }
           this.loading = false
         })
-      }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
-        // console.log('I am triggered on both OK and Cancel')
       })
     }
   },
   computed: {
     ...mapState({
       columns (state, getters) {
-        return getters[`${this.collection}/columns`]
-      }
+        return getters[`${this.storeCollection}/columns`]
+      },
+      params (state, getters) {
+        return getters[`${this.storeCollection}/params`]
+      },
     }),
-    collectionName () {
-      const words = this.collection.split('_')
-      const titles = []
-      for (const key in words) {
-        const word = words[key]
-        titles.push(word.charAt(0).toUpperCase() + word.slice(1))
-      }
-      return titles.join(' ')
-    }
+    storeCollection() {
+      const route = useRoute()
+      const { collection } = route.params
+      const storeCollection = this.storeCollection || collection
+      return storeCollection
+    },
   }
 }
 </script>

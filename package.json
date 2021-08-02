@@ -10,25 +10,29 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/cli": "^1.1.3",
+    "@quasar/cli": "^1.2.1",
     "@quasar/extras": "^1.0.0",
     "@vuelidate/core": "^2.0.0-alpha.15",
     "@vuelidate/validators": "^2.0.0-alpha.13",
     "axios": "^0.21.1",
+    "babel-loader": "^8.2.2",
     "core-js": "^3.6.5",
     "highcharts": "^9.0.1",
     "highcharts-vue": "^1.3.5",
     "qs": "^6.10.1",
-    "quasar": "^2.0.0-beta.12",
-    "vue-i18n": "^9.0.0-beta.0"
+    "quasar": "^2.0.0",
+    "vue-i18n": "^9.0.0-beta.0",
+    "vuex": "^4.0.1"
   },
   "devDependencies": {
-    "@quasar/app": "^3.0.0-beta.15",
+    "@babel/eslint-parser": "^7.13.14",
+    "@quasar/app": "^3.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^7.0.0",
-    "eslint-webpack-plugin": "^2.4.0"
+    "eslint-webpack-plugin": "^2.4.0",
+    "workbox-webpack-plugin": "^6.0.0"
   },
   "browserslist": [
     "last 10 Chrome versions",
@@ -42,7 +46,7 @@
     "last 5 Opera versions"
   ],
   "engines": {
-    "node": ">= 10.18.1",
+    "node": ">= 12.22.1",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   }

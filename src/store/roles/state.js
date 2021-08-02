@@ -34,6 +34,8 @@ export const form = {
   guard_name: 'web'
 }
 
+export const resetValue = {...form}
+
 export const layout = [
   [
     {
@@ -42,8 +44,9 @@ export const layout = [
       name: 'name',
       label: 'Role',
       props: {
-        maxlength: 100
-      }
+        maxlength: 100,
+      },
+      events: {}
     },
     {
       type: 'QInput',
@@ -51,8 +54,9 @@ export const layout = [
       name: 'guard_name',
       label: 'Guard',
       props: {
-        maxlength: 25
-      }
+        maxlength: 25,
+      },
+      events: {}
     }
   ]
 ]
@@ -74,6 +78,7 @@ export default function () {
     // Datatable config
     columns,
     form,
+    resetValue,
     layout,
     validation
   }

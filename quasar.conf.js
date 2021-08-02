@@ -24,6 +24,7 @@ module.exports = configure(function (/* ctx */) {
     boot: [
       'i18n',
       'axios',
+      'directives',
     ],
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -67,7 +68,7 @@ module.exports = configure(function (/* ctx */) {
       // extractCSS: false,
       env: {
         BASEURL:  'http://localhost:8000',
-        APIURL:   'http://localhost:8000/api/v2'
+        APIURL:   'http://localhost:8000/api/v1'
       },
 
       // https://v2.quasar.dev/quasar-cli/handling-webpack

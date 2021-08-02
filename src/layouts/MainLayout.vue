@@ -47,19 +47,19 @@
         <q-space />
 
         <div class="q-gutter-sm row items-center no-wrap">
-          <q-btn round dense flat color="text-grey-7" icon="apps">
-            <q-tooltip>Google Apps</q-tooltip>
+          <q-btn v-can="'nav.topbar.broadcast'" round dense flat color="text-grey-7" icon="campaign" to="/notifications/create">
+            <q-tooltip>Broadcast</q-tooltip>
           </q-btn>
-          <q-btn round dense flat color="grey-8" icon="notifications">
+
+          <q-btn round dense flat color="grey-8" icon="notifications" to="/notifications">
             <q-badge color="red" text-color="white" floating>
               2
             </q-badge>
             <q-tooltip>Notifications</q-tooltip>
           </q-btn>
 
-          <q-btn round flat to="/profile">
-            <q-avatar size="26px">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+          <q-btn round dense flat to="/profile">
+            <q-avatar size="26px" icon="face">
             </q-avatar>
             <q-tooltip>Your Profile</q-tooltip>
           </q-btn>
@@ -69,23 +69,13 @@
               transition-hide="jump-up"
             >
               <q-list>
-                <q-item-label header>Settings</q-item-label>
-                <q-item clickable v-close-popup >
+                <q-item clickable v-close-popup to="/profile" >
                   <q-item-section avatar>
-                    <q-avatar icon="flag" color="primary" text-color="white" />
+                    <q-avatar icon="face" color="primary" text-color="white" />
                   </q-item-section>
                   <q-item-section>
-                    <q-item-label>Language</q-item-label>
-                    <q-item-label caption>English</q-item-label>
-                  </q-item-section>
-                </q-item>
-                <q-item clickable v-close-popup >
-                  <q-item-section avatar>
-                    <q-avatar icon="more_horiz" color="primary" text-color="white" />
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>Settings</q-item-label>
-                    <q-item-label caption>More settings</q-item-label>
+                    <q-item-label>Profile</q-item-label>
+                    <q-item-label caption>User Profile</q-item-label>
                   </q-item-section>
                 </q-item>
                 <q-separator inset spaced />
@@ -114,30 +104,81 @@
     >
       <q-scroll-area class="fit">
         <q-list padding class="text-grey-8">
-          <q-item class="GNL__drawer-item" v-ripple v-for="link in links1" :key="link.text" clickable>
+
+          <q-item class="GNL__drawer-item" v-ripple to="/">
             <q-item-section avatar>
-              <q-icon :name="link.icon" />
+              <q-icon name="home" />
             </q-item-section>
             <q-item-section>
-              <q-item-label>{{ link.text }}</q-item-label>
+              <q-item-label>Dashboard</q-item-label>
             </q-item-section>
           </q-item>
 
+          <div v-can="'nav.aside.marketing'">
           <q-separator inset class="q-my-sm" />
-
-          <q-item class="GNL__drawer-item" v-ripple v-for="link in links2" :key="link.text" clickable>
+          <q-item-label header>Marketing &amp; Contents</q-item-label>
+          <q-item v-ripple v-can="'banners.read.index'"  clickable to="/banners">
             <q-item-section avatar>
-              <q-icon :name="link.icon" />
+              <q-icon name="ad_units" />
             </q-item-section>
             <q-item-section>
-              <q-item-label>{{ link.text }}</q-item-label>
+              <q-item-label>Banners</q-item-label>
             </q-item-section>
           </q-item>
 
-          <q-separator inset class="q-my-sm" />
+          <q-item v-ripple v-can="'contents.read.faq'" clickable to="/faq">
+            <q-item-section avatar>
+              <q-icon name="help_center" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>F.A.Q</q-item-label>
+            </q-item-section>
+          </q-item>
 
+          <q-item v-ripple v-can="'contents.read.terms'" clickable to="/terms">
+            <q-item-section avatar>
+              <q-icon name="gavel" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Terms &amp; Condition</q-item-label>
+            </q-item-section>
+          </q-item>
+          </div>
+
+          <div v-can="'nav.aside.notifications'">
+          <q-separator inset class="q-my-sm" />
+          <q-item-label header>Notifications</q-item-label>
+
+          <q-item v-ripple v-can="'notifications.read.index'" clickable to="/notifications">
+            <q-item-section avatar>
+              <q-icon name="notifications" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Notification</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item v-ripple v-can="'notification_templates.read.index'" clickable to="/notificationTemplates">
+            <q-item-section avatar>
+              <q-icon name="feedback" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Notification Template</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item v-ripple v-can="'format_messages.read.index'" clickable to="/notificationFormats">
+            <q-item-section avatar>
+              <q-icon name="warning" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Notification Format</q-item-label>
+            </q-item-section>
+          </q-item>
+          </div>
+
+          <q-separator inset class="q-my-sm" />
           <q-item-label header>Administrator</q-item-label>
-
           <q-expansion-item
             icon="people"
             label="Users Management"
@@ -206,24 +247,6 @@
               </q-item-section>
             </q-item>
           </q-expansion-item>
-
-          <q-separator inset class="q-my-sm" />
-
-          <q-item class="GNL__drawer-item" v-ripple v-for="link in links3" :key="link.text" clickable>
-            <q-item-section>
-              <q-item-label>{{ link.text }} <q-icon v-if="link.icon" :name="link.icon" /></q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <div class="q-mt-md">
-            <div class="flex flex-center q-gutter-xs">
-              <a class="GNL__drawer-footer-link" href="javascript:void(0)" aria-label="Privacy">Privacy</a>
-              <span> · </span>
-              <a class="GNL__drawer-footer-link" href="javascript:void(0)" aria-label="Terms">Terms</a>
-              <span> · </span>
-              <a class="GNL__drawer-footer-link" href="javascript:void(0)" aria-label="About">About Google</a>
-            </div>
-          </div>
         </q-list>
       </q-scroll-area>
     </q-drawer>
@@ -243,30 +266,6 @@ export default {
       leftDrawerOpen: true,
       search: '',
       storage: 0.26,
-      links1: [
-        { icon: 'photo', text: 'Photos' },
-        { icon: 'photo_album', text: 'Albums' },
-        { icon: 'assistant', text: 'Assistant' },
-        { icon: 'people', text: 'Sharing' },
-        { icon: 'book', text: 'Photo books' }
-      ],
-      links2: [
-        { icon: 'archive', text: 'Archive' },
-        { icon: 'delete', text: 'Trash' }
-      ],
-      links3: [
-        { icon: 'settings', text: 'Settings' },
-        { icon: 'help', text: 'Help & Feedback' },
-        { icon: 'get_app', text: 'App Downloads' }
-      ],
-      createMenu: [
-        { icon: 'photo_album', text: 'Album' },
-        { icon: 'people', text: 'Shared Album' },
-        { icon: 'movie', text: 'Movie' },
-        { icon: 'library_books', text: 'Animation' },
-        { icon: 'dashboard', text: 'Collage' },
-        { icon: 'book', text: 'Photo book' }
-      ]
     }
   },
   computed: {

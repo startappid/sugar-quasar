@@ -102,5 +102,385 @@ export default {
       verify_label: 'Verify',
       verify_message: 'Are you sure you want to verify {user}?'
     }
-  }
+  },
+  countries: {
+    index: {
+      title: 'Countries'
+    },
+    create: {
+      title: 'Create new Country'
+    },
+    show: {
+      title: 'Detail Country'
+    },
+    edit: {
+      title: 'Update Country'
+    },
+    trash: {
+      title: 'Trash of Countries'
+    },
+    trashed: {
+      title: 'Deleted Country'
+    },
+  },
+  provinces: {
+    index: {
+      title: 'Provinces'
+    },
+    create: {
+      title: 'Create new Province'
+    },
+    show: {
+      title: 'Detail Province'
+    },
+    edit: {
+      title: 'Update Province'
+    },
+    trash: {
+      title: 'Trash of Provinces'
+    },
+    trashed: {
+      title: 'Deleted Province'
+    },
+  },
+  cities: {
+    index: {
+      title: 'Cities'
+    },
+    create: {
+      title: 'Create new City'
+    },
+    show: {
+      title: 'Detail City'
+    },
+    edit: {
+      title: 'Update City'
+    },
+    trash: {
+      title: 'Trash of Cities'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  banners: {
+    index: {
+      title: 'Banners'
+    },
+    create: {
+      title: 'Create new Banner'
+    },
+    show: {
+      title: 'Detail Banner'
+    },
+    edit: {
+      title: 'Update Banner'
+    },
+    trash: {
+      title: 'Trash of Banners'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  faq: {
+    index: {
+      title: 'F.A.Q'
+    },
+    create: {
+      title: 'Create new F.A.Q'
+    },
+    show: {
+      title: 'Detail F.A.Q'
+    },
+    edit: {
+      title: 'Update F.A.Q'
+    },
+    trash: {
+      title: 'Trash of F.A.Q'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  terms: {
+    index: {
+      title: 'Terms & Conditions'
+    },
+    create: {
+      title: 'Create new Terms & Conditions'
+    },
+    show: {
+      title: 'Detail Terms & Conditions'
+    },
+    edit: {
+      title: 'Update Terms & Conditions'
+    },
+    trash: {
+      title: 'Trash of Terms & Conditions'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  users: {
+    index: {
+      title: 'Users'
+    },
+    create: {
+      title: 'Create new User'
+    },
+    show: {
+      title: 'Detail User'
+    },
+    edit: {
+      title: 'Update User'
+    },
+    trash: {
+      title: 'Trash of Users'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  teachers: {
+    index: {
+      title: 'Digital Partners'
+    },
+    create: {
+      title: 'Create new Digital Partner'
+    },
+    show: {
+      title: 'Detail Digital Partner'
+    },
+    edit: {
+      title: 'Update Digital Partner'
+    },
+    trash: {
+      title: 'Trash of Digital Partners'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  students: {
+    index: {
+      title: 'Students'
+    },
+    create: {
+      title: 'Create new Students'
+    },
+    show: {
+      title: 'Detail Students'
+    },
+    edit: {
+      title: 'Update Students'
+    },
+    trash: {
+      title: 'Trash of Students'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  addresses: {
+    index: {
+      title: 'Addresses'
+    },
+    create: {
+      title: 'Create new Address'
+    },
+    show: {
+      title: 'Detail Address'
+    },
+    edit: {
+      title: 'Update Address'
+    },
+    trash: {
+      title: 'Trash of Addresses'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  contacts: {
+    index: {
+      title: 'Contacts'
+    },
+    create: {
+      title: 'Create new Contact'
+    },
+    show: {
+      title: 'Detail Contact'
+    },
+    edit: {
+      title: 'Update Contact'
+    },
+    trash: {
+      title: 'Trash of Contacts'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  files: {
+    index: {
+      title: 'Files & Media'
+    },
+    create: {
+      title: 'Upload Media'
+    },
+    show: {
+      title: 'Detail Media'
+    },
+    edit: {
+      title: 'Update Media'
+    },
+    trash: {
+      title: 'Trash of Files & Media'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  permissions: {
+    index: {
+      title: 'Permissions'
+    },
+    create: {
+      title: 'Create new Permission'
+    },
+    show: {
+      title: 'Detail Permission'
+    },
+    edit: {
+      title: 'Update Permission'
+    },
+    trash: {
+      title: 'Trash of Permissions'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  roles: {
+    index: {
+      title: 'Roles'
+    },
+    create: {
+      title: 'Create new Role'
+    },
+    show: {
+      title: 'Detail Role'
+    },
+    edit: {
+      title: 'Update Role'
+    },
+    trash: {
+      title: 'Trash of Roles'
+    },
+    trashed: {
+      title: 'Deleted Role'
+    },
+  },
+  sysparam: {
+    index: {
+      title: 'System Parameters'
+    },
+    create: {
+      title: 'Create new System Parameter'
+    },
+    show: {
+      title: 'System Parameter'
+    },
+    edit: {
+      title: 'Update Parameter'
+    },
+    trash: {
+      title: 'Trash of System Parameters'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  notifications: {
+    index: {
+      title: 'Notifications'
+    },
+    create: {
+      title: 'Create new Notifications'
+    },
+    show: {
+      title: 'Detail Notification'
+    },
+    edit: {
+      title: 'Update Notification'
+    },
+    trash: {
+      title: 'Trash of Notifications'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  notificationTemplates: {
+    index: {
+      title: 'Notification Templates'
+    },
+    create: {
+      title: 'Create new Notification Templates'
+    },
+    show: {
+      title: 'Notification Template'
+    },
+    edit: {
+      title: 'Update Notification Template'
+    },
+    trash: {
+      title: 'Trash of Notification Templates'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  notificationFormats: {
+    index: {
+      title: 'Notification Formats'
+    },
+    create: {
+      title: 'Create new Notification Formats'
+    },
+    show: {
+      title: 'Notification Format'
+    },
+    edit: {
+      title: 'Update Notification Format'
+    },
+    trash: {
+      title: 'Trash of Notification Formats'
+    },
+    trashed: {
+      title: null
+    },
+  },
+  notificationsBroadcast: {
+    index: {
+      title: 'Notification Formats'
+    },
+    create: {
+      title: 'Broadcast'
+    },
+    show: {
+      title: 'Notification Format'
+    },
+    edit: {
+      title: 'Update Notification Format'
+    },
+    trash: {
+      title: 'Trash of Notification Formats'
+    },
+    trashed: {
+      title: null
+    },
+  },
 }

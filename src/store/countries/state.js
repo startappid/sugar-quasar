@@ -42,7 +42,7 @@ export const form = {
   name: null,
   phonecode: null
 }
-
+export const resetValue = {...form}
 export const layout = [
   [
     {
@@ -98,6 +98,7 @@ export default function () {
     // Datatable config
     columns,
     form,
+    resetValue,
     layout,
     validation
   }

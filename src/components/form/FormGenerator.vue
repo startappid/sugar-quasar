@@ -8,12 +8,14 @@
         <component
           v-bind:is="field.type"
           outlined
+          :class="`form-${field.name}`"
           v-model="form[field.name]"
           :readonly="readonly"
           :label="field.label"
           stack-label
           v-bind="field.props"
           v-on="field.events"
+          :hint="!v$.form[field.name].required? '-- optional': ''"
           :error="v$.form[field.name].$error"
           clearable
         >
@@ -45,12 +47,13 @@
         </component>
       </div>
 
-      <div v-else-if="['QRadio'].indexOf(field.type) >= 0">
+      <div v-else-if="['QRadio'].indexOf(field.type) >= 0" class="q-px-sm q-pt-sm">
         {{field.label}}:
         <component
+          :class="`form-${field.name}`"
           v-for="option in field.props.options"
           :key="`form-radio-${option.value}`"
-          v-bind:is="field.type"
+          v-bind:is="'QRadio'"
           v-model="form[field.name]"
           :readonly="readonly"
           :label="option.label"
@@ -58,21 +61,24 @@
           stack-label
           v-bind="field.props"
           v-on="field.events"
+          :hint="!v$.form[field.name].required? '-- optional': ''"
           :error="v$.form[field.name].$error"
           clearable
         />
       </div>
 
       <div v-else-if="['QFile'].indexOf(field.type) >= 0">
-        <q-img
-          v-if="['show', 'update', 'trashed'].indexOf(stateForm) >= 0"
+        <div :class="`form-${field.name}`"></div>
+        <img
+          v-if="['show', 'update', 'trashed'].indexOf(stateForm) >= 0 && field.name"
           :src="form[field.imgfield]"
           spinner-color="white"
-          style="max-width: 600px"
+          style="width: auto; max-width: 600px"
           class="q-mb-md"
+          onerror="this.style.display='none'"
         />
 
-        <component
+        <q-file
           v-if="!readonly"
           v-bind:is="field.type"
           outlined
@@ -82,6 +88,7 @@
           stack-label
           v-bind="field.props"
           v-on="field.events"
+          :hint="!v$.form[field.name].required? '-- optional': ''"
           :error="v$.form[field.name].$error"
           clearable
         >
@@ -111,20 +118,27 @@
               :ratio="50/10"
             />
           </template>
-        </component>
+          <template v-slot:append>
+            <q-icon name="attach_file" />
+          </template>
+        </q-file>
       </div>
 
       <div v-else-if="['QEditor'].indexOf(field.type) >= 0">
         <div class="text-subtitle">{{field.label}}</div>
         <component
+          :class="`form-${field.name}`"
           v-bind:is="field.type"
           v-model="form[field.name]"
+          :hint="!v$.form[field.name].required? '-- optional': ''"
           class="q-mb-md"
         />
+        <div class="text-weight-light" v-if="field.props.hint">{{field.props.hint}}</div>
       </div>
 
       <div v-else-if="['QToggle'].indexOf(field.type) >= 0">
         <q-toggle
+          :class="`form-${field.name}`"
           :label="field.label"
           v-model="form[field.name]"
           :readonly="readonly"
@@ -137,6 +151,7 @@
       <component
         v-else
         v-bind:is="'QInput'"
+        :class="`form-${field.name}`"
         outlined
         v-model="form[field.name]"
         :readonly="readonly"
@@ -144,6 +159,7 @@
         stack-label
         v-bind="field.props"
         v-on="field.events"
+        :hint="!v$.form[field.name].required? '-- optional': ''"
         :error="v$.form[field.name].$error"
         clearable
       />
@@ -159,7 +175,7 @@
       </q-card-section>
 
       <q-card-section>
-        <FormFactoryComponent
+        <FormGenerator
           :collection="dialogReference"
           :stateForm="'create'"
           :onCreated="dialogFormsonCreated"
@@ -174,7 +190,6 @@
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { mapActions, mapState, mapMutations } from 'vuex'
-import FormFactoryComponent from 'components/form/FormFactoryComponent'
 
 import {
   QInput,
@@ -210,7 +225,7 @@ export default {
       default: null
     },
     id: {
-      type: String,
+      type: [String, Number],
       default: null
     }
   },
@@ -229,7 +244,6 @@ export default {
     //   QRange,
     //   QTime,
     //   QDate,
-    FormFactoryComponent,
   },
   inject: ['form'],
   data () {
@@ -248,13 +262,17 @@ export default {
         const { type, reference, events } = field
         if (type === 'QSelect' && reference) {
           events.filter = (search, update, abort) => {
-            const params = {
+            let params = {
               search
             }
 
             if (field.params) {
-              for (const key of field.params) {
-                params[key] = this.form[key]
+              if(Array.isArray(field.params)) {
+                for (const key of field.params) {
+                  params[key] = this.form[key]
+                }
+              } else {
+                params = { ...params, ...field.params}
               }
             }
 
@@ -290,62 +308,11 @@ export default {
   beforeUnmount () {
     this.$store.commit(`${this.collection}/reset`)
   },
-  mounted () {
-    for (const fields of this.layout) {
-      for (const field of fields) {
-        const { type, reference } = field
-        if (type === 'QSelect' && reference) {
-          this.$store.dispatch(`${reference}/fetch`, {}).then(response => {
-            const { data } = response
-            const { props } = field
-            props.options = data
-          }).catch(error => {
-            if (error.response) {
-              const { data } = error.response
-              this.$q.dialog({
-                title: `${data.status}`,
-                message: `${data.message}`,
-                ok: {
-                  flat: true
-                },
-                persistent: true
-              })
-            }
-          })
-        }
-      }
-    }
-  },
+  mounted () { },
   methods: {
-    ...mapActions({
-      create (dispatch, payload) {
-        return dispatch(this.collection + '/create', payload)
-      },
-      detail (dispatch, payload) {
-        return dispatch(this.collection + '/detail', payload)
-      },
-      update (dispatch, payload) {
-        return dispatch(this.collection + '/update', payload)
-      },
-      patch (dispatch, payload) {
-        return dispatch(this.collection + '/patch', payload)
-      },
-      destroy (dispatch, payload) {
-        return dispatch(this.collection + '/destroy', payload)
-      },
-      hardDelete (dispatch, payload) {
-        return dispatch(this.collection + '/hardDelete', payload)
-      },
-      trashed (dispatch, payload) {
-        return dispatch(this.collection + '/trashed', payload)
-      },
-      restore (dispatch, payload) {
-        return dispatch(this.collection + '/restore', payload)
-      }
-    }),
-
     setFormData(data) {
       this.form = data
+      this.setDefaultValueRefference()
     },
     resetForm() {
       this.$refs.formComponent.reset()
@@ -357,6 +324,10 @@ export default {
       return this.v$.$error
     },
 
+    getValidation () {
+      return this.v$
+    },
+
     readSrcFile (file) {
       return URL.createObjectURL(file)
     },
@@ -366,21 +337,47 @@ export default {
     },
     dialogFormsonCreated () {
       this.dialogForms = false
+    },
+    setDefaultValueRefference() {
+      for (const fields of this.layout) {
+        for (const field of fields) {
+          const { type, reference } = field
+          if (type === 'QSelect' && reference) {
+            let params = {}
+
+            if (field.params) {
+              if(Array.isArray(field.params)) {
+                for (const key of field.params) {
+                  params[key] = this.form[key]
+                }
+              } else {
+                params = { ...params, ...field.params}
+              }
+            }
+
+            this.$store.dispatch(`${reference}/detail`, { id: this.form[field['name']], params }).then(response => {
+              const { data } = response
+              const { props } = field
+              props.options = [ data ]
+            }).catch(error => {
+              if (error.response) {
+                const { data } = error.response
+                this.$q.dialog({
+                  title: `${data.status}`,
+                  message: `${data.message}`,
+                  ok: {
+                    flat: true
+                  },
+                  persistent: true
+                })
+              }
+            })
+          }
+        }
+      }
     }
   },
   computed: {
-    // ...mapGetters(`${this.collection}`, ['validation', 'form', 'layout']),
-    // ...mapState({
-    //   validation (state, getters) {
-    //     return getters[`${this.collection}/validation`]
-    //   },
-    //   form (state, getters) {
-    //     return getters[`${this.collection}/form`]
-    //   },
-    //   layout (state, getters) {
-    //     return getters[`${this.collection}/layout`]
-    //   }
-    // }),
     referenceCollectionName () {
       const words = this.dialogReference.split('_')
       const titles = []
