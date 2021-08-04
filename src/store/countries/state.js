@@ -62,7 +62,7 @@ export const layout = [
       type: 'QInput',
       col: 'col-6',
       name: 'name',
-      label: 'Country Name',
+      label: 'Country',
       props: {
         maxlength: 50
       },

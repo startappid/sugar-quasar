@@ -1,5 +1,7 @@
 import { collection } from './collection'
 
+import { countries } from './countries'
+
 import { users } from './users'
 import { roles } from './roles'
 import { profile } from './profile'
@@ -71,6 +73,8 @@ const routes = (store) => [
 
 
   { ...profile },
+
+  { ...countries },
 
   { ...users },
   { ...roles },

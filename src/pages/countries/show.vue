@@ -5,18 +5,11 @@
       position="top"
       skip-hijack
     />
-    <!--
-    <div class="text-h5">Country: {{form.name}}</div>
-    <q-breadcrumbs>
-      <q-breadcrumbs-el :label="$t(`${storeCollection}.index.title`)" :to="`/${storeCollection}`" />
-      <q-breadcrumbs-el label="Detail" />
-    </q-breadcrumbs>
-    -->
-    <q-toolbar class="q-pb-md q-px-none">
-      <q-toolbar-title>{{form.name}}</q-toolbar-title>
-      <q-tabs v-model="tab" shrink stretch active-color="light-blue-10">
-        <q-tab name="provinces" label="Provinces" />
-        <q-tab name="cities" label="Cities" />
+    <div class="text-h5">{{form.name}}</div>
+    <q-toolbar class="q-pb-md q-px-none q-mt-lg">
+      <q-tabs v-model="tab" shrink stretch active-color="light-blue-10" content-class="tabs-border" class="full-width" align="left">
+        <q-tab no-caps name="provinces" label="Provinces" />
+        <q-tab no-caps name="cities" label="Cities" />
       </q-tabs>
     </q-toolbar>
 
@@ -39,7 +32,11 @@
     </q-footer>
   </q-page>
 </template>
-
+<style>
+.tabs-border {
+  border-bottom: 1px solid #e0e0e0;
+}
+</style>
 <script>
 import { mapState } from 'vuex'
 import { useStore } from 'vuex'
