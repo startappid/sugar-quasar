@@ -1,6 +1,9 @@
 import { required } from '@vuelidate/validators'
 import state from '../resources/state'
 export const collection = 'countries'
+export const params = {
+  'orderby[name]': 'asc'
+}
 export const columns = [
   {
     name: 'isocode',
@@ -95,6 +98,7 @@ export default function () {
     ...state(),
     // Collection name
     collection,
+    params,
     // Datatable config
     columns,
     form,
