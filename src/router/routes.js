@@ -16,7 +16,7 @@ import { notificationFormats } from './notificationFormats'
 
 const routes = (store) => [
   {
-    path: '/',
+    path: '',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') }
