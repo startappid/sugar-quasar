@@ -275,7 +275,7 @@ export default {
         sortBy: 'id',
         descending: true,
         page: 1,
-        rowsPerPage: 25, // limit default set 25
+        rowsPerPage: 10, // limit default set 25
         rowsNumber: 0 // total records
       },
       pageOptions: [5, 10, 25, 50, 100],
