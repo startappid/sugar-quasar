@@ -133,9 +133,9 @@ module.exports = configure(function (/* ctx */) {
       },
 
       manifest: {
-        name: `Startapp`,
-        short_name: `Startapp`,
-        description: `Startapp - Start your business with the App.`,
+        name: `VCDLN KEDAIREKA`,
+        short_name: `VCDLN KEDAIREKA`,
+        description: `VCDLN KEDAIREKA`,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',

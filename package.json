@@ -1,8 +1,8 @@
 {
-  "name": "sugar-quasar",
+  "name": "vcdln-kedaireka",
   "version": "0.0.1",
-  "description": "Startapp - Start your business with the App.",
-  "productName": "Startapp",
+  "description": "VCDLN KEDAIREKA",
+  "productName": "VCDLN KEDAIREKA",
   "author": "Farid Hidayat <e.faridhidayat@gmail.com>",
   "private": true,
   "scripts": {

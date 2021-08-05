@@ -13,8 +13,9 @@
         />
 
         <q-toolbar-title v-if="$q.screen.gt.sm" shrink class="row items-center no-wrap">
-          <img src="http://startapp.id/startapp-light.png" width="56" />
-          <span class="q-ml-sm">Startapp</span>
+          <!-- <img src="http://startapp.id/startapp-light.png" width="56" /> -->
+          <!-- <span class="q-ml-sm">VCDLN KEDAIREKA</span> -->
+          <span class="q-ml-sm">KEDAIREKA</span>
         </q-toolbar-title>
 
         <q-space />
