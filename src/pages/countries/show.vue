@@ -8,8 +8,9 @@
     <div class="text-h5">{{form.name}}</div>
     <q-toolbar class="q-pb-md q-px-none q-mt-lg">
       <q-tabs v-model="tab" shrink stretch active-color="light-blue-10" content-class="tabs-border" class="full-width" align="left">
-        <q-tab no-caps name="provinces" label="Provinces" />
-        <q-tab no-caps name="cities" label="Cities" />
+        <q-tab no-caps name="country" label="Country" />
+        <q-route-tab :to="`${id}/provinces`" no-caps label="Provinces" />
+        <q-route-tab :to="`${id}/cities`" no-caps label="Cities" />
       </q-tabs>
     </q-toolbar>
 
