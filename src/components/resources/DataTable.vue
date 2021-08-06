@@ -598,15 +598,6 @@ export default {
     data () {
       return this.rows.value
     },
-    collectionName () {
-      const words = this.collection.split('_')
-      const titles = []
-      for (const key in words) {
-        const word = words[key]
-        titles.push(word.charAt(0).toUpperCase() + word.slice(1))
-      }
-      return titles.join(' ')
-    },
     pageTitle () {
       if (this.stateForm == 'trash') {
         return this.$t(`${this.collection}.trash.title`)
