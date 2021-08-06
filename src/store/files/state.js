@@ -56,66 +56,6 @@ export const directories = [
     label: 'Banners Video'
   },
   {
-    value: 'cities/thumbnail',
-    label: 'Cities Thumbnail'
-  },
-  {
-    value: 'countries/flag',
-    label: 'Countries Flag'
-  },
-  {
-    value: 'institutions/gallery',
-    label: 'Institutions Gallery'
-  },
-  {
-    value: 'institutions/logo',
-    label: 'Institutions Logo'
-  },
-  {
-    value: 'partnerships/image',
-    label: 'Partnerships Image'
-  },
-  {
-    value: 'users',
-    label: 'Users'
-  },
-  {
-    value: 'users/docs',
-    label: 'Users Docs'
-  },
-  {
-    value: 'users/id',
-    label: 'Users ID'
-  },
-  {
-    value: 'users/resume',
-    label: 'Digital Resume'
-  },
-  {
-    value: 'users/membership',
-    label: 'Membership'
-  },
-  {
-    value: 'users/receipt',
-    label: 'Receipt'
-  },
-  {
-    value: 'user_accounts/card',
-    label: 'Accounts Card'
-  },
-  {
-    value: 'courses/categories/thumbnail',
-    label: 'Courses Categories Thumbnail'
-  },
-  {
-    value: 'courses/thumbnail',
-    label: 'Courses Thumbnail'
-  },
-  {
-    value: 'courses/gallery',
-    label: 'Courses Gallery'
-  },
-  {
     value: 'files',
     label: 'Files'
   },
@@ -195,6 +135,14 @@ export const layout = [
           {
             label: 'Image',
             value: 'image'
+          },
+          {
+            label: 'Video',
+            value: 'video'
+          },
+          {
+            label: 'Audio',
+            value: 'audio'
           },
           {
             label: 'Other',
