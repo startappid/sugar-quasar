@@ -254,9 +254,9 @@ export const countries = (store) => {
             },
             component: () => {
               try {
-                const isExist = require(`pages/${collection}/provinces/index.vue`)
+                const isExist = require(`pages/${collection}/cities/index.vue`)
                 if (isExist) {
-                  return import(`pages/${collection}/provinces/index.vue`)
+                  return import(`pages/${collection}/cities/index.vue`)
                 }
               } catch (error) {
                 return import('pages/resources/index.vue')
@@ -271,9 +271,9 @@ export const countries = (store) => {
             },
             component: () => {
               try {
-                const isExist = require(`pages/${collection}/provinces/trash.vue`)
+                const isExist = require(`pages/${collection}/cities/trash.vue`)
                 if (isExist) {
-                  return import(`pages/${collection}/provinces/trash.vue`)
+                  return import(`pages/${collection}/cities/trash.vue`)
                 }
               } catch (error) {
                 return import('pages/resources/trash.vue')
@@ -288,9 +288,9 @@ export const countries = (store) => {
             },
             component: () => {
               try {
-                const isExist = require(`pages/${collection}/provinces/create.vue`)
+                const isExist = require(`pages/${collection}/cities/create.vue`)
                 if (isExist) {
-                  return import('pages/' + collection + '/provinces/create.vue')
+                  return import('pages/' + collection + '/cities/create.vue')
                 }
               } catch (error) {
                 return import('pages/resources/create.vue')
@@ -305,9 +305,9 @@ export const countries = (store) => {
             },
             component: () => {
               try {
-                const isExist = require(`pages/${collection}/provinces/show.vue`)
+                const isExist = require(`pages/${collection}/cities/show.vue`)
                 if (isExist) {
-                  return import('pages/' + collection + '/provinces/show.vue')
+                  return import('pages/' + collection + '/cities/show.vue')
                 }
               } catch (error) {
                 return import('pages/resources/show.vue')
@@ -322,9 +322,9 @@ export const countries = (store) => {
             },
             component: () => {
               try {
-                const isExist = require(`pages/${collection}/provinces/trashed.vue`)
+                const isExist = require(`pages/${collection}/cities/trashed.vue`)
                 if (isExist) {
-                  return import(`pages/${collection}/provinces/trashed.vue`)
+                  return import(`pages/${collection}/cities/trashed.vue`)
                 }
               } catch (error) {
                 return import('pages/resources/trashed.vue')
@@ -339,9 +339,9 @@ export const countries = (store) => {
             },
             component: () => {
               try {
-                const isExist = require(`pages/${collection}/provinces/edit.vue`)
+                const isExist = require(`pages/${collection}/cities/edit.vue`)
                 if (isExist) {
-                  return import(`pages/${collection}/provinces/edit.vue`)
+                  return import(`pages/${collection}/cities/edit.vue`)
                 }
               } catch (error) {
                 return import('pages/resources/edit.vue')
