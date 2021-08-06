@@ -13,6 +13,8 @@ import countries from './countries'
 import provinces from './provinces'
 import cities from './cities'
 
+import degrees from './degrees'
+
 import users from './users'
 import addresses from './addresses'
 import contacts from './contacts'
@@ -44,6 +46,8 @@ export default store(function (/* { ssrContext } */) {
       countries,
       provinces,
       cities,
+
+      degrees,
 
       users,
       addresses,

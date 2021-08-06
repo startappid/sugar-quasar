@@ -210,7 +210,7 @@
           >
             <q-item clickable v-ripple :inset-level="1" to="/degrees">
               <q-item-section>
-                Degress
+                Degrees
               </q-item-section>
             </q-item>
             <q-item clickable v-ripple :inset-level="1" to="/levels">

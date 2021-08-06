@@ -503,4 +503,25 @@ export default {
       title: null
     },
   },
+
+  degrees: {
+    index: {
+      title: 'Degrees'
+    },
+    create: {
+      title: 'Create Degree'
+    },
+    show: {
+      title: 'Detail Degree'
+    },
+    edit: {
+      title: 'Update Degree'
+    },
+    trash: {
+      title: 'Trash of Degrees'
+    },
+    trashed: {
+      title: 'Deleted Degree'
+    },
+  },
 }
