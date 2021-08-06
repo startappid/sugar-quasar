@@ -133,7 +133,7 @@ export const countries = (store) => {
 
       // Provinces
       {
-        path: ':country_id/provinces',
+        path: ':id/provinces',
         component: async () => await import('layouts/LayoutEmpty.vue'),
         children: [
           {
