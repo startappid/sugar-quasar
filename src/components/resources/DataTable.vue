@@ -289,7 +289,6 @@ export default {
       this.onRequest({ pagination, filter })
     },
     collection: function (newVal, oldVal) {
-      // this.collection = newVal
       const pagination = this.pagination
       const filter = this.filter
       this.rows.value = []
@@ -401,15 +400,6 @@ export default {
           this.loading = false
         })
       })
-    },
-    showSelected () {
-      const data = this.selected[0]
-      const trashed = this.stateForm == 'trash'? '/trashed': ''
-      this.$router.push(`/${this.path}/${data.id}${trashed}`)
-    },
-    editSelected () {
-      const data = this.selected[0]
-      this.$router.push(`/${this.path}/${data.id}/edit`)
     },
     deleteSelected () {
       const ids = []
