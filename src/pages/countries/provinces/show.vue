@@ -5,7 +5,7 @@
       position="top"
       skip-hijack
     />
-    <div class="text-h5">{{country.name}}</div>
+    <div class="text-h5">{{country?.name}}</div>
     <q-toolbar class="q-pb-md q-px-none q-mt-lg">
       <q-tabs v-model="tab" shrink stretch active-color="light-blue-10" content-class="tabs-border" class="full-width" align="left">
         <q-route-tab :to="`/countries/${country_id}`" no-caps label="Country" />
@@ -26,10 +26,10 @@
 
     <q-footer reveal elevated class="bg-white text-black">
       <q-toolbar style="height: 64px">
-        <q-btn flat label="Back" :to="`/${storeCollection}`" />
+        <q-btn flat label="Back" :to="`/${parentCollection}/${country_id}/${storeCollection}`" />
         <q-space />
         <q-btn icon="delete" flat color="negative" label="Delete" @click="confirmDelete(id)" />
-        <q-btn icon="edit" :loading="loading" class="q-ml-md bg-primary text-white" color="secondary" label="Edit" :to="`/countries/${country_id}/${storeCollection}/${id}/edit`" />
+        <q-btn icon="edit" :loading="loading" class="q-ml-md bg-primary text-white" color="secondary" label="Edit" :to="`/${parentCollection}/${country_id}/${storeCollection}/${id}/edit`" />
       </q-toolbar>
     </q-footer>
   </q-page>
