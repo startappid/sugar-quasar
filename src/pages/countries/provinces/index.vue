@@ -10,8 +10,8 @@
     </q-toolbar>
     <q-toolbar class="q-pb-md q-px-none">
       <q-toolbar-title></q-toolbar-title>
-      <q-btn flat rounded icon="delete" color="negative" label="Trash" :to="`/${storeCollection}/trash`" />
-      <q-btn rounded icon="add" color="secondary" class="q-ml-sm" label="New" :to="`/${storeCollection}/create`" />
+      <q-btn flat rounded icon="delete" color="negative" label="Trash" :to="`/${parentCollection}/${country_id}/${storeCollection}/trash`" />
+      <q-btn rounded icon="add" color="secondary" class="q-ml-sm" label="New" :to="`/${parentCollection}/${country_id}/${storeCollection}/create`" />
     </q-toolbar>
     <DataTable
       :columns="columns"
