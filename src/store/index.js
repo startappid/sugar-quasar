@@ -14,6 +14,7 @@ import provinces from './provinces'
 import cities from './cities'
 
 import degrees from './degrees'
+import levels from './levels'
 
 import users from './users'
 import addresses from './addresses'
@@ -48,6 +49,7 @@ export default store(function (/* { ssrContext } */) {
       cities,
 
       degrees,
+      levels,
 
       users,
       addresses,

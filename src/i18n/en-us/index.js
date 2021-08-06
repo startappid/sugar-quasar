@@ -524,4 +524,24 @@ export default {
       title: 'Deleted Degree'
     },
   },
+  levels: {
+    index: {
+      title: 'Levels'
+    },
+    create: {
+      title: 'Create Level'
+    },
+    show: {
+      title: 'Detail Level'
+    },
+    edit: {
+      title: 'Update Level'
+    },
+    trash: {
+      title: 'Trash of Levels'
+    },
+    trashed: {
+      title: 'Deleted Level'
+    },
+  },
 }
