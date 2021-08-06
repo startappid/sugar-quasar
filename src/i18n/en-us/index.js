@@ -343,6 +343,26 @@ export default {
       title: null
     },
   },
+  videos: {
+    index: {
+      title: 'Videos'
+    },
+    create: {
+      title: 'Upload Video'
+    },
+    show: {
+      title: 'Detail Video'
+    },
+    edit: {
+      title: 'Update Video'
+    },
+    trash: {
+      title: 'Trash of Videos'
+    },
+    trashed: {
+      title: 'Deleted Video'
+    },
+  },
   permissions: {
     index: {
       title: 'Permissions'

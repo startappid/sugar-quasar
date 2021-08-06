@@ -17,6 +17,7 @@ import users from './users'
 import addresses from './addresses'
 import contacts from './contacts'
 import files from './files'
+import videos from './videos'
 import roles from './roles'
 import permissions from './permissions'
 import sysparam from './sysparam'
@@ -48,6 +49,9 @@ export default store(function (/* { ssrContext } */) {
       addresses,
       contacts,
       files,
+
+      videos,
+
       roles,
       permissions,
       sysparam

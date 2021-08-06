@@ -115,6 +115,28 @@
             </q-item-section>
           </q-item>
 
+          <div v-can="'nav.aside.streaming'">
+          <q-separator inset class="q-my-sm" />
+          <q-item-label header>Videos &amp; Streaming</q-item-label>
+          <q-item v-ripple v-can="'videos.read.index'"  clickable to="/videos">
+            <q-item-section avatar>
+              <q-icon name="videocam" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Videos</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item v-ripple>
+            <q-item-section avatar>
+              <q-icon name="live_tv" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Live Streaming</q-item-label>
+            </q-item-section>
+          </q-item>
+          </div>
+
           <div v-can="'nav.aside.marketing'">
           <q-separator inset class="q-my-sm" />
           <q-item-label header>Marketing &amp; Contents</q-item-label>
