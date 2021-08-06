@@ -14,6 +14,7 @@
       <q-btn rounded icon="add" color="secondary" class="q-ml-sm" label="New" :to="`/${parentCollection}/${country_id}/${storeCollection}/create`" />
     </q-toolbar>
     <DataTable
+      ref="refDatatable"
       :columns="columns"
       :fetch="fetch"
       :destroy="destroy"
