@@ -9,11 +9,36 @@
       </q-tabs>
     </q-toolbar>
     <q-toolbar class="q-pb-md q-px-none">
+      <q-select
+        filled
+        v-model="params.province_id"
+        use-input
+        label="Province"
+        emit-value
+        map-options
+        option-value="id"
+        option-label="name"
+        class="col-4"
+        :options="provincesOptions"
+        @filter="provinceSelect"
+        @update:model-value="provinceChanged"
+        autocomplete="off"
+      >
+        <template v-slot:no-option>
+          <q-item>
+            <q-item-section class="text-italic text-grey">
+              Data not found
+            </q-item-section>
+          </q-item>
+        </template>
+      </q-select>
+
       <q-toolbar-title></q-toolbar-title>
       <q-btn flat rounded icon="delete" color="negative" label="Trash" :to="`/${parentCollection}/${country_id}/${storeCollection}/trash`" />
       <q-btn rounded icon="add" color="secondary" class="q-ml-sm" label="New" :to="`/${parentCollection}/${country_id}/${storeCollection}/create`" />
     </q-toolbar>
     <DataTable
+      ref="refDatatable"
       :columns="columns"
       :fetch="fetch"
       :destroy="destroy"
@@ -80,7 +105,8 @@ export default {
     return {
       stateForm: 'entries', // entries, trash
       country: {},
-      tab: 'provinces'
+      tab: 'provinces',
+      provincesOptions: []
     }
   },
   methods: {
@@ -91,7 +117,22 @@ export default {
       destroy (dispatch, payload) {
         return dispatch(this.storeCollection + '/destroy', payload)
       }
-    })
+    }),
+    provinceChanged () {
+      this.stateData = new Date().toISOString()
+      this.$refs.refDatatable.emitFilter(this.params)
+    },
+    provinceSelect (search, update, abort) {
+      const params = {
+        search
+      }
+      this.$store.dispatch('provinces/fetch', { params }).then(response => {
+        const { data } = response
+        update(() => {
+          this.provincesOptions = data
+        })
+      })
+    }
   },
   computed: {
     ...mapState({
