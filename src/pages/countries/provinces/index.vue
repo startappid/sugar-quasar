@@ -3,9 +3,9 @@
     <div class="text-h5">{{country.name}}</div>
     <q-toolbar class="q-pb-md q-px-none q-mt-lg">
       <q-tabs v-model="tab" shrink stretch active-color="light-blue-10" content-class="tabs-border" class="full-width" align="left">
-        <q-route-tab :to="`/countries/${id}`" no-caps label="Country" />
+        <q-route-tab :to="`/countries/${country_id}`" no-caps label="Country" />
         <q-tab no-caps name="provinces" label="Provinces" />
-        <q-route-tab :to="`${id}/cities`" no-caps label="Cities" />
+        <q-route-tab :to="`${country_id}/cities`" no-caps label="Cities" />
       </q-tabs>
     </q-toolbar>
     <q-toolbar class="q-pb-md q-px-none">
@@ -17,7 +17,7 @@
       :columns="columns"
       :fetch="fetch"
       :destroy="destroy"
-      :basePath="`${parentCollection}/${id}/${storeCollection}`"
+      :basePath="`${parentCollection}/${country_id}/${storeCollection}`"
       :collection="storeCollection"
       :params="params"
       :stateForm="stateForm"
@@ -50,14 +50,14 @@ export default {
   },
   setup () {
     const route = useRoute()
-    const { id } = route.params
+    const { country_id } = route.params
     return {
-      id
+      country_id
     }
   },
   mounted () {
     this.$store
-    .dispatch(`${this.parentCollection}/detail`, { id: this.id })
+    .dispatch(`${this.parentCollection}/detail`, { id: this.country_id })
     .then(response => {
       const { data } = response
       this.country = data
@@ -100,7 +100,7 @@ export default {
       },
       params (state, getters) {
         const params = getters[`${this.storeCollection}/params`]
-        params['country_id'] = this.id
+        params['country_id'] = this.country_id
         return params
       }
     }),
