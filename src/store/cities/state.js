@@ -5,7 +5,7 @@ export const headers = {
   'Content-Type': 'multipart/form-data'
 }
 export const params = {
-  relationship: ['country', 'province', 'thumbnail']
+  relationship: ['country', 'province']
 }
 
 export const columns = [
