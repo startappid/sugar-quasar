@@ -240,6 +240,116 @@ export const countries = (store) => {
           },
         ],
       },
+
+      // Cities
+      {
+        path: ':country_id/cities',
+        component: async () => await import('layouts/LayoutEmpty.vue'),
+        children: [
+          {
+            path: '',
+            props: {
+              parentCollection: collection,
+              collection: 'provinces'
+            },
+            component: () => {
+              try {
+                const isExist = require(`pages/${collection}/provinces/index.vue`)
+                if (isExist) {
+                  return import(`pages/${collection}/provinces/index.vue`)
+                }
+              } catch (error) {
+                return import('pages/resources/index.vue')
+              }
+            }
+          },
+          {
+            path: 'trash',
+            props: {
+              parentCollection: collection,
+              collection: 'provinces'
+            },
+            component: () => {
+              try {
+                const isExist = require(`pages/${collection}/provinces/trash.vue`)
+                if (isExist) {
+                  return import(`pages/${collection}/provinces/trash.vue`)
+                }
+              } catch (error) {
+                return import('pages/resources/trash.vue')
+              }
+            }
+          },
+          {
+            path: 'create',
+            props: {
+              parentCollection: collection,
+              collection: 'provinces'
+            },
+            component: () => {
+              try {
+                const isExist = require(`pages/${collection}/provinces/create.vue`)
+                if (isExist) {
+                  return import('pages/' + collection + '/provinces/create.vue')
+                }
+              } catch (error) {
+                return import('pages/resources/create.vue')
+              }
+            }
+          },
+          {
+            path: ':id',
+            props: {
+              parentCollection: collection,
+              collection: 'provinces'
+            },
+            component: () => {
+              try {
+                const isExist = require(`pages/${collection}/provinces/show.vue`)
+                if (isExist) {
+                  return import('pages/' + collection + '/provinces/show.vue')
+                }
+              } catch (error) {
+                return import('pages/resources/show.vue')
+              }
+            }
+          },
+          {
+            path: ':id/trashed',
+            props: {
+              parentCollection: collection,
+              collection: 'provinces'
+            },
+            component: () => {
+              try {
+                const isExist = require(`pages/${collection}/provinces/trashed.vue`)
+                if (isExist) {
+                  return import(`pages/${collection}/provinces/trashed.vue`)
+                }
+              } catch (error) {
+                return import('pages/resources/trashed.vue')
+              }
+            }
+          },
+          {
+            path: ':id/edit',
+            props: {
+              parentCollection: collection,
+              collection: 'provinces'
+            },
+            component: () => {
+              try {
+                const isExist = require(`pages/${collection}/provinces/edit.vue`)
+                if (isExist) {
+                  return import(`pages/${collection}/provinces/edit.vue`)
+                }
+              } catch (error) {
+                return import('pages/resources/edit.vue')
+              }
+            }
+          },
+        ],
+      },
     ]
   }
 }
