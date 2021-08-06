@@ -8,9 +8,9 @@
     <div class="text-h5">{{country?.name}}</div>
     <q-toolbar class="q-pb-md q-px-none q-mt-lg">
       <q-tabs v-model="tab" shrink stretch active-color="light-blue-10" content-class="tabs-border" class="full-width" align="left">
-        <q-route-tab :to="`/countries/${country_id}`" no-caps label="Country" />
+        <q-route-tab :to="`/countries/${country_id}`" no-caps name="country" label="Country" />
         <q-route-tab :to="`/countries/${country_id}/provinces`" no-caps name="provinces" label="Provinces" />
-        <q-route-tab :to="`/countries/${country_id}/cities`" no-caps label="Cities" />
+        <q-route-tab :to="`/countries/${country_id}/cities`" no-caps name="cities" label="Cities" />
       </q-tabs>
     </q-toolbar>
     <div class="text-h5">{{$t(`${storeCollection}.show.title`)}}</div>
