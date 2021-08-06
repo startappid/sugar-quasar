@@ -202,6 +202,39 @@
 
           <q-separator inset class="q-my-sm" />
           <q-item-label header>Administrator</q-item-label>
+
+          <q-expansion-item
+            icon="school"
+            label="Educational"
+            class="q-my-sm"
+          >
+            <q-item clickable v-ripple :inset-level="1" to="/degrees">
+              <q-item-section>
+                Degress
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple :inset-level="1" to="/levels">
+              <q-item-section>
+                Levels
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple :inset-level="1" to="/majors">
+              <q-item-section>
+                Majors
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple :inset-level="1" to="/fields">
+              <q-item-section>
+                Fields
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple :inset-level="1" to="/subjects">
+              <q-item-section>
+                Subjects
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
+
           <q-expansion-item
             icon="people"
             label="Users Management"
