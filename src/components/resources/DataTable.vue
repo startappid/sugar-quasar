@@ -20,13 +20,8 @@
   >
     <template v-slot:top-right>
 
-      <q-btn flat round dense icon="visibility" class="q-mr-sm" v-if="selected.length==1&&isStateFormEntries" @click="showSelected()" />
-      <q-btn flat round dense icon="create" class="q-mr-sm" v-if="selected.length==1&&isStateFormEntries" @click="editSelected()" />
-      <q-separator vertical inset v-if="selected.length==1&&isStateFormEntries" />
       <q-btn flat round dense icon="delete" class="q-mr-sm q-ml-sm" color="negative"  v-if="selected.length>=1&&isStateFormEntries" @click="deleteSelected()" />
 
-      <q-btn flat rounded dense icon="visibility" class="q-mr-sm" v-if="selected.length==1&&isStateFormTrash" @click="showSelected()" />
-      <q-separator vertical inset v-if="selected.length==1&&isStateFormTrash" />
       <q-btn flat rounded dense icon="restore_from_trash" class="q-mr-sm q-ml-sm" v-if="selected.length>=1&&isStateFormTrash" @click="restoreSelected()"/>
       <q-btn flat rounded dense icon="delete_forever" class="q-mr-sm" color="negative"  v-if="selected.length>=1&&isStateFormTrash" @click="deleteSelected()" />
 
