@@ -1,5 +1,7 @@
 import { collection } from './collection'
 
+import { countries } from './countries'
+
 import { users } from './users'
 import { roles } from './roles'
 import { profile } from './profile'
@@ -14,7 +16,7 @@ import { notificationFormats } from './notificationFormats'
 
 const routes = (store) => [
   {
-    path: '/',
+    path: '',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/Index.vue') }
@@ -71,6 +73,8 @@ const routes = (store) => [
 
 
   { ...profile },
+
+  { ...countries(store) },
 
   { ...users },
   { ...roles },

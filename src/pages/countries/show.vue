@@ -5,14 +5,14 @@
       position="top"
       skip-hijack
     />
-    <q-toolbar class="q-pb-md q-px-none">
-      <q-breadcrumbs>
-        <q-breadcrumbs-el :label="$t(`${storeCollection}.index.title`)" :to="`/${storeCollection}`" />
-        <q-breadcrumbs-el label="Detail" />
-      </q-breadcrumbs>
-      <q-toolbar-title></q-toolbar-title>
+    <div class="text-h5">{{form.name}}</div>
+    <q-toolbar class="q-pb-md q-px-none q-mt-lg">
+      <q-tabs v-model="tab" shrink stretch active-color="light-blue-10" content-class="tabs-border" class="full-width" align="left">
+        <q-tab no-caps name="country" label="Country" />
+        <q-route-tab :to="`${id}/provinces`" no-caps label="Provinces" />
+        <q-route-tab :to="`${id}/cities`" no-caps label="Cities" />
+      </q-tabs>
     </q-toolbar>
-    <div class="text-h5">{{$t(`${storeCollection}.edit.title`)}}</div>
 
     <FormGenerator
       ref="formGenerator"
@@ -25,22 +25,24 @@
 
     <q-footer reveal elevated class="bg-white text-black">
       <q-toolbar style="height: 64px">
-        <q-btn flat label="Cancel" :to="`/${storeCollection}`" />
+        <q-btn flat label="Back" :to="`/${storeCollection}`" />
         <q-space />
         <q-btn icon="delete" flat color="negative" label="Delete" @click="confirmDelete(id)" />
-        <q-btn icon="check" class="q-ml-md bg-primary text-white" :loading="loading" color="secondary" label="Update" @click="submitUpdate" />
+        <q-btn icon="edit" :loading="loading" class="q-ml-md bg-primary text-white" color="secondary" label="Edit" :to="`/${storeCollection}/${$route.params.id}/edit`" />
       </q-toolbar>
     </q-footer>
   </q-page>
 </template>
-
+<style>
+.tabs-border {
+  border-bottom: 1px solid #e0e0e0;
+}
+</style>
 <script>
 import { mapState } from 'vuex'
 import { useStore } from 'vuex'
 import FormGenerator from 'components/form/FormGenerator'
-import { scroll } from 'quasar'
 import { useRoute } from 'vue-router'
-const { getScrollTarget, setVerticalScrollPosition } = scroll
 
 export default {
   components: {
@@ -96,11 +98,14 @@ export default {
     })
   },
   data () {
+    const route = useRoute()
+    const { id } = route.params
     return {
-      stateForm: 'update', // create, update, show
-      id: this.$route.params.id,
+      stateForm: 'show', // create, update, show
+      id,
       isPwd: true,
-      loading: false
+      loading: false,
+      tab: 'country'
     }
   },
   methods: {
@@ -150,65 +155,6 @@ export default {
           }
           this.loading = false
         })
-      })
-    },
-
-    submitUpdate () {
-      const { formGenerator } = this.$refs
-      if (formGenerator.validateError()) {
-        const $v = formGenerator.getValidation()
-        const el = this.$el.querySelector(`.form-${$v.$errors[0].$property}`)
-        const target = getScrollTarget(el)
-        const offset = el.offsetTop
-        const duration = 500
-        setVerticalScrollPosition(target, offset, duration)
-        return
-      }
-
-      const { loadingbar } = this.$refs
-      loadingbar.start()
-      this.loading = true
-
-      const payload = {
-        id: this.id,
-        data: formGenerator.form
-      }
-
-      this.$store
-      .dispatch(`${this.storeCollection}/update`, payload)
-      .then((response) => {
-        const { status, message } = response
-        this.$q.dialog({
-          title: `${status}`,
-          message: `${message}`,
-          ok: {
-            flat: true
-          },
-          persistent: true
-        }).onOk(() => {
-          if (!this.submitAndCreate) {
-            this.$router.push(`/${this.storeCollection}`)
-          }
-        }).finally(() => {
-          this.loading = false
-        })
-      })
-      .catch((error) => {
-        if (error.response) {
-          const { data } = error.response
-          this.$q.dialog({
-            title: `${data.status}`,
-            message: `${data.message}`,
-            ok: {
-              flat: true
-            },
-            persistent: true
-          })
-        }
-      })
-      .finally(() => {
-        loadingbar.stop()
-        this.loading = false
       })
     },
   },

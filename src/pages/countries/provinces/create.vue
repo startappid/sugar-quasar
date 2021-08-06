@@ -5,12 +5,13 @@
       position="top"
       skip-hijack
     />
-    <q-toolbar class="q-pb-md q-px-none">
-      <q-breadcrumbs>
-        <q-breadcrumbs-el :label="$t(`${storeCollection}.index.title`)" :to="`/${storeCollection}`" />
-        <q-breadcrumbs-el label="Create" />
-      </q-breadcrumbs>
-      <q-toolbar-title></q-toolbar-title>
+    <div class="text-h5">{{country?.name}}</div>
+    <q-toolbar class="q-pb-md q-px-none q-mt-lg">
+      <q-tabs v-model="tab" shrink stretch active-color="light-blue-10" content-class="tabs-border" class="full-width" align="left">
+        <q-route-tab :to="`/countries/${country_id}`" no-caps name="country" label="Country" />
+        <q-route-tab :to="`/countries/${country_id}/provinces`" no-caps name="provinces" label="Provinces" />
+        <q-route-tab :to="`/countries/${country_id}/cities`" no-caps name="cities" label="Cities" />
+      </q-tabs>
     </q-toolbar>
     <div class="text-h5">{{$t(`${storeCollection}.create.title`)}}</div>
 
@@ -26,7 +27,7 @@
       <q-toolbar style="height: 64px">
         <q-toggle v-model="submitAndCreate" label="Submit and create new" />
         <q-space />
-        <q-btn flat label="Cancel" :to="`/${storeCollection}`" />
+        <q-btn flat label="Cancel" :to="`/${parentCollection}/${country_id}/${storeCollection}`" />
         <q-btn
           icon="check"
           class="q-ml-md bg-primary text-white"
@@ -39,12 +40,17 @@
     </q-footer>
   </q-page>
 </template>
-
+<style>
+.tabs-border {
+  border-bottom: 1px solid #e0e0e0;
+}
+</style>
 <script>
 import { mapState } from 'vuex'
 import FormGenerator from 'components/form/FormGenerator'
 import { scroll } from 'quasar'
 import { useRoute } from 'vue-router'
+import { parse } from 'qs'
 const { getScrollTarget, setVerticalScrollPosition } = scroll
 
 export default {
@@ -52,13 +58,21 @@ export default {
     FormGenerator
   },
   props: {
+    parentCollection: {
+      type: String,
+      default: null
+    },
     collection: {
       type: String,
       default: null
     }
   },
   setup (props) {
-
+    const route = useRoute()
+    const { country_id } = route.params
+    return {
+      country_id
+    }
   },
   provide () {
     return {
@@ -66,14 +80,22 @@ export default {
     }
   },
   mounted () {
-
+    this.$store
+    .dispatch(`${this.parentCollection}/detail`, { id: this.country_id })
+    .then(response => {
+      const { data } = response
+      this.country = data
+    })
+    this.$refs.formGenerator.setFormData(this.form)
   },
   data () {
     return {
+      country: {},
       stateForm: 'create', // create, update, show
       isPwd: true,
       loading: false,
-      submitAndCreate: false
+      submitAndCreate: false,
+      tab: 'provinces'
     }
   },
   methods: {
@@ -120,7 +142,7 @@ export default {
           },
           persistent: true
         }).onOk(() => {
-          this.$router.push(`/${this.storeCollection}`)
+          this.$router.push(`/${this.parentCollection}/${this.country_id}/${this.storeCollection}`)
         }).finally(() => {
           this.loading = false
         })
@@ -148,7 +170,9 @@ export default {
         return getters[`${this.storeCollection}/validation`]
       },
       form (state, getters) {
-        return getters[`${this.storeCollection}/form`]
+        const form = getters[`${this.storeCollection}/form`]
+        form['country_id'] = parseInt(this.country_id)
+        return form
       },
       layout (state, getters) {
         return getters[`${this.storeCollection}/layout`]

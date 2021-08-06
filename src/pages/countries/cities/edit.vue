@@ -5,12 +5,13 @@
       position="top"
       skip-hijack
     />
-    <q-toolbar class="q-pb-md q-px-none">
-      <q-breadcrumbs>
-        <q-breadcrumbs-el :label="$t(`${storeCollection}.index.title`)" :to="`/${storeCollection}`" />
-        <q-breadcrumbs-el label="Detail" />
-      </q-breadcrumbs>
-      <q-toolbar-title></q-toolbar-title>
+    <div class="text-h5">{{country?.name}}</div>
+    <q-toolbar class="q-pb-md q-px-none q-mt-lg">
+      <q-tabs v-model="tab" shrink stretch active-color="light-blue-10" content-class="tabs-border" class="full-width" align="left">
+        <q-route-tab :to="`/countries/${country_id}`" no-caps name="country" label="Country" />
+        <q-route-tab :to="`/countries/${country_id}/provinces`" no-caps name="provinces" label="Provinces" />
+        <q-route-tab :to="`/countries/${country_id}/cities`" no-caps name="cities" label="Cities" />
+      </q-tabs>
     </q-toolbar>
     <div class="text-h5">{{$t(`${storeCollection}.edit.title`)}}</div>
 
@@ -25,7 +26,7 @@
 
     <q-footer reveal elevated class="bg-white text-black">
       <q-toolbar style="height: 64px">
-        <q-btn flat label="Cancel" :to="`/${storeCollection}`" />
+        <q-btn flat label="Cancel" :to="`/${parentCollection}/${country_id}/${storeCollection}`" />
         <q-space />
         <q-btn icon="delete" flat color="negative" label="Delete" @click="confirmDelete(id)" />
         <q-btn icon="check" class="q-ml-md bg-primary text-white" :loading="loading" color="secondary" label="Update" @click="submitUpdate" />
@@ -33,7 +34,11 @@
     </q-footer>
   </q-page>
 </template>
-
+<style>
+.tabs-border {
+  border-bottom: 1px solid #e0e0e0;
+}
+</style>
 <script>
 import { mapState } from 'vuex'
 import { useStore } from 'vuex'
@@ -47,13 +52,22 @@ export default {
     FormGenerator
   },
   props: {
+    parentCollection: {
+      type: String,
+      default: null
+    },
     collection: {
       type: String,
       default: null
     }
   },
   setup (props) {
-
+    const route = useRoute()
+    const { country_id, id } = route.params
+    return {
+      country_id,
+      id
+    }
   },
   provide () {
     return {
@@ -94,13 +108,21 @@ export default {
         persistent: true
       })
     })
+
+    this.$store
+    .dispatch(`${this.parentCollection}/detail`, { id: this.country_id })
+    .then(response => {
+      const { data } = response
+      this.country = data
+    })
   },
   data () {
     return {
+      country: {},
       stateForm: 'update', // create, update, show
-      id: this.$route.params.id,
       isPwd: true,
-      loading: false
+      loading: false,
+      tab: 'provinces'
     }
   },
   methods: {
@@ -134,7 +156,7 @@ export default {
             },
             persistent: true
           }).onOk(() => {
-            this.$router.push(`/${this.storeCollection}`)
+            this.$router.push(`/${this.parentCollection}/${this.country_id}/${this.storeCollection}`)
           })
         }).catch(error => {
           if (error.response) {
@@ -187,7 +209,7 @@ export default {
           persistent: true
         }).onOk(() => {
           if (!this.submitAndCreate) {
-            this.$router.push(`/${this.storeCollection}`)
+            this.$router.push(`/${this.parentCollection}/${this.country_id}/${this.storeCollection}`)
           }
         }).finally(() => {
           this.loading = false

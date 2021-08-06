@@ -1,34 +1,26 @@
 import { required } from '@vuelidate/validators'
 import state from '../resources/state'
-export const collection = 'countries'
+export const collection = 'contents'
 export const params = {
-  'orderby[name]': 'asc'
+  type: 'faqs'
 }
+
 export const columns = [
   {
-    name: 'isocode',
+    name: 'title',
     required: true,
-    label: 'ISO Code ',
+    label: 'Ask',
     align: 'left',
-    field: 'isocode',
+    field: 'title',
     format: (val) => val,
     sortable: true
   },
   {
-    name: 'name',
+    name: 'type',
     required: true,
-    label: 'Name',
+    label: 'Type',
     align: 'left',
-    field: 'name',
-    format: (val) => val,
-    sortable: true
-  },
-  {
-    name: 'phonecode',
-    required: true,
-    label: 'Phone Code',
-    align: 'left',
-    field: 'phonecode',
+    field: 'type',
     format: (val) => val,
     sortable: true
   },
@@ -41,56 +33,57 @@ export const columns = [
 ]
 
 export const form = {
-  isocode: null,
-  name: null,
-  phonecode: null
+  title: null,
+  category: null,
+  content: '',
+  type: 'faqs',
+  image: null,
 }
 export const resetValue = {...form}
 export const layout = [
   [
     {
       type: 'QInput',
-      col: 'col-2',
-      name: 'isocode',
-      label: 'ISO Code',
+      col: 'col',
+      name: 'title',
+      label: 'Ask',
       props: {
-        maxlength: 2
+        maxlength: 1024,
+        autogrow: true
       },
       events: {}
     },
+  ],
+  [
     {
-      type: 'QInput',
-      col: 'col-6',
-      name: 'name',
-      label: 'Country',
-      props: {
-        maxlength: 50
-      },
+      type: 'QEditor',
+      col: 'col',
+      name: 'content',
+      label: 'Answer',
+      props: {},
       events: {}
     },
+  ],
+  [
     {
-      type: 'QInput',
-      col: 'col-2',
-      name: 'phonecode',
-      label: 'Phone Code',
+      type: 'QFile',
+      col: 'col-4',
+      name: 'image',
+      label: 'Image',
       props: {
-        maxlength: 3
+        maxlength: 1024
       },
       events: {}
     }
-  ]
+  ],
 ]
 
 export const validation = {
-  isocode: {
-    required
-  },
-  name: {
-    required
-  },
-  phonecode: {
-    required
-  }
+  title: { required },
+  content: { required },
+  type: { required },
+  category: {},
+  image: {},
 }
 
 export default function () {

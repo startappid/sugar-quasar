@@ -5,14 +5,15 @@
       position="top"
       skip-hijack
     />
-    <q-toolbar class="q-pb-md q-px-none">
-      <q-breadcrumbs>
-        <q-breadcrumbs-el :label="$t(`${storeCollection}.index.title`)" :to="`/${storeCollection}`" />
-        <q-breadcrumbs-el label="Detail" />
-      </q-breadcrumbs>
-      <q-toolbar-title></q-toolbar-title>
+    <div class="text-h5">{{country?.name}}</div>
+    <q-toolbar class="q-pb-md q-px-none q-mt-lg">
+      <q-tabs v-model="tab" shrink stretch active-color="light-blue-10" content-class="tabs-border" class="full-width" align="left">
+        <q-route-tab :to="`/countries/${country_id}`" no-caps name="country" label="Country" />
+        <q-route-tab :to="`/countries/${country_id}/provinces`" no-caps name="provinces" label="Provinces" />
+        <q-route-tab :to="`/countries/${country_id}/cities`" no-caps name="cities" label="Cities" />
+      </q-tabs>
     </q-toolbar>
-    <div class="text-h5">{{$t(`${storeCollection}.edit.title`)}}</div>
+    <div class="text-h5">{{$t(`${storeCollection}.trashed.title`)}}</div>
 
     <FormGenerator
       ref="formGenerator"
@@ -25,35 +26,45 @@
 
     <q-footer reveal elevated class="bg-white text-black">
       <q-toolbar style="height: 64px">
-        <q-btn flat label="Cancel" :to="`/${storeCollection}`" />
+        <q-btn flat label="Cancel" :to="`/${parentCollection}/${country_id}/${storeCollection}/trash`" />
         <q-space />
-        <q-btn icon="delete" flat color="negative" label="Delete" @click="confirmDelete(id)" />
-        <q-btn icon="check" class="q-ml-md bg-primary text-white" :loading="loading" color="secondary" label="Update" @click="submitUpdate" />
+        <q-btn icon="delete_forever" flat color="negative" label="Delete Forever" @click="confirmHardDelete(id)" />
+        <q-btn icon="restore_from_trash" class="q-ml-md bg-primary text-white" color="secondary" label="Restore" @click="confirmRestore(id)" />
       </q-toolbar>
     </q-footer>
   </q-page>
 </template>
-
+<style>
+.tabs-border {
+  border-bottom: 1px solid #e0e0e0;
+}
+</style>
 <script>
-import { mapState } from 'vuex'
-import { useStore } from 'vuex'
-import FormGenerator from 'components/form/FormGenerator'
-import { scroll } from 'quasar'
+import { mapState, useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-const { getScrollTarget, setVerticalScrollPosition } = scroll
+import FormGenerator from 'components/form/FormGenerator'
 
 export default {
   components: {
     FormGenerator
   },
   props: {
+    parentCollection: {
+      type: String,
+      default: null
+    },
     collection: {
       type: String,
       default: null
     }
   },
   setup (props) {
-
+    const route = useRoute()
+    const { country_id, id } = route.params
+    return {
+      country_id,
+      id
+    }
   },
   provide () {
     return {
@@ -66,10 +77,8 @@ export default {
     loadingbar.start()
     this.loading = true
 
-    const params = this.params
-
     $store
-    .dispatch(`${this.storeCollection}/detail`, { id: this.id, params })
+    .dispatch(`${this.storeCollection}/trashed`, { id: this.id })
     .then(response => {
       const { data } = response
       this.loading = false
@@ -94,17 +103,25 @@ export default {
         persistent: true
       })
     })
+
+    this.$store
+    .dispatch(`${this.parentCollection}/detail`, { id: this.country_id })
+    .then(response => {
+      const { data } = response
+      this.country = data
+    })
   },
   data () {
     return {
-      stateForm: 'update', // create, update, show
-      id: this.$route.params.id,
+      country: {},
+      stateForm: 'trashed', // create, update, show, trashed
       isPwd: true,
-      loading: false
+      loading: false,
+      tab: 'provinces'
     }
   },
   methods: {
-    confirmDelete (id) {
+    confirmHardDelete (id) {
       this.$q.dialog({
         title: 'Delete',
         message: 'Are you sure to delete?',
@@ -121,7 +138,7 @@ export default {
         },
         persistent: true
       }).onOk(() => {
-        this.$store.dispatch(`${this.storeCollection}/destroy`, {
+        this.$store.dispatch(`${this.storeCollection}/hardDelete`, {
           type: id,
           params: {}
         }).then((response) => {
@@ -134,7 +151,7 @@ export default {
             },
             persistent: true
           }).onOk(() => {
-            this.$router.push(`/${this.storeCollection}`)
+            this.$router.push(`/${this.parentCollection}/${this.country_id}/${this.storeCollection}/trash`)
           })
         }).catch(error => {
           if (error.response) {
@@ -152,63 +169,52 @@ export default {
         })
       })
     },
-
-    submitUpdate () {
-      const { formGenerator } = this.$refs
-      if (formGenerator.validateError()) {
-        const $v = formGenerator.getValidation()
-        const el = this.$el.querySelector(`.form-${$v.$errors[0].$property}`)
-        const target = getScrollTarget(el)
-        const offset = el.offsetTop
-        const duration = 500
-        setVerticalScrollPosition(target, offset, duration)
-        return
-      }
-
-      const { loadingbar } = this.$refs
-      loadingbar.start()
-      this.loading = true
-
-      const payload = {
-        id: this.id,
-        data: formGenerator.form
-      }
-
-      this.$store
-      .dispatch(`${this.storeCollection}/update`, payload)
-      .then((response) => {
-        const { status, message } = response
-        this.$q.dialog({
-          title: `${status}`,
-          message: `${message}`,
-          ok: {
-            flat: true
-          },
-          persistent: true
-        }).onOk(() => {
-          if (!this.submitAndCreate) {
-            this.$router.push(`/${this.storeCollection}`)
-          }
-        }).finally(() => {
-          this.loading = false
-        })
-      })
-      .catch((error) => {
-        if (error.response) {
-          const { data } = error.response
+    confirmRestore (id) {
+      this.$q.dialog({
+        title: 'Restore',
+        message: 'Are you sure to restore?',
+        ok: {
+          label: 'Restore',
+          color: 'secondary',
+          flat: true
+        },
+        cancel: {
+          label: 'Cancel',
+          color: 'white',
+          textColor: 'black',
+          flat: true
+        },
+        persistent: true
+      }).onOk(() => {
+        this.$store.dispatch(`${this.storeCollection}/restore`, {
+          type: id,
+          params: {}
+        }).then((response) => {
+          const { status, message } = response
           this.$q.dialog({
-            title: `${data.status}`,
-            message: `${data.message}`,
+            title: `${status}`,
+            message: `${message}`,
             ok: {
               flat: true
             },
             persistent: true
+          }).onOk(() => {
+            this.$router.push(`/${this.parentCollection}/${this.country_id}/${this.storeCollection}/trash`)
           })
-        }
-      })
-      .finally(() => {
-        loadingbar.stop()
-        this.loading = false
+        }).catch(error => {
+          if (error.response) {
+            const { data } = error.response
+            this.$q.dialog({
+              title: `${data.status}`,
+              message: `${data.message}`,
+              ok: {
+                flat: true
+              },
+              persistent: true
+            })
+          }
+          this.loading = false
+        })
       })
     },
   },
@@ -222,9 +228,6 @@ export default {
       },
       layout (state, getters) {
         return getters[`${this.storeCollection}/layout`]
-      },
-      params (state, getters) {
-        return getters[`${this.storeCollection}/params`]
       }
     }),
     readonly () {
@@ -235,7 +238,7 @@ export default {
       const { collection } = route.params
       const storeCollection = this.collection || collection
       return storeCollection
-    }
+    },
   }
 }
 </script>

@@ -5,6 +5,9 @@ import resources from './resources'
 import auth from './auth'
 
 import banners from './banners'
+// CONTENTS:
+import faq from './faq'
+import terms from './terms'
 
 import countries from './countries'
 import provinces from './provinces'
@@ -34,6 +37,8 @@ export default store(function (/* { ssrContext } */) {
       auth,
 
       banners,
+      faq,
+      terms,
 
       countries,
       provinces,

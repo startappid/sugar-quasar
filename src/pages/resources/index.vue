@@ -64,6 +64,7 @@
       -->
     </q-toolbar>
     <DataTable
+      ref="refDatatable"
       :columns="columns"
       :fetch="fetch"
       :destroy="destroy"

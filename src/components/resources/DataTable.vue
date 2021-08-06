@@ -20,13 +20,8 @@
   >
     <template v-slot:top-right>
 
-      <q-btn flat round dense icon="visibility" class="q-mr-sm" v-if="selected.length==1&&isStateFormEntries" @click="showSelected()" />
-      <q-btn flat round dense icon="create" class="q-mr-sm" v-if="selected.length==1&&isStateFormEntries" @click="editSelected()" />
-      <q-separator vertical inset v-if="selected.length==1&&isStateFormEntries" />
       <q-btn flat round dense icon="delete" class="q-mr-sm q-ml-sm" color="negative"  v-if="selected.length>=1&&isStateFormEntries" @click="deleteSelected()" />
 
-      <q-btn flat rounded dense icon="visibility" class="q-mr-sm" v-if="selected.length==1&&isStateFormTrash" @click="showSelected()" />
-      <q-separator vertical inset v-if="selected.length==1&&isStateFormTrash" />
       <q-btn flat rounded dense icon="restore_from_trash" class="q-mr-sm q-ml-sm" v-if="selected.length>=1&&isStateFormTrash" @click="restoreSelected()"/>
       <q-btn flat rounded dense icon="delete_forever" class="q-mr-sm" color="negative"  v-if="selected.length>=1&&isStateFormTrash" @click="deleteSelected()" />
 
@@ -275,7 +270,7 @@ export default {
         sortBy: 'id',
         descending: true,
         page: 1,
-        rowsPerPage: 25, // limit default set 25
+        rowsPerPage: 10, // limit default set 25
         rowsNumber: 0 // total records
       },
       pageOptions: [5, 10, 25, 50, 100],
@@ -294,7 +289,6 @@ export default {
       this.onRequest({ pagination, filter })
     },
     collection: function (newVal, oldVal) {
-      // this.collection = newVal
       const pagination = this.pagination
       const filter = this.filter
       this.rows.value = []
@@ -406,15 +400,6 @@ export default {
           this.loading = false
         })
       })
-    },
-    showSelected () {
-      const data = this.selected[0]
-      const trashed = this.stateForm == 'trash'? '/trashed': ''
-      this.$router.push(`/${this.path}/${data.id}${trashed}`)
-    },
-    editSelected () {
-      const data = this.selected[0]
-      this.$router.push(`/${this.path}/${data.id}/edit`)
     },
     deleteSelected () {
       const ids = []
@@ -597,15 +582,6 @@ export default {
   computed: {
     data () {
       return this.rows.value
-    },
-    collectionName () {
-      const words = this.collection.split('_')
-      const titles = []
-      for (const key in words) {
-        const word = words[key]
-        titles.push(word.charAt(0).toUpperCase() + word.slice(1))
-      }
-      return titles.join(' ')
     },
     pageTitle () {
       if (this.stateForm == 'trash') {

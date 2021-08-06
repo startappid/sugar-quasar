@@ -5,14 +5,15 @@
       position="top"
       skip-hijack
     />
-    <q-toolbar class="q-pb-md q-px-none">
-      <q-breadcrumbs>
-        <q-breadcrumbs-el :label="$t(`${storeCollection}.index.title`)" :to="`/${storeCollection}`" />
-        <q-breadcrumbs-el label="Detail" />
-      </q-breadcrumbs>
-      <q-toolbar-title></q-toolbar-title>
+    <div class="text-h5">{{country?.name}}</div>
+    <q-toolbar class="q-pb-md q-px-none q-mt-lg">
+      <q-tabs v-model="tab" shrink stretch active-color="light-blue-10" content-class="tabs-border" class="full-width" align="left">
+        <q-route-tab :to="`/countries/${country_id}`" no-caps name="country" label="Country" />
+        <q-route-tab :to="`/countries/${country_id}/provinces`" no-caps name="provinces" label="Provinces" />
+        <q-route-tab :to="`/countries/${country_id}/cities`" no-caps name="cities" label="Cities" />
+      </q-tabs>
     </q-toolbar>
-    <div class="text-h5">{{$t(`${storeCollection}.edit.title`)}}</div>
+    <div class="text-h5">{{$t(`${storeCollection}.show.title`)}}</div>
 
     <FormGenerator
       ref="formGenerator"
@@ -25,35 +26,46 @@
 
     <q-footer reveal elevated class="bg-white text-black">
       <q-toolbar style="height: 64px">
-        <q-btn flat label="Cancel" :to="`/${storeCollection}`" />
+        <q-btn flat label="Back" :to="`/${parentCollection}/${country_id}/${storeCollection}`" />
         <q-space />
         <q-btn icon="delete" flat color="negative" label="Delete" @click="confirmDelete(id)" />
-        <q-btn icon="check" class="q-ml-md bg-primary text-white" :loading="loading" color="secondary" label="Update" @click="submitUpdate" />
+        <q-btn icon="edit" :loading="loading" class="q-ml-md bg-primary text-white" color="secondary" label="Edit" :to="`/${parentCollection}/${country_id}/${storeCollection}/${id}/edit`" />
       </q-toolbar>
     </q-footer>
   </q-page>
 </template>
-
+<style>
+.tabs-border {
+  border-bottom: 1px solid #e0e0e0;
+}
+</style>
 <script>
 import { mapState } from 'vuex'
 import { useStore } from 'vuex'
 import FormGenerator from 'components/form/FormGenerator'
-import { scroll } from 'quasar'
 import { useRoute } from 'vue-router'
-const { getScrollTarget, setVerticalScrollPosition } = scroll
 
 export default {
   components: {
     FormGenerator
   },
   props: {
+    parentCollection: {
+      type: String,
+      default: null
+    },
     collection: {
       type: String,
       default: null
     }
   },
   setup (props) {
-
+    const route = useRoute()
+    const { country_id, id } = route.params
+    return {
+      country_id,
+      id
+    }
   },
   provide () {
     return {
@@ -94,13 +106,21 @@ export default {
         persistent: true
       })
     })
+
+    this.$store
+    .dispatch(`${this.parentCollection}/detail`, { id: this.country_id })
+    .then(response => {
+      const { data } = response
+      this.country = data
+    })
   },
   data () {
     return {
-      stateForm: 'update', // create, update, show
-      id: this.$route.params.id,
+      country: {},
+      stateForm: 'show', // create, update, show
       isPwd: true,
-      loading: false
+      loading: false,
+      tab: 'provinces'
     }
   },
   methods: {
@@ -134,7 +154,7 @@ export default {
             },
             persistent: true
           }).onOk(() => {
-            this.$router.push(`/${this.storeCollection}`)
+            this.$router.push(`/${this.parentCollection}/${this.country_id}/${this.storeCollection}`)
           })
         }).catch(error => {
           if (error.response) {
@@ -150,65 +170,6 @@ export default {
           }
           this.loading = false
         })
-      })
-    },
-
-    submitUpdate () {
-      const { formGenerator } = this.$refs
-      if (formGenerator.validateError()) {
-        const $v = formGenerator.getValidation()
-        const el = this.$el.querySelector(`.form-${$v.$errors[0].$property}`)
-        const target = getScrollTarget(el)
-        const offset = el.offsetTop
-        const duration = 500
-        setVerticalScrollPosition(target, offset, duration)
-        return
-      }
-
-      const { loadingbar } = this.$refs
-      loadingbar.start()
-      this.loading = true
-
-      const payload = {
-        id: this.id,
-        data: formGenerator.form
-      }
-
-      this.$store
-      .dispatch(`${this.storeCollection}/update`, payload)
-      .then((response) => {
-        const { status, message } = response
-        this.$q.dialog({
-          title: `${status}`,
-          message: `${message}`,
-          ok: {
-            flat: true
-          },
-          persistent: true
-        }).onOk(() => {
-          if (!this.submitAndCreate) {
-            this.$router.push(`/${this.storeCollection}`)
-          }
-        }).finally(() => {
-          this.loading = false
-        })
-      })
-      .catch((error) => {
-        if (error.response) {
-          const { data } = error.response
-          this.$q.dialog({
-            title: `${data.status}`,
-            message: `${data.message}`,
-            ok: {
-              flat: true
-            },
-            persistent: true
-          })
-        }
-      })
-      .finally(() => {
-        loadingbar.stop()
-        this.loading = false
       })
     },
   },

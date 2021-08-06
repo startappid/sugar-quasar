@@ -5,7 +5,7 @@ export const headers = {
   'Content-Type': 'multipart/form-data'
 }
 export const params = {
-  relationship: ['country', 'province', 'thumbnail']
+  relationship: ['country', 'province']
 }
 
 export const columns = [
@@ -53,8 +53,7 @@ export const columns = [
 export const form = {
   country_id: null,
   province_id: null,
-  name: null,
-  thumbnail: null
+  name: null
 }
 
 export const resetValue = {...form}
@@ -111,19 +110,6 @@ export const layout = [
       },
       events: {}
     }
-  ],
-  [
-    {
-      type: 'QFile',
-      col: 'col-4',
-      name: 'thumbnail',
-      label: 'Choose file thumbnail',
-      props: {
-        maxlength: 50,
-        hint: '— optional'
-      },
-      events: {}
-    },
   ]
 ]
 
@@ -136,8 +122,7 @@ export const validation = {
   },
   name: {
     required
-  },
-  thumbnail: {}
+  }
 }
 
 export default function () {

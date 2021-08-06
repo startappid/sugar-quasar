@@ -1,12 +1,15 @@
 <template>
   <q-page class="q-pa-md">
+    <div class="text-h5">{{country?.name}}</div>
+    <q-toolbar class="q-pb-md q-px-none q-mt-lg">
+      <q-tabs v-model="tab" shrink stretch active-color="light-blue-10" content-class="tabs-border" class="full-width" align="left">
+        <q-route-tab :to="`/countries/${country_id}`" no-caps name="country" label="Country" />
+        <q-route-tab :to="`/countries/${country_id}/provinces`" no-caps name="provinces" label="Provinces" />
+        <q-route-tab :to="`/countries/${country_id}/cities`" no-caps name="cities" label="Cities" />
+      </q-tabs>
+    </q-toolbar>
     <q-toolbar class="q-pb-md q-px-none">
-      <q-breadcrumbs>
-        <q-breadcrumbs-el :label="$t(`${storeCollection}.index.title`)" :to="`/${storeCollection}`" />
-        <q-breadcrumbs-el label="Trash" />
-      </q-breadcrumbs>
       <q-toolbar-title></q-toolbar-title>
-
       <q-btn icon="delete_forever" class="q-mr-md" label="Empty" flat color="negative" @click="emptyTrash" />
       <q-btn icon="restore_from_trash" class="q-mr-md" label="Restore" color="secondary" @click="restoreAll"/>
     </q-toolbar>
@@ -15,6 +18,7 @@
       :fetch="trash"
       :destroy="destroy"
       :restore="restore"
+      :basePath="`${parentCollection}/${country_id}/${storeCollection}`"
       :collection="storeCollection"
       :params="params"
       :stateForm="stateForm"
@@ -22,7 +26,11 @@
     />
   </q-page>
 </template>
-
+<style>
+.tabs-border {
+  border-bottom: 1px solid #e0e0e0;
+}
+</style>
 <script>
 import DataTable from 'components/resources/DataTable'
 import { mapState, mapActions } from 'vuex'
@@ -33,15 +41,36 @@ export default {
     DataTable
   },
   props: {
+    parentCollection: {
+      type: String,
+      default: null
+    },
     collection: {
       type: String,
       default: null
     }
   },
+  setup () {
+    const route = useRoute()
+    const { country_id } = route.params
+    return {
+      country_id
+    }
+  },
+  mounted () {
+    this.$store
+    .dispatch(`${this.parentCollection}/detail`, { id: this.country_id })
+    .then(response => {
+      const { data } = response
+      this.country = data
+    })
+  },
   data () {
     return {
       stateForm: 'trash', // entries, trash
-      stateData: null
+      stateData: null,
+      country: {},
+      tab: 'provinces'
     }
   },
   methods: {
