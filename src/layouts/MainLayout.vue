@@ -33,11 +33,11 @@
               <q-item aria-hidden="true">
                 <q-item-section class="text-uppercase text-grey-7" style="font-size: 0.7rem">Create New</q-item-section>
               </q-item>
-              <q-item v-for="menu in createMenu" :key="menu.text" clickable v-close-popup aria-hidden="true">
+              <q-item clickable v-close-popup aria-hidden="true">
                 <q-item-section avatar>
-                  <q-icon :name="menu.icon" />
+                  <q-icon name="add" />
                 </q-item-section>
-                <q-item-section>{{ menu.text }}</q-item-section>
+                <q-item-section>Data</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
