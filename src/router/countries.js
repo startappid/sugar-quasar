@@ -250,7 +250,7 @@ export const countries = (store) => {
             path: '',
             props: {
               parentCollection: collection,
-              collection: 'provinces'
+              collection: 'cities'
             },
             component: () => {
               try {
@@ -267,7 +267,7 @@ export const countries = (store) => {
             path: 'trash',
             props: {
               parentCollection: collection,
-              collection: 'provinces'
+              collection: 'cities'
             },
             component: () => {
               try {
@@ -284,7 +284,7 @@ export const countries = (store) => {
             path: 'create',
             props: {
               parentCollection: collection,
-              collection: 'provinces'
+              collection: 'cities'
             },
             component: () => {
               try {
@@ -301,7 +301,7 @@ export const countries = (store) => {
             path: ':id',
             props: {
               parentCollection: collection,
-              collection: 'provinces'
+              collection: 'cities'
             },
             component: () => {
               try {
@@ -318,7 +318,7 @@ export const countries = (store) => {
             path: ':id/trashed',
             props: {
               parentCollection: collection,
-              collection: 'provinces'
+              collection: 'cities'
             },
             component: () => {
               try {
@@ -335,7 +335,7 @@ export const countries = (store) => {
             path: ':id/edit',
             props: {
               parentCollection: collection,
-              collection: 'provinces'
+              collection: 'cities'
             },
             component: () => {
               try {
