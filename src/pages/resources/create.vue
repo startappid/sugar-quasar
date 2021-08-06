@@ -160,7 +160,7 @@ export default {
     storeCollection() {
       const route = useRoute()
       const { collection } = route.params
-      const storeCollection = this.storeCollection || collection
+      const storeCollection = this.collection || collection
       return storeCollection
     },
   }
