@@ -503,7 +503,6 @@ export default {
       title: null
     },
   },
-
   degrees: {
     index: {
       title: 'Degrees'
@@ -562,6 +561,26 @@ export default {
     },
     trashed: {
       title: 'Deleted Major'
+    },
+  },
+  fields: {
+    index: {
+      title: 'Fields'
+    },
+    create: {
+      title: 'Create Field'
+    },
+    show: {
+      title: 'Detail Field'
+    },
+    edit: {
+      title: 'Update Field'
+    },
+    trash: {
+      title: 'Trash of Fields'
+    },
+    trashed: {
+      title: 'Deleted Field'
     },
   },
 }
