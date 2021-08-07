@@ -603,4 +603,24 @@ export default {
       title: 'Deleted Class'
     },
   },
+  subjects: {
+    index: {
+      title: 'Subjects'
+    },
+    create: {
+      title: 'Create Subject'
+    },
+    show: {
+      title: 'Detail Subject'
+    },
+    edit: {
+      title: 'Update Subject'
+    },
+    trash: {
+      title: 'Trash of Subjects'
+    },
+    trashed: {
+      title: 'Deleted Subject'
+    },
+  },
 }

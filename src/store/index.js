@@ -18,6 +18,7 @@ import levels from './levels'
 import majors from './majors'
 import fields from './fields'
 import classes from './classes'
+import subjects from './subjects'
 
 import users from './users'
 import addresses from './addresses'
@@ -56,6 +57,7 @@ export default store(function (/* { ssrContext } */) {
       majors,
       fields,
       classes,
+      subjects,
 
       users,
       addresses,
