@@ -583,4 +583,24 @@ export default {
       title: 'Deleted Field'
     },
   },
+  classes: {
+    index: {
+      title: 'Classes'
+    },
+    create: {
+      title: 'Create Class'
+    },
+    show: {
+      title: 'Detail Class'
+    },
+    edit: {
+      title: 'Update Class'
+    },
+    trash: {
+      title: 'Trash of Classes'
+    },
+    trashed: {
+      title: 'Deleted Class'
+    },
+  },
 }
