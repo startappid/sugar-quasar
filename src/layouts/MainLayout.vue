@@ -208,6 +208,18 @@
             label="Educational"
             class="q-my-sm"
           >
+            <q-item clickable v-ripple :inset-level="1" to="/classes">
+              <q-item-section>
+                Classes
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple :inset-level="1" to="/subjects">
+              <q-item-section>
+                Subjects
+              </q-item-section>
+            </q-item>
+            <!-- <q-separator inset :inset-level="1" class="q-my-sm" /> -->
+            <q-separator spaced inset="item" class="q-mr-md" />
             <q-item clickable v-ripple :inset-level="1" to="/degrees">
               <q-item-section>
                 Degrees
@@ -226,11 +238,6 @@
             <q-item clickable v-ripple :inset-level="1" to="/fields">
               <q-item-section>
                 Fields
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-ripple :inset-level="1" to="/subjects">
-              <q-item-section>
-                Subjects
               </q-item-section>
             </q-item>
           </q-expansion-item>
