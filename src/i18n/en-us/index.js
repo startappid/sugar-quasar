@@ -544,4 +544,24 @@ export default {
       title: 'Deleted Level'
     },
   },
+  majors: {
+    index: {
+      title: 'Majors'
+    },
+    create: {
+      title: 'Create Major'
+    },
+    show: {
+      title: 'Detail Major'
+    },
+    edit: {
+      title: 'Update Major'
+    },
+    trash: {
+      title: 'Trash of Majors'
+    },
+    trashed: {
+      title: 'Deleted Major'
+    },
+  },
 }
