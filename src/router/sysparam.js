@@ -8,7 +8,10 @@ export const sysparam = {
       props: { collection },
       component: () => {
         try {
-          return require(`pages/${collection}/index.vue`)
+          const isExist = require(`pages/${collection}/index.vue`)
+          if (isExist) {
+            return import('pages/' + collection + '/index.vue')
+          }
         } catch (error) {
           return import('pages/resources/index.vue')
         }
