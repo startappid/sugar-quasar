@@ -310,6 +310,18 @@
               </q-item-section>
             </q-item>
           </q-expansion-item>
+
+          <q-expansion-item
+            icon="settings"
+            label="Settings"
+            class="q-my-sm"
+          >
+            <q-item clickable v-ripple :inset-level="1" to="/sysparams">
+              <q-item-section>
+                Sysparams
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
         </q-list>
       </q-scroll-area>
     </q-drawer>
