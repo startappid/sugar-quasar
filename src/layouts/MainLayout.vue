@@ -316,7 +316,7 @@
             label="Settings"
             class="q-my-sm"
           >
-            <q-item clickable v-ripple :inset-level="1" to="/sysparams">
+            <q-item clickable v-ripple :inset-level="1" to="/sysparam">
               <q-item-section>
                 Sysparams
               </q-item-section>
