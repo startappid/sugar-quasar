@@ -405,19 +405,19 @@ export default {
   },
   sysparam: {
     index: {
-      title: 'System Parameters'
+      title: 'Sysparams'
     },
     create: {
-      title: 'Create new System Parameter'
+      title: 'Create new Sysparam'
     },
     show: {
-      title: 'System Parameter'
+      title: 'Sysparam'
     },
     edit: {
       title: 'Update Parameter'
     },
     trash: {
-      title: 'Trash of System Parameters'
+      title: 'Trash of Sysparams'
     },
     trashed: {
       title: null
