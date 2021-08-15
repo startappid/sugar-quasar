@@ -1,8 +1,9 @@
+import { required } from '@vuelidate/validators'
 import state from '../resources/state'
 
 export const collection = 'sysparams'
 export const params = {
-  // 'orderby[name]': 'asc'
+  'orderby[group]': 'asc'
 }
 export const form = {
   group: null,
@@ -69,8 +70,68 @@ export const columns = [
   }
 ]
 
-export const layout = []
-export const validation = {}
+export const layout = [
+  [
+    {
+      type: 'QInput',
+      col: 'col-2',
+      name: 'group',
+      label: 'Group',
+      props: {
+        type: 'text',
+        maxlength: 1024
+      },
+      events: {}
+    },
+    {
+      type: 'QInput',
+      col: 'col-2',
+      name: 'key',
+      label: 'Key',
+      props: {
+        type: 'text',
+        maxlength: 1024
+      },
+      events: {}
+    }
+  ],
+  [
+    {
+      type: 'QInput',
+      col: 'col-6',
+      name: 'value',
+      label: 'Value',
+      props: {
+        type: 'text',
+        maxlength: 1024
+      },
+      events: {}
+    }
+  ],
+  [
+    {
+      type: 'QInput',
+      col: 'col-2',
+      name: 'order',
+      label: 'Order',
+      props: {
+        type: 'number',
+        maxlength: 1024
+      },
+      events: {}
+    },
+  ],
+]
+
+export const validation = {
+  group: { required },
+  key:  { required },
+  value:  { required },
+  data: {},
+  order: {},
+  status: {},
+}
+
 export const data = []
 export const route = {}
 

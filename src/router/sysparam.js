@@ -22,7 +22,10 @@ export const sysparam = {
       props: { collection },
       component: () => {
         try {
-          return require('pages/' + collection + '/trash.vue')
+          const isExist = require(`pages/${collection}/trash.vue`)
+          if (isExist) {
+            return import('pages/' + collection + '/trash.vue')
+          }
         } catch (error) {
           return import('pages/resources/trash.vue')
         }
@@ -33,42 +36,12 @@ export const sysparam = {
       props: { collection },
       component: () => {
         try {
-          return require('pages/' + collection + '/create.vue')
+          const isExist = require(`pages/${collection}/create.vue`)
+          if (isExist) {
+            return import('pages/' + collection + '/create.vue')
+          }
         } catch (error) {
           return import('pages/resources/create.vue')
-        }
-      }
-    },
-    {
-      path: 'report',
-      props: { collection },
-      component: () => {
-        try {
-          return require('pages/' + collection + '/report.vue')
-        } catch (error) {
-          return import('pages/resources/report.vue')
-        }
-      }
-    },
-    {
-      path: 'import',
-      props: { collection },
-      component: () => {
-        try {
-          return require('pages/' + collection + '/import.vue')
-        } catch (error) {
-          return import('pages/resources/import.vue')
-        }
-      }
-    },
-    {
-      path: 'export',
-      props: { collection },
-      component: () => {
-        try {
-          return require('pages/' + collection + '/export.vue')
-        } catch (error) {
-          return import('pages/resources/export.vue')
         }
       }
     },
@@ -77,7 +50,10 @@ export const sysparam = {
       props: { collection },
       component: () => {
         try {
-          return require('pages/' + collection + '/show.vue')
+          const isExist = require(`pages/${collection}/show.vue`)
+          if (isExist) {
+            return import('pages/' + collection + '/show.vue')
+          }
         } catch (error) {
           return import('pages/resources/show.vue')
         }
@@ -88,7 +64,10 @@ export const sysparam = {
       props: { collection },
       component: () => {
         try {
-          return require('pages/' + collection + '/trashed.vue')
+          const isExist = require(`pages/${collection}/trashed.vue`)
+          if (isExist) {
+            return import('pages/' + collection + '/trashed.vue')
+          }
         } catch (error) {
           return import('pages/resources/trashed.vue')
         }
@@ -99,7 +78,10 @@ export const sysparam = {
       props: { collection },
       component: () => {
         try {
-          return require('pages/' + collection + '/edit.vue')
+          const isExist = require(`pages/${collection}/edit.vue`)
+          if (isExist) {
+            return import('pages/' + collection + '/edit.vue')
+          }
         } catch (error) {
           return import('pages/resources/edit.vue')
         }
