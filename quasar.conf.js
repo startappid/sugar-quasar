@@ -67,6 +67,8 @@ module.exports = configure(function (/* ctx */) {
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
       env: {
+        MODE:  'development',
+        MOCK_API:  false,
         BASEURL:  'http://localhost:8000',
         APIURL:   'http://localhost:8000/api/v1'
       },
@@ -133,9 +135,9 @@ module.exports = configure(function (/* ctx */) {
       },
 
       manifest: {
-        name: `VCDLN KEDAIREKA`,
-        short_name: `VCDLN KEDAIREKA`,
-        description: `VCDLN KEDAIREKA`,
+        name: `SKSSK`,
+        short_name: `SKSSK`,
+        description: `SKSSK`,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
@@ -200,7 +202,7 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'den-quasar'
+        appId: 'skssk'
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

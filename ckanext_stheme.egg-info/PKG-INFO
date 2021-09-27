@@ -1,0 +1,41 @@
+Metadata-Version: 2.1
+Name: ckanext-stheme
+Version: 0.0.1
+Summary: UNKNOWN
+Home-page: https://github.com/reekoheek/ckanext-stheme
+Author: Ganesha
+Author-email: reekoheek@gmail.com
+License: AGPL
+Description: # Startapp Webapp (sugar-quasar)
+        
+        Startapp backoffice
+        
+        ## Install the dependencies
+        ```bash
+        yarn
+        ```
+        
+        ### Start the app in development mode (hot-code reloading, error reporting, etc.)
+        ```bash
+        quasar dev
+        ```
+        
+        ### Lint the files
+        ```bash
+        yarn run lint
+        ```
+        
+        ### Build the app for production
+        ```bash
+        quasar build
+        ```
+        
+        ### Customize the configuration
+        See [Configuring quasar.conf.js](https://v2.quasar.dev/quasar-cli/quasar-conf-js).
+        
+Keywords: CKAN
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)
+Classifier: Programming Language :: Python :: 2.7
+Description-Content-Type: text/markdown

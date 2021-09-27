@@ -1,0 +1,7 @@
+
+        [ckan.plugins]
+        stheme=ckanext.stheme.plugin:SthemePlugin
+
+        [babel.extractors]
+        ckan = ckan.lib.extract:extract_ckan
+    

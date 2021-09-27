@@ -1,0 +1,14 @@
+# stheme-js:
+#   filter: rjsmin
+#   output: ckanext-stheme/%(version)s-stheme.js
+#   contents:
+#     - js/stheme.js
+#   extra:
+#     preload:
+#       - base/main
+
+# stheme-css:
+#   filter: cssrewrite
+#   output: ckanext-stheme/%(version)s-stheme.css
+#   contents:
+#     - css/stheme.css
