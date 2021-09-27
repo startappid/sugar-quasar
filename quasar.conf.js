@@ -66,6 +66,7 @@ module.exports = configure(function (/* ctx */) {
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
+      // publicPath: '/stheme', // use this path uncomment if on development with CKAN
       env: {
         MODE:  'development',
         MOCK_API:  false,
