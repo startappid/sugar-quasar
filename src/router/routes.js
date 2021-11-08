@@ -74,7 +74,7 @@ const routes = (store) => [
 
   { ...profile },
 
-  { ...countries },
+  { ...countries(store) },
 
   { ...users },
   { ...roles },

@@ -13,8 +13,8 @@
         />
 
         <q-toolbar-title v-if="$q.screen.gt.sm" shrink class="row items-center no-wrap">
-          <img src="http://startapp.id/startapp-light.png" width="56" />
-          <span class="q-ml-sm">Startapp</span>
+          <!-- <img src="http://startapp.id/startapp-light.png" width="56" /> -->
+          <span class="q-ml-sm">SKSSK</span>
         </q-toolbar-title>
 
         <q-space />
@@ -32,11 +32,11 @@
               <q-item aria-hidden="true">
                 <q-item-section class="text-uppercase text-grey-7" style="font-size: 0.7rem">Create New</q-item-section>
               </q-item>
-              <q-item v-for="menu in createMenu" :key="menu.text" clickable v-close-popup aria-hidden="true">
+              <q-item clickable v-close-popup aria-hidden="true">
                 <q-item-section avatar>
-                  <q-icon :name="menu.icon" />
+                  <q-icon name="add" />
                 </q-item-section>
-                <q-item-section>{{ menu.text }}</q-item-section>
+                <q-item-section>Data</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
@@ -114,6 +114,28 @@
             </q-item-section>
           </q-item>
 
+          <div v-can="'nav.aside.streaming'">
+          <q-separator inset class="q-my-sm" />
+          <q-item-label header>Videos &amp; Streaming</q-item-label>
+          <q-item v-ripple v-can="'videos.read.index'"  clickable to="/videos">
+            <q-item-section avatar>
+              <q-icon name="videocam" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Videos</q-item-label>
+            </q-item-section>
+          </q-item>
+
+          <q-item v-ripple>
+            <q-item-section avatar>
+              <q-icon name="live_tv" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>Live Streaming</q-item-label>
+            </q-item-section>
+          </q-item>
+          </div>
+
           <div v-can="'nav.aside.marketing'">
           <q-separator inset class="q-my-sm" />
           <q-item-label header>Marketing &amp; Contents</q-item-label>
@@ -179,6 +201,46 @@
 
           <q-separator inset class="q-my-sm" />
           <q-item-label header>Administrator</q-item-label>
+
+          <q-expansion-item
+            icon="school"
+            label="Educational"
+            class="q-my-sm"
+          >
+            <q-item clickable v-ripple :inset-level="1" to="/classes">
+              <q-item-section>
+                Classes
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple :inset-level="1" to="/subjects">
+              <q-item-section>
+                Subjects
+              </q-item-section>
+            </q-item>
+            <!-- <q-separator inset :inset-level="1" class="q-my-sm" /> -->
+            <q-separator spaced inset="item" class="q-mr-md" />
+            <q-item clickable v-ripple :inset-level="1" to="/degrees">
+              <q-item-section>
+                Degrees
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple :inset-level="1" to="/levels">
+              <q-item-section>
+                Levels
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple :inset-level="1" to="/majors">
+              <q-item-section>
+                Majors
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple :inset-level="1" to="/fields">
+              <q-item-section>
+                Fields
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
+
           <q-expansion-item
             icon="people"
             label="Users Management"
@@ -244,6 +306,18 @@
             <q-item clickable v-ripple :inset-level="1" to="/cities">
               <q-item-section>
                 Cities
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
+
+          <q-expansion-item
+            icon="settings"
+            label="Settings"
+            class="q-my-sm"
+          >
+            <q-item clickable v-ripple :inset-level="1" to="/sysparam">
+              <q-item-section>
+                Sysparams
               </q-item-section>
             </q-item>
           </q-expansion-item>

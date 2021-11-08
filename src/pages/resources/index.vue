@@ -64,6 +64,7 @@
       -->
     </q-toolbar>
     <DataTable
+      ref="refDatatable"
       :columns="columns"
       :fetch="fetch"
       :destroy="destroy"
@@ -114,8 +115,7 @@ export default {
       }
     }),
     storeCollection() {
-      const route = useRoute()
-      const { collection } = route.params
+      const { collection } = this.$route.params
       const storeCollection = this.collection || collection
       return storeCollection
     }
