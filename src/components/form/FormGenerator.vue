@@ -157,10 +157,10 @@
         :readonly="readonly"
         :label="field.label"
         stack-label
-        v-bind="field.props"
-        v-on="field.events"
         :hint="!v$.form[field.name].required? '-- optional': ''"
         :error="v$.form[field.name].$error"
+        v-bind="field.props"
+        v-on="field.events"
         clearable
       />
 

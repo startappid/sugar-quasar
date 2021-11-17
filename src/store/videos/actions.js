@@ -14,16 +14,26 @@ export {
   restore
 } from '../resources/actions'
 
-export async function groups ({ state, commit, dispatch, getters }, { params, headers = {}, config = {} } = {}) {
+export async function upcreate ({ state, commit, dispatch, getters }, { data, params = {}, headers = {}, config = {} }) {
   var token = Cookies.get('authorization_token')
+  const _headers = state.headers
+
   if (token) {
-    headers = { Authorization: `Bearer ${token}`, ...headers }
+    headers = { Authorization: `Bearer ${token}`, ...headers, ..._headers }
   }
+
+  headers['Content-Type'] = 'multipart/form-data'
+
+  const formData = new FormData()
+  for (const key in data) {
+    if (data[key]) formData.append(key, data[key])
+  }
+  data = formData
   config = { ...getters.config, ...config }
   const { collection } = state
-  const ROUTE_FETCH = `/${collection}/groups`
+  const ROUTE_CREATE = `/${collection}/upcreate`
   const promise = new Promise((resolve, reject) => {
-    return api.get(ROUTE_FETCH, { params, headers, ...config }).then(response => {
+    return api.post(ROUTE_CREATE, data, { params, headers, ...config }).then(response => {
       const { data /** , status, statusText, headers, config **/ } = response
       resolve(data)
     }).catch(error => {

@@ -65,10 +65,10 @@ export const form = {
   file: null,
   title: null,
   description: '',
-  directory: null,
+  directory: 'files/video',
   foreign_table: null,
   foreign_id: null,
-  type: 'image',
+  type: 'video',
   fullpath: null // NOTE: fullpath will not be submited
 }
 
@@ -80,10 +80,9 @@ export const layout = [
       col: 'col-4',
       name: 'file',
       label: 'File',
-      imgfield: 'fullpath', // NOTE: field wil be shown
       props: {
         maxlength: 1024,
-        accept: 'application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*'
+        accept: 'video/*'
       },
       events: {}
     }
@@ -116,87 +115,50 @@ export const layout = [
       events: {}
     }
   ],
-  [
-    {
-      type: 'QRadio',
-      col: 'col',
-      name: 'type',
-      label: 'Type',
-      props: {
-        options: [
-          {
-            label: 'Compress',
-            value: 'compress'
-          },
-          {
-            label: 'Documents',
-            value: 'document'
-          },
-          {
-            label: 'Image',
-            value: 'image'
-          },
-          {
-            label: 'Video',
-            value: 'video'
-          },
-          {
-            label: 'Audio',
-            value: 'audio'
-          },
-          {
-            label: 'Other',
-            value: 'other'
-          }
-        ]
-      },
-      events: {}
-    }
-  ],
-  [
-    {
-      type: 'QInput',
-      col: 'col-2',
-      name: 'foreign_table',
-      label: 'Foreign Table',
-      props: {
-        maxlength: 1024,
-        autogrow: true,
-        hint: '-- optional'
-      },
-      events: {}
-    },
-    {
-      type: 'QInput',
-      col: 'col-2',
-      name: 'foreign_id',
-      label: 'Foreign ID',
-      props: {
-        maxlength: 1024,
-        autogrow: true,
-        hint: '-- optional'
-      },
-      events: {}
-    },
-    {
-      type: 'QSelect',
-      col: 'col-3',
-      name: 'directory',
-      label: 'Directory',
-      props: {
-        options: directories,
-        'use-input': true,
-        'emit-value': true,
-        'map-options': true,
-        'option-value': 'value',
-        'option-label': 'label',
-        'hide-selected': true,
-        'fill-input': true,
-        hint: '-- optional'
-      },
-      events: {}
-    },
-  ],
+  // [
+  //   {
+  //     type: 'QInput',
+  //     col: 'col-2',
+  //     name: 'foreign_table',
+  //     label: 'Foreign Table',
+  //     props: {
+  //       maxlength: 1024,
+  //       autogrow: true,
+  //       hint: '-- optional'
+  //     },
+  //     events: {}
+  //   },
+  //   {
+  //     type: 'QInput',
+  //     col: 'col-2',
+  //     name: 'foreign_id',
+  //     label: 'Foreign ID',
+  //     props: {
+  //       maxlength: 1024,
+  //       autogrow: true,
+  //       hint: '-- optional'
+  //     },
+  //     events: {}
+  //   },
+  //   {
+  //     type: 'QSelect',
+  //     col: 'col-3',
+  //     name: 'directory',
+  //     label: 'Directory',
+  //     props: {
+  //       options: directories,
+  //       'use-input': true,
+  //       'emit-value': true,
+  //       'map-options': true,
+  //       'option-value': 'value',
+  //       'option-label': 'label',
+  //       'hide-selected': true,
+  //       'fill-input': true,
+  //       hint: '-- optional'
+  //     },
+  //     events: {}
+  //   },
+  // ],
 ]
 
 export const validation = {

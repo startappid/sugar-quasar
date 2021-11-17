@@ -343,6 +343,26 @@ export default {
       title: null
     },
   },
+  videos: {
+    index: {
+      title: 'Videos'
+    },
+    create: {
+      title: 'Upload Video'
+    },
+    show: {
+      title: 'Detail Video'
+    },
+    edit: {
+      title: 'Update Video'
+    },
+    trash: {
+      title: 'Trash of Videos'
+    },
+    trashed: {
+      title: 'Deleted Video'
+    },
+  },
   permissions: {
     index: {
       title: 'Permissions'
@@ -385,19 +405,19 @@ export default {
   },
   sysparam: {
     index: {
-      title: 'System Parameters'
+      title: 'Sysparams'
     },
     create: {
-      title: 'Create new System Parameter'
+      title: 'Create new Sysparam'
     },
     show: {
-      title: 'System Parameter'
+      title: 'Sysparam'
     },
     edit: {
       title: 'Update Parameter'
     },
     trash: {
-      title: 'Trash of System Parameters'
+      title: 'Trash of Sysparams'
     },
     trashed: {
       title: null
@@ -481,6 +501,126 @@ export default {
     },
     trashed: {
       title: null
+    },
+  },
+  degrees: {
+    index: {
+      title: 'Degrees'
+    },
+    create: {
+      title: 'Create Degree'
+    },
+    show: {
+      title: 'Detail Degree'
+    },
+    edit: {
+      title: 'Update Degree'
+    },
+    trash: {
+      title: 'Trash of Degrees'
+    },
+    trashed: {
+      title: 'Deleted Degree'
+    },
+  },
+  levels: {
+    index: {
+      title: 'Levels'
+    },
+    create: {
+      title: 'Create Level'
+    },
+    show: {
+      title: 'Detail Level'
+    },
+    edit: {
+      title: 'Update Level'
+    },
+    trash: {
+      title: 'Trash of Levels'
+    },
+    trashed: {
+      title: 'Deleted Level'
+    },
+  },
+  majors: {
+    index: {
+      title: 'Majors'
+    },
+    create: {
+      title: 'Create Major'
+    },
+    show: {
+      title: 'Detail Major'
+    },
+    edit: {
+      title: 'Update Major'
+    },
+    trash: {
+      title: 'Trash of Majors'
+    },
+    trashed: {
+      title: 'Deleted Major'
+    },
+  },
+  fields: {
+    index: {
+      title: 'Fields'
+    },
+    create: {
+      title: 'Create Field'
+    },
+    show: {
+      title: 'Detail Field'
+    },
+    edit: {
+      title: 'Update Field'
+    },
+    trash: {
+      title: 'Trash of Fields'
+    },
+    trashed: {
+      title: 'Deleted Field'
+    },
+  },
+  classes: {
+    index: {
+      title: 'Classes'
+    },
+    create: {
+      title: 'Create Class'
+    },
+    show: {
+      title: 'Detail Class'
+    },
+    edit: {
+      title: 'Update Class'
+    },
+    trash: {
+      title: 'Trash of Classes'
+    },
+    trashed: {
+      title: 'Deleted Class'
+    },
+  },
+  subjects: {
+    index: {
+      title: 'Subjects'
+    },
+    create: {
+      title: 'Create Subject'
+    },
+    show: {
+      title: 'Detail Subject'
+    },
+    edit: {
+      title: 'Update Subject'
+    },
+    trash: {
+      title: 'Trash of Subjects'
+    },
+    trashed: {
+      title: 'Deleted Subject'
     },
   },
 }
