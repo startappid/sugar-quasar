@@ -52,19 +52,10 @@ export default store(function (/* { ssrContext } */) {
       provinces,
       cities,
 
-      degrees,
-      levels,
-      majors,
-      fields,
-      classes,
-      subjects,
-
       users,
       addresses,
       contacts,
       files,
-
-      videos,
 
       roles,
       permissions,
