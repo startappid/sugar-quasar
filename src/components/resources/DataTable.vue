@@ -129,8 +129,6 @@
 </style>
 
 <script>
-// import { useQuasar } from 'quasar'
-// import { ref } from 'vue'
 import useDatatableSelectable from 'app/src/app/composables/datatable/useDatatableSelectable'
 
 export default {
