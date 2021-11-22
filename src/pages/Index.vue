@@ -2,7 +2,7 @@
   <q-page class="flex flex-center">
     <img
       alt="Startapp"
-      src="http://startapp.id/startapp-light.png"
+      src="~/assets/startapp.png"
       width="250"
     >
   </q-page>
