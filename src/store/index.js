@@ -13,18 +13,11 @@ import countries from './countries'
 import provinces from './provinces'
 import cities from './cities'
 
-import degrees from './degrees'
-import levels from './levels'
-import majors from './majors'
-import fields from './fields'
-import classes from './classes'
-import subjects from './subjects'
-
 import users from './users'
 import addresses from './addresses'
 import contacts from './contacts'
 import files from './files'
-import videos from './videos'
+
 import roles from './roles'
 import permissions from './permissions'
 import sysparam from './sysparam'
@@ -52,19 +45,10 @@ export default store(function (/* { ssrContext } */) {
       provinces,
       cities,
 
-      degrees,
-      levels,
-      majors,
-      fields,
-      classes,
-      subjects,
-
       users,
       addresses,
       contacts,
       files,
-
-      videos,
 
       roles,
       permissions,
