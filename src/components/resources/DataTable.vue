@@ -129,7 +129,8 @@
 </style>
 
 <script>
-import useDatatableSelectable from 'app/src/app/composables/datatable/useDatatableSelectable'
+import useDatatableSelectable from 'src/app/composables/datatable/useDatatableSelectable'
+import useDatatableRepositories from 'src/app/composables/datatable/useDatatableRepositories'
 
 export default {
   name: 'DataTable',
@@ -184,7 +185,21 @@ export default {
     }
   },
   setup (props) {
+
+    const {
+      filter,
+      loading,
+      pagination,
+      pageOptions,
+      onRequest
+    } = useDatatableRepositories(props)
+
     return {
+      filter,
+      loading,
+      pagination,
+      pageOptions,
+      onRequest,
       ...useDatatableSelectable()
     }
   },
@@ -195,16 +210,6 @@ export default {
     }
 
     return {
-      filter: '',
-      loading: false,
-      pagination: {
-        sortBy: 'id',
-        descending: true,
-        page: 1,
-        rowsPerPage: 10, // limit default set 25
-        rowsNumber: 0 // total records
-      },
-      pageOptions: [5, 10, 25, 50, 100],
       events
     }
   },
@@ -227,58 +232,55 @@ export default {
     }
   },
   methods: {
-    onRequest (props) {
-      const { filters } = props
-      const { page, rowsPerPage, sortBy, descending } = props.pagination
-      let filter = {}
-      if(filters) {
-        filter = { ...filters }
-      }
-      const search = props.filter
-      const params = {
-        ...this.params,
-        ...filter,
-        search,
-        page: page,
-        limit: rowsPerPage,
-        // [`orderby[${sortBy}]`]: descending ? 'desc' : 'asc'
-      }
 
-      const orderby = Object.keys(this.params).find((index, item) => index.startsWith("orderby"))
-      if(!orderby) {
-        params[[`orderby[${sortBy}]`]] = descending ? 'desc' : 'asc'
-      }
+    // onRequest (props) {
+    //   const { filters } = props
+    //   const { page, rowsPerPage, sortBy, descending } = props.pagination
+    //   let filter = {}
+    //   if(filters) {
+    //     filter = { ...filters }
+    //   }
+    //   const search = props.filter
+    //   const params = {
+    //     ...this.params,
+    //     ...filter,
+    //     search,
+    //     page: page,
+    //     limit: rowsPerPage,
+    //     // [`orderby[${sortBy}]`]: descending ? 'desc' : 'asc'
+    //   }
 
-      this.loading = true
-      this.fetch({ params }).then((response) => {
-        const { data, meta } = response
-        this.pagination.rowsNumber = meta.recordsFiltered
-        this.pagination.page = page
-        this.pagination.rowsPerPage = rowsPerPage
-        this.pagination.sortBy = sortBy
-        this.pagination.descending = descending
-        this.rows.value = data
-        this.loading = false
-      }).catch(error => {
-        if (error.response) {
-          const { data } = error.response
-          this.$q.dialog({
-            title: `${data.status}`,
-            message: `${data.message}`,
-            ok: {
-              flat: true
-            },
-            persistent: true
-          })
-        }
-        this.loading = false
-      })
-    },
-    emitFilter(filters) {
-      const pagination = this.pagination
-      const filter = this.filter
-      this.onRequest({ pagination, filter, filters })
-    },
+    //   const orderby = Object.keys(params).find((index, item) => index.startsWith("orderby"))
+    //   if(!orderby && sortBy) {
+    //     params[[`orderby[${sortBy}]`]] = descending ? 'desc' : 'asc'
+    //   }
+
+    //   this.loading = true
+    //   this.fetch({ params }).then((response) => {
+    //     const { data, meta } = response
+    //     this.pagination.rowsNumber = meta.recordsFiltered
+    //     this.pagination.page = page
+    //     this.pagination.rowsPerPage = rowsPerPage
+    //     this.pagination.sortBy = sortBy
+    //     this.pagination.descending = descending
+    //     this.rows.value = data
+    //     this.loading = false
+    //   }).catch(error => {
+    //     if (error.response) {
+    //       const { data } = error.response
+    //       this.$q.dialog({
+    //         title: `${data.status}`,
+    //         message: `${data.message}`,
+    //         ok: {
+    //           flat: true
+    //         },
+    //         persistent: true
+    //       })
+    //     }
+    //     this.loading = false
+    //   })
+    // },
+
     confirmDelete (id) {
       this.$q.dialog({
         title: 'Delete',
@@ -332,6 +334,7 @@ export default {
         })
       })
     },
+
     deleteSelected () {
       const ids = []
       for (const item of this.selected) {
@@ -502,6 +505,12 @@ export default {
           this.loading = false
         })
       })
+    },
+
+    emitFilter(filters) {
+      const pagination = this.pagination
+      const filter = this.filter
+      this.onRequest({ pagination, filter, filters })
     },
 
     rowClick (evt, row, index) {
